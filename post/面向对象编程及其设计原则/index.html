@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面向对象编程及其设计原则 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="面向对象编程（Object Oriented Programming），简称OOP，是一种程序设计思想。OOP程序的基本单位是对象，具有相同数据和操作的对象集合称为类。类是对象的抽象表示，对象是类的实例。尽管近年来函数式编程的呼声越来越高，但不可否认的是OOP在大型软件系统和游戏开发等领域依然是最广泛最有效的编程范式。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E5%8F%8A%E5%85%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面向对象编程及其设计原则" />
+<meta property="og:description" content="面向对象编程（Object Oriented Programming），简称OOP，是一种程序设计思想。OOP程序的基本单位是对象，具有相同数据和操作的对象集合称为类。类是对象的抽象表示，对象是类的实例。尽管近年来函数式编程的呼声越来越高，但不可否认的是OOP在大型软件系统和游戏开发等领域依然是最广泛最有效的编程范式。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E5%8F%8A%E5%85%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" />
+<meta property="article:published_time" content="2019-04-20T15:55:58+00:00" />
+<meta property="article:modified_time" content="2019-04-20T15:55:58+00:00" />
+<meta itemprop="name" content="面向对象编程及其设计原则">
+<meta itemprop="description" content="面向对象编程（Object Oriented Programming），简称OOP，是一种程序设计思想。OOP程序的基本单位是对象，具有相同数据和操作的对象集合称为类。类是对象的抽象表示，对象是类的实例。尽管近年来函数式编程的呼声越来越高，但不可否认的是OOP在大型软件系统和游戏开发等领域依然是最广泛最有效的编程范式。">
+<meta itemprop="datePublished" content="2019-04-20T15:55:58+00:00" />
+<meta itemprop="dateModified" content="2019-04-20T15:55:58+00:00" />
+<meta itemprop="wordCount" content="4629">
+
+
+
+<meta itemprop="keywords" content="OOP思想,设计原则," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面向对象编程及其设计原则"/>
+<meta name="twitter:description" content="面向对象编程（Object Oriented Programming），简称OOP，是一种程序设计思想。OOP程序的基本单位是对象，具有相同数据和操作的对象集合称为类。类是对象的抽象表示，对象是类的实例。尽管近年来函数式编程的呼声越来越高，但不可否认的是OOP在大型软件系统和游戏开发等领域依然是最广泛最有效的编程范式。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面向对象编程及其设计原则</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-04-20 </span>
+        <div class="post-category">
+            <a href="/categories/oop/"> OOP </a>
+            </div>
+          <span class="more-meta"> 4629 words </span>
+          <span class="more-meta"> 10 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>面向对象编程（Object Oriented Programming），简称OOP，是一种程序设计思想。OOP程序的基本单位是对象，具有相同数据和操作的对象集合称为类。类是对象的抽象表示，对象是类的实例。尽管近年来函数式编程的呼声越来越高，但不可否认的是OOP在大型软件系统和游戏开发等领域依然是最广泛最有效的编程范式。</p>
+<p>面向对象编程首先是一种编程思想，其次才是具体的编程范式。OOP是利用人类思维将现实世界进行建模，将一切事物抽象成对象和类，每一个对象都有特定的属性和行为。比如，鲤鱼和草鱼都属于鱼类，它们都有鱼鳞、鱼尾巴、鱼腮等特性，还有游走和腮呼吸等行为。在这个例子中，鱼类就是一个抽象的类别定义，鲤鱼和草鱼就是鱼类的具体表示。</p>
+<p>软件开发领域没有银弹，OOP不是万能的，OOP适合多个对象相互协作的软件系统。只有在我们所面临的问题中能够抽象出多个对象时，才是使用OOP的最佳场景。在对于单一的数据操作时，如果为每一个操作都创建一个类。接着再通过消息传递改变对象内部的数据状态，这无疑是糟糕的设计。对于这类问题，函数式编程可能更适合，将一个个数据操作封装成函数然后执行这些函数。</p>
+<p>封装、继承和多态是面向对象编程的三大特性。封装是指将数据和数据相关的操作封装在实体对象中，只能通过操作方法来得到或更改对象内部数据的状态，外界无需关心操作实现的细节。继承是指一个类拥有另一个类的全部属性和方法，最大化实现代码的可重用。被继承的类称为基类，继承的类称为子类，子类还可添加新的属性和方法。</p>
+<p>多态是指不同的对象调用同一个接口表现出不同的功能。在C#中，多态分为静态多态性和动态多态性，静态多态性通过函数重载和运算符重载来实现，动态多态性通过抽象类和虚函数来实现。封装、继承和多态不是某个OOP语言的特性，一些动态语言通过自身的语法也可实现OOP。例如，JavaScript中利用函数和Prototype原型属性来模拟类和定义成员函数，从而实现OOP。对于OOP而言，最关键的是通过消息传递来改变对象内部的数据状态。</p>
+<p>通过以上部分讲解，应该能大致了解什么是面向对象编程，接下来我们谈谈面向对象设计原则。早期面向对象设计原则只有五个：单一职责原则（S）、开闭原则（O）、里氏替换原则（L）、接口隔离原则（I）和依赖倒置原则（D），合称<strong>SOLID</strong>设计原则。随着软件工程的发展，又增加了迪米特原则（最少知识原则）和组合/聚合复用原则，共称为面向对象七大设计原则。面向对象七大设计原则是设计模式的基础，很多设计模式就是基于这七大设计原则提出的。</p>
+<p>**开闭原则：一个软件实体（类、函数和模块等）对扩展开放，对修改关闭。**开闭原则是软件开发领域最基础的设计原则。这意味着我们在开发软件时，如果需要添加新的功能，我们应该在已有的模块上添加代码，而不是修改代码。因为如果贸然修改代码，可能会引起连锁反应，对其他依赖的模块产生影响。遵循开闭原则可以实现热插拔的效果，扩展的同时不影响其他模块。</p>
+<p>实现开闭原则的关键在于把程序中不变的部分抽象成抽象类或者接口。抽象类为继承而生，本身不能被实现，只能通过继承的子类来实现。如果需要扩展，则通过继承的子类来扩展，而不去修改抽象类本身。接口同理，不同的类通过接口来实现类自身的功能，接口不需要关心各个实现类的接口具体实现，需要扩展就添加新的接口或者创建一个实现接口的新类。那么抽象类和接口的区别是什么呢？</p>
+<p>在JAVA和C#中，抽象类和其他类一样只能被单一继承。即子类只能继承一个类，不支持同时继承多个类。而接口可以实现多重继承，子类可以实现多个接口，这点很大程度上弥补了JAVA和C#中类只能单一继承的限制。抽象类是对类进行抽象，继承的子类们必须属于同一类。子类和抽象类是“is-a”的关系，即什么是什么的关系，比如猫和狗是动物等。而接口是对行为进行抽象，实现的子类们可以没有任何关系，只需要都具备某个行为就行。它们是“like a”的关系，即什么像什么，比如飞机和鸟都可以飞，因此飞机和鸟这两个类都可以继承Fly这个接口。</p>
+<p>在实际的面向对象编程中，抽象类多是自底向上进行设计，通过重构从多个具体类中提取出公共部分组成一个抽象类。因此我们要注意类的划分粒度，比如黄狗和狼狗应该抽象出狗这一抽象类，而猫和狗应该抽象出动物这一抽象类。而接口更多是自顶向下进行设计，它是一个规则，定好了就必须实现。接口不会管什么类实现，只要这个类具有这个行为就行。下面这个原则就是为了判断我们是否应该使用继承而提出来的。</p>
+<p>**里氏替换原则：任何使用基类的地方都可以用子类替换，且程序不会出错。**里氏替换原则是对开闭原则的补充，开闭原则的关键是抽象化，而继承就是抽象化的具体体现。因此里氏替换原则是开闭原则实现步骤的规范。比如飞机和鸟之间就不能继承，二者看似相似，如果把飞机替换成鸟程序就会出错，因为二者根本就不是属于同一类。里氏替换原则告诉我们不能滥用类的继承，设计继承关系前，应思考这二者能不能继承。此外，类的继承应该是继承自抽象类而不是具体类。在继承关系树中，叶子节点应该是具体类，不能被继承，而分支节点应该是抽象类和接口。</p>
+<p>**迪米特原则（最少知识原则）：一个实体应该尽可能少地与其他实体发生相互作用，从而使系统功能模块相对独立。**在实际开发中，迪米特原则意味着尽量少用public属性（包括字段和字段对应的属性）和方法，即类里面的成员变量（字段、属性和方法）多用private和protected访问修饰符。因为一个类public的成员变量越多，修改时涉及的面就越广，程序就越容易出错。但这些原则都是相对的，不要教条式地过度遵循原则。比如，使用迪米特原则，如果一味地追求相对独立，势必要在发生相互作用的两个类之间添加中间类，这样会使代码变得臃肿。但不管怎样，如无必要，不要public类的成员变量。</p>
+<p>**单一职责原则：一个类只能有一个引起它变换的原因，即一个类只能有一个职责。**单一职责原则非常简单，很多人没有了解过面向对象设计原则也知道单一职责原则。单一职责原则避免了当需要改动类中的一部分功能代码时却影响了其他功能代码，导致程序出错。遵循单一职责原则可以使我们的程序耦合度降低，模块之间依赖变少，从而提高程序的可维护性。但任何原则都不是绝对的，在某些情况下可以违背单一职责原则。例子如下：</p>
+<p>比如猫和鱼都属于动物类，动物类有个MoveRun方法表示跑。虽然猫和鱼都能移动，但猫能跑，鱼只能游。这时是在动物类MoveRun方法中，用if-else判断区分跑和游？还是在动物类里新建一个MoveSwim方法表示游？无论哪种方式，看似都违背了单一职责原则，但如果新建一个WaterAnimal动物类，再加一个MoveSwim方法，但这样会导致改动太大，粒度过于细分。所以以上三种方式告诉我们，只有在特殊情况才能违背单一职责原则，比如逻辑足够简单就直接更改Move方法，类中方法少就在类中新建MoveSwim方法。</p>
+<p>**接口隔离原则：使用多个专门的接口而不是一个总接口。**接口隔离原则包含两个接口设计原则：接口较小原则和接口继承原则。接口较小原则，设计接口时应尽量使接口较小，如果接口方法较多，就应该拆分为多个接口。接口继承原则，不要让类继承的接口里有未使用的方法，因为接口的方法必须实现。如果使用该接口的其他类需要改动接口里的方法，则该类也必须要改动接口方法的实现。不仅是针对该类直接继承的接口，如果该接口继承自其他接口，其他接口里一样不能有未使用的方法。如果有，则表示该类直接继承的接口被污染了。因此，接口隔离原则是“高内聚低耦合”思想的体现，提高了程序的可维护性和可读性。</p>
+<p>**依赖倒置原则：高层模块不依赖于低层模块，面向接口编程。**依赖是“use-a”的关系，如果模块A调用了模块B的成员变量（字段、属性和方法），我们就称模块A依赖模块B。在OOP中，类是最小的模块。低层模块是指由一些基础方法构成的模块，高层模块是指封装了复杂逻辑的模块。要想高层模块不依赖于低层模块，就要通过接口来隔离高层模块和低层模块。接口是对低层模块的抽象，低层模块继承这个接口，然后高层模块就直接依赖这些接口而不是低层模块。下面通过一个例子来说明：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">LearnOOP</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">People</span> <span class="c1">// 高层模块
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="n">Eat</span><span class="p">(</span><span class="n">IFood</span> <span class="n">food</span><span class="p">)</span> <span class="c1">// 任何类只要继承某个类或者接口就属于这个基类或者接口类型。
+</span><span class="c1"></span>        <span class="p">{</span>
+            <span class="n">food</span><span class="p">.</span><span class="n">Digest</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+  
+  	<span class="k">interface</span> <span class="n">IFood</span> <span class="c1">// 把相同的行为抽象为接口，作为高层模块和低层模块的隔离层。
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="k">void</span> <span class="n">Digest</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Bread</span> <span class="p">:</span> <span class="n">IFood</span> <span class="c1">// 低层模块
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="n">Digest</span><span class="p">()</span>
+        <span class="p">{</span>
+             <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;面包消化了&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Rice</span> <span class="p">:</span> <span class="n">IFood</span>  <span class="c1">// 低层模块
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="n">Digest</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;米饭消化了&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">EatFood</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">People</span> <span class="n">people</span> <span class="p">=</span> <span class="k">new</span> <span class="n">People</span><span class="p">();</span>
+            <span class="c1">// People高层模块只依赖接口IFood接口，Bread和Rice底层模块实现IFood接口。
+</span><span class="c1"></span>            <span class="c1">// 如果有Noodles和Milk等新的食物，直接实现IFood接口，不需要改动People高层模块。
+</span><span class="c1"></span>            <span class="n">people</span><span class="p">.</span><span class="n">Eat</span><span class="p">(</span><span class="k">new</span> <span class="n">Bread</span><span class="p">());</span>
+            <span class="n">people</span><span class="p">.</span><span class="n">Eat</span><span class="p">(</span><span class="k">new</span> <span class="n">Rice</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 以上代码输出结果为：
+</span><span class="c1">// 面包消化了
+</span><span class="c1">// 米饭消化了
+</span><span class="c1">// 遵循依赖倒置原则可以使程序的扩展性和可维护性更高，减少了类之间的耦合性，降低了修改程序所带来的风险。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>**组合/聚合复用原则：尽量使用组合/聚合的方式而不是使用继承来达到复用的目的。**实现代码复用有组合/聚合的方式和继承的方式，二者分别表示“has-a”和“is-a”的关系。组合和聚合都是类之间关联关系的特殊情况，组合是强关联，二者生命周期一致。比如人和器官是组合关系，一旦人死亡，器官也将不复存在。而聚合是弱关联，部分可能会超过整体的生命周期。比如班级和学生，班级消失了，学生依然存在。关联关系在代码中一般以成员变量的形式存在。</p>
+<p>使用继承实现代码复用，父类的实现细节全部暴露给子类，一旦父类发生变化，子类也要跟着变化。这称为“白箱”复用。但使用组合/聚合复用，只需要将对象A作为对象的B成员变量，即可达到复用。这种复用称为“黑箱复用”，因为对象B不需要关心对象A的内部实现，从而更好的保护了对象所在类的封装性。因此我们在代码复用时，要优先采用组合/聚合复用，而不是继承复用。二者的判断标准是看代码复用的两个类之间的关系是“has-a”还是“is-a”。使用继承复用时，还必须遵循里氏替换原则，不能滥用继承。下面通过类图来实现组合/聚合复用原则：</p>
+<p><img src="http://wx1.sinaimg.cn/large/006WUoxdly1g6njv53hmbj31m80oin2f.jpg" alt=""></p>
+<p>如上类图所示，把汽车的动力引擎提取出来，用新的类表示。然后在Car类里用这个Power类声明成员变量，对于汽车而言动力引擎就是它的组成部分，它们是组合关系。如果使用类继承来复用代码，每种汽车又要分为汽油驱动的汽车和电动汽车。这样会导致类的个数变多，程序变得臃肿。每次继承后，父类都要将内部实现细节暴露给子类，不利于程序的后期维护。因此代码复用优先采用组合/聚合的方式，只有符合&quot;is-a&quot;关系时才采用类继承复用。</p>
+<p>以上就是面向对象编程和面向对象七大设计原则，后期如果有新的理解会继续更新。设计原则是设计模式的基石，只有充分理解设计原则后，才能更好的掌握设计模式。开闭原则是这些设计原则的核心，关键是学会抽象化，将软件中不变的部分抽象为抽象类和接口。最后两个原则，依赖倒置原则和组合/聚合复用原则在实际开发中运用较多，平时应多结合代码实践进行理解。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-04-20
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/oop%E6%80%9D%E6%83%B3/">OOP思想</a>
+          <a href="/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">设计原则</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E7%AE%97%E6%B3%95%E6%95%88%E7%8E%87/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">算法效率</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E6%8E%A2%E7%B4%A2niantic%E7%9C%9F%E5%AE%9E%E4%B8%96%E7%95%8C%E5%B9%B3%E5%8F%B0/">
+            <span class="next-text nav-default">探索Niantic真实世界平台</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

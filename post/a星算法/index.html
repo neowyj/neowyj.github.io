@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>A*算法 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="算法简介 A星搜索算法（A* search algorithm），简称A星算法，是一种启发式搜索算法，用于求解图中两个节点之间的最短路径及其长度。常用于游戏中NPC的移动计算和求地图中两点的实际最短路径。A星算法是Dijkstra算法的升级版，但Dijkstra算法属于盲目搜索，每次都需要访问到所有结点的路径并找出最短的一条路径，然后以该最短路径为基础更新到其他结点的路径，不断重复直到找到所有的最短路径结点。当图中的结点很多时，如果采用Dijkstra算法寻找最短路径，产生的计算量将会非常大，而采用A星算法产生的计算量将会远小于Dijkstra算法。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/a%E6%98%9F%E7%AE%97%E6%B3%95/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="A*算法" />
+<meta property="og:description" content="算法简介
+A星搜索算法（A* search algorithm），简称A星算法，是一种启发式搜索算法，用于求解图中两个节点之间的最短路径及其长度。常用于游戏中NPC的移动计算和求地图中两点的实际最短路径。A星算法是Dijkstra算法的升级版，但Dijkstra算法属于盲目搜索，每次都需要访问到所有结点的路径并找出最短的一条路径，然后以该最短路径为基础更新到其他结点的路径，不断重复直到找到所有的最短路径结点。当图中的结点很多时，如果采用Dijkstra算法寻找最短路径，产生的计算量将会非常大，而采用A星算法产生的计算量将会远小于Dijkstra算法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/a%E6%98%9F%E7%AE%97%E6%B3%95/" />
+<meta property="article:published_time" content="2019-11-01T18:04:43+00:00" />
+<meta property="article:modified_time" content="2019-11-01T18:04:43+00:00" />
+<meta itemprop="name" content="A*算法">
+<meta itemprop="description" content="算法简介
+A星搜索算法（A* search algorithm），简称A星算法，是一种启发式搜索算法，用于求解图中两个节点之间的最短路径及其长度。常用于游戏中NPC的移动计算和求地图中两点的实际最短路径。A星算法是Dijkstra算法的升级版，但Dijkstra算法属于盲目搜索，每次都需要访问到所有结点的路径并找出最短的一条路径，然后以该最短路径为基础更新到其他结点的路径，不断重复直到找到所有的最短路径结点。当图中的结点很多时，如果采用Dijkstra算法寻找最短路径，产生的计算量将会非常大，而采用A星算法产生的计算量将会远小于Dijkstra算法。">
+<meta itemprop="datePublished" content="2019-11-01T18:04:43+00:00" />
+<meta itemprop="dateModified" content="2019-11-01T18:04:43+00:00" />
+<meta itemprop="wordCount" content="5982">
+
+
+
+<meta itemprop="keywords" content="A*算法," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="A*算法"/>
+<meta name="twitter:description" content="算法简介
+A星搜索算法（A* search algorithm），简称A星算法，是一种启发式搜索算法，用于求解图中两个节点之间的最短路径及其长度。常用于游戏中NPC的移动计算和求地图中两点的实际最短路径。A星算法是Dijkstra算法的升级版，但Dijkstra算法属于盲目搜索，每次都需要访问到所有结点的路径并找出最短的一条路径，然后以该最短路径为基础更新到其他结点的路径，不断重复直到找到所有的最短路径结点。当图中的结点很多时，如果采用Dijkstra算法寻找最短路径，产生的计算量将会非常大，而采用A星算法产生的计算量将会远小于Dijkstra算法。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">A*算法</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-01 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+            </div>
+          <span class="more-meta"> 5982 words </span>
+          <span class="more-meta"> 12 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="算法简介">算法简介</h4>
+<p>A星搜索算法（A* search algorithm），简称A星算法，是一种启发式搜索算法，用于求解图中两个节点之间的最短路径及其长度。常用于游戏中NPC的移动计算和求地图中两点的实际最短路径。A星算法是Dijkstra算法的升级版，但Dijkstra算法属于盲目搜索，每次都需要访问到所有结点的路径并找出最短的一条路径，然后以该最短路径为基础更新到其他结点的路径，不断重复直到找到所有的最短路径结点。当图中的结点很多时，如果采用Dijkstra算法寻找最短路径，产生的计算量将会非常大，而采用A星算法产生的计算量将会远小于Dijkstra算法。</p>
+<p>以到达某个目的地为例，广度优先搜索和Dijkstra算法每次都是把周围的路都走完，再选择最短的一条路走，直到到达目的地。虽然能找到最短的一条路，但需要花很多时间。而深度优先搜索是一条路走到底，走不通再退回来，一条条地试。虽然能到达目的地，但可能不是最短的一条路。而A*算法的搜索过程类似于人的搜索方法，比如我们要到目的地，我们每走一段路就会看看当前位置的方向是否偏离目的地，这样就能够保证我们始终朝着目标方向走，不会走冤枉路，从而少走很多路程。</p>
+<p>因此A*算法引入了一个启发函数h(n)，通过计算当前节点到目标节点的估算距离来保证搜索的方向不会偏离目标节点。在实际运用中，每条路径的地形可能不同，因此每条路径都有不同的权值，即经过该路径的代价。因此A星算法的公式为：<strong>f(n) = g(n) + h(n)</strong>，g(n)为当前节点到起点的实际代价，h(n)为当前节点到目标节点的估算距离代价，f(n)为经过可能经过该节点的最短路径的估算代价。每次选择下一个最短路径经过的节点时，就从待选节点中选择一个估价f最小的一个节点。</p>
+<p>因此，一个好的启发函数h(n)很大程度上决定了A*算法的效率。只要h(n)不大于当前节点到目标节点的实际距离，就一定能够找出最短路径。而且h(n)越小，需要计算的节点数就越多，A星算法的效率就越低。常见的启发式函数有欧几里得距离，曼哈顿距离和切比雪夫距离等，但最常用的是<strong>曼哈顿距离</strong>。即两个点(x1, x2)和(x2, x3)之间的距离为|x1-x2|+|y1-y2|，就像横着和竖着穿越街区一样。只能如果h(n)为0，A星算法就退化成了Dijkstra算法，只需要计算出当前节点到起点的实际距离即可，此时需要计算的节点数最多。</p>
+<h4 id="算法步骤">算法步骤</h4>
+<p><img src="http://qiniu.arflow.cn/201910/A%2A%E7%AE%97%E6%B3%95.jpg" alt=""></p>
+<p>在上图中，绿色方块为起点，红色方块为终点，蓝色方块为障碍物，有红色圆心的方块为最短路径上的节点，把它们连起来就是一条起点到终点的一条最短路径。A*算法需要两个列表集合：open表和close表。open表用于存放待处理的节点，close表用于存放已经处理过的节点。此外，还需要为每个节点指定一个父节点，用于找到终点时进行回溯得到起点到终点的最短路径。</p>
+<p>以上图为例，设往上下左右横着竖着走的代价为10，往右上右下左下左上四个角斜着走的代价为14，因为正方形中斜边长为直角边长的根号2倍约为1.414，这里为了计算方便去1.4倍。每一个正方形左下方的值为代价G，即该节点到起点的实际代价；右下方的值为估价H，即通过曼哈顿距离计算的每个节点到终点的估算代价H；左上方的值为可能经过该节点的最短路径的估价F。</p>
+<p>下面我们开始手动模拟下A*算法的搜索过程，首先从起点开始，把起点加入open表，同时检测起点周围的8个相邻节点。每次节点检测分三种情况：</p>
+<p>1、如果相邻节点是不可到达的，比如障碍物，则忽略该节点。</p>
+<p>2、如果相邻节点可到达，但已经在open表中，就计算当前节点的实际代价G加上到这个节点的实际代价，是否小于该相邻节点的实际代价G。如果是就说明找到了一条更优的路径，因为节点代价H不边，代价G越小代价F就越小。于是就更新该相邻节点的代价G和代价F并重新参与代价F的排序，并更改它的父节点为当前节点。如果不是，则不做任何操作。</p>
+<p>3、如果相邻节点可到达，且不在open表和close表中，则该相邻节点为新结点，把当前节点设置为该相邻节点的父节点，并把该相邻节点加入到open表中。</p>
+<p>从上图可以看出，起点的周围8个相邻节点都属于第三种情况，因此把这8个结点都加入到open表中。这样一轮节点扩展就完成了，把起点移除open表同时把起点加入到close表中，即起点不再检测和参与代价f的排序。接着从这8个待检测结点选择一个代价F最小的节点，即起点右边代价f为40的节点，然后以该节点为当前节点进行下一轮节点扩展。</p>
+<p>现在发现代价f为40的当前节点周围有三个是障碍物，忽略它们。剩下的相邻节点都已经在open表中，分别计算当前节点的实际代价G加上到这些相邻节点的实际代价，是否小于这些相邻节点的实际代价G。经过计算发现明显不是，因为两点之间线段最短，斜着走肯定比走直角边的代价更小，因此不做任何操作。</p>
+<p>现在把当前节点移除open表并加入到close表，接着重现遍历open表找到一个代价f最小的节点，这时又两个代价f为54的节点。我们优先选择代价h最小的一个即离终点最近的一个节点，如果代价h也一样，就选择新发现的节点。新发现和后发现的不重要，最后的最短路径长度是一样的，只是路径节点不一样，所以A*算法可能会找到几条最短路径。然后以代价f为54的节点为当前节点进行下一轮节点扩展，不断重复上述过程，直到找到终点为止。</p>
+<h4 id="代码实现">代码实现</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span><span class="lnt">377
+</span><span class="lnt">378
+</span><span class="lnt">379
+</span><span class="lnt">380
+</span><span class="lnt">381
+</span><span class="lnt">382
+</span><span class="lnt">383
+</span><span class="lnt">384
+</span><span class="lnt">385
+</span><span class="lnt">386
+</span><span class="lnt">387
+</span><span class="lnt">388
+</span><span class="lnt">389
+</span><span class="lnt">390
+</span><span class="lnt">391
+</span><span class="lnt">392
+</span><span class="lnt">393
+</span><span class="lnt">394
+</span><span class="lnt">395
+</span><span class="lnt">396
+</span><span class="lnt">397
+</span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
+</span><span class="lnt">414
+</span><span class="lnt">415
+</span><span class="lnt">416
+</span><span class="lnt">417
+</span><span class="lnt">418
+</span><span class="lnt">419
+</span><span class="lnt">420
+</span><span class="lnt">421
+</span><span class="lnt">422
+</span><span class="lnt">423
+</span><span class="lnt">424
+</span><span class="lnt">425
+</span><span class="lnt">426
+</span><span class="lnt">427
+</span><span class="lnt">428
+</span><span class="lnt">429
+</span><span class="lnt">430
+</span><span class="lnt">431
+</span><span class="lnt">432
+</span><span class="lnt">433
+</span><span class="lnt">434
+</span><span class="lnt">435
+</span><span class="lnt">436
+</span><span class="lnt">437
+</span><span class="lnt">438
+</span><span class="lnt">439
+</span><span class="lnt">440
+</span><span class="lnt">441
+</span><span class="lnt">442
+</span><span class="lnt">443
+</span><span class="lnt">444
+</span><span class="lnt">445
+</span><span class="lnt">446
+</span><span class="lnt">447
+</span><span class="lnt">448
+</span><span class="lnt">449
+</span><span class="lnt">450
+</span><span class="lnt">451
+</span><span class="lnt">452
+</span><span class="lnt">453
+</span><span class="lnt">454
+</span><span class="lnt">455
+</span><span class="lnt">456
+</span><span class="lnt">457
+</span><span class="lnt">458
+</span><span class="lnt">459
+</span><span class="lnt">460
+</span><span class="lnt">461
+</span><span class="lnt">462
+</span><span class="lnt">463
+</span><span class="lnt">464
+</span><span class="lnt">465
+</span><span class="lnt">466
+</span><span class="lnt">467
+</span><span class="lnt">468
+</span><span class="lnt">469
+</span><span class="lnt">470
+</span><span class="lnt">471
+</span><span class="lnt">472
+</span><span class="lnt">473
+</span><span class="lnt">474
+</span><span class="lnt">475
+</span><span class="lnt">476
+</span><span class="lnt">477
+</span><span class="lnt">478
+</span><span class="lnt">479
+</span><span class="lnt">480
+</span><span class="lnt">481
+</span><span class="lnt">482
+</span><span class="lnt">483
+</span><span class="lnt">484
+</span><span class="lnt">485
+</span><span class="lnt">486
+</span><span class="lnt">487
+</span><span class="lnt">488
+</span><span class="lnt">489
+</span><span class="lnt">490
+</span><span class="lnt">491
+</span><span class="lnt">492
+</span><span class="lnt">493
+</span><span class="lnt">494
+</span><span class="lnt">495
+</span><span class="lnt">496
+</span><span class="lnt">497
+</span><span class="lnt">498
+</span><span class="lnt">499
+</span><span class="lnt">500
+</span><span class="lnt">501
+</span><span class="lnt">502
+</span><span class="lnt">503
+</span><span class="lnt">504
+</span><span class="lnt">505
+</span><span class="lnt">506
+</span><span class="lnt">507
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">AStar</span>
+<span class="p">{</span>
+    <span class="c1">// 每个节点的坐标
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Location</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+        <span class="k">private</span> <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">X</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">x</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Y</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">y</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">y</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">Location</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="n">x</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="n">y</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 节点的定义
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Node</span>
+    <span class="p">{</span>
+        <span class="c1">// 节点坐标
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">Location</span> <span class="n">location</span><span class="p">;</span>
+        <span class="c1">// 节点到起点的实际代价
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">costG</span><span class="p">;</span>
+        <span class="c1">// 节点到终点的估算代价
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">costH</span><span class="p">;</span>
+        <span class="c1">// 经过该结点的最短路径的估算代价
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">costF</span><span class="p">;</span>
+        <span class="c1">// 节点的父结点，默认值为null表示没有指定父节点。
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">Node</span> <span class="n">father</span><span class="p">;</span>
+        <span class="c1">// 节点是否已被访问，默认值为false表示没有被访问。
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">bool</span> <span class="n">isVisted</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="n">Location</span> <span class="n">Location</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">location</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">location</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">CostG</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">costG</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">costG</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">CostH</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">costH</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">costH</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">CostF</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">costF</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">costF</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">Node</span> <span class="n">Father</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">father</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">father</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsVisted</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">isVisted</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">isVisted</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="c1">// 初始化节点
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">Node</span><span class="p">(</span><span class="n">Location</span> <span class="n">location</span><span class="p">,</span> <span class="kt">int</span> <span class="n">costG</span><span class="p">,</span> <span class="kt">int</span> <span class="n">costH</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">location</span> <span class="p">=</span> <span class="n">location</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">costG</span> <span class="p">=</span> <span class="n">costG</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">costH</span> <span class="p">=</span> <span class="n">costH</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">costF</span> <span class="p">=</span> <span class="n">costG</span> <span class="p">+</span> <span class="n">costH</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 节点向周围八个方向走一步的代价
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">int</span> <span class="n">StepCost</span><span class="p">(</span><span class="n">Location</span> <span class="n">location</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">dx</span> <span class="p">=</span> <span class="n">location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="k">this</span><span class="p">.</span><span class="n">location</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">dy</span> <span class="p">=</span> <span class="n">location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="k">this</span><span class="p">.</span><span class="n">location</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+            <span class="k">switch</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// 往上走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">):</span>
+                <span class="c1">// 往下走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">):</span>
+                <span class="c1">// 往左走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(-</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">):</span>
+                <span class="c1">// 往右走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">):</span>
+                    <span class="p">{</span>
+                        <span class="c1">// 往上下左右走每一步代价为10
+</span><span class="c1"></span>                        <span class="k">return</span> <span class="m">10</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="c1">// 往右上方走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">):</span>
+                <span class="c1">// 往右下方走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">):</span>
+                <span class="c1">// 往左下方走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(-</span><span class="m">1</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">):</span>
+                <span class="c1">// 往左上方走
+</span><span class="c1"></span>                <span class="k">case</span> <span class="p">(-</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">):</span>
+                    <span class="p">{</span>
+                        <span class="c1">// 往四个方向斜着走每一步代价为14，对于一个正方形节点斜边约为直角边的1.4倍。
+</span><span class="c1"></span>                        <span class="k">return</span> <span class="m">14</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="c1">// 往其他方向走代价默认为0
+</span><span class="c1"></span>                <span class="k">default</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 八个方向，以当前节点为基准，上北下南左西右东
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">enum</span> <span class="n">Direction</span>
+    <span class="p">{</span>
+        <span class="n">North</span><span class="p">,</span>
+        <span class="n">NorthEast</span><span class="p">,</span>
+        <span class="n">East</span><span class="p">,</span>
+        <span class="n">SouthEast</span><span class="p">,</span>
+        <span class="n">South</span><span class="p">,</span>
+        <span class="n">SouthWest</span><span class="p">,</span>
+        <span class="n">West</span><span class="p">,</span>
+        <span class="n">NorthWest</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 定义当前地图
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Map</span>
+    <span class="p">{</span>
+        <span class="c1">// 地图长度
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+        <span class="c1">// 地图宽度
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">width</span><span class="p">;</span>
+        <span class="c1">// 障碍矩阵，默认为fasle表示没有障碍。
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">bool</span><span class="p">[,]</span> <span class="n">obstacles</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Length</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">length</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">length</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Width</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">width</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">width</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">bool</span><span class="p">[,]</span> <span class="n">Obstacles</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">obstacles</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">obstacles</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="c1">// 地图构造函数
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">Map</span><span class="p">(</span><span class="kt">int</span> <span class="n">length</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Location</span><span class="p">&gt;</span> <span class="n">obstacleList</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">Length</span> <span class="p">=</span> <span class="n">length</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">Width</span> <span class="p">=</span> <span class="n">width</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">Obstacles</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">bool</span><span class="p">[</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">];</span>
+            <span class="c1">// 初始化地图中的障碍结点
+</span><span class="c1"></span>            <span class="n">InitObstacles</span><span class="p">(</span><span class="n">obstacleList</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 设置障碍函数
+</span><span class="c1"></span>        <span class="k">private</span> <span class="k">void</span> <span class="n">InitObstacles</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Location</span><span class="p">&gt;</span> <span class="n">obstacleList</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="n">Location</span> <span class="n">o</span> <span class="k">in</span> <span class="n">obstacleList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Obstacles</span><span class="p">[</span><span class="n">o</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="n">Y</span><span class="p">]</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 以当前节点为基准，判断某个方向上位置的相邻结点能否到达
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">bool</span> <span class="n">isWalkable</span><span class="p">(</span><span class="n">Node</span> <span class="n">currentNode</span><span class="p">,</span> <span class="n">Location</span> <span class="n">nextLocation</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 如果相邻结点在地图之外，则不可到达
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">nextLocation</span><span class="p">.</span><span class="n">X</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">X</span> <span class="p">&gt;</span> <span class="n">Length</span> <span class="p">-</span> <span class="m">1</span> <span class="p">||</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">Y</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">Y</span> <span class="p">&gt;</span> <span class="n">Width</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 如果相邻结点是障碍，则不可到达
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">Obstacles</span><span class="p">[</span><span class="n">nextLocation</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">Y</span><span class="p">])</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 如果当前节点右边是一个障碍，且相邻结点在障碍的上方或下方，则该节点不可直接穿墙角到该相邻结点。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="m">1</span> <span class="p">&gt;=</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="m">1</span> <span class="p">&lt;=</span> <span class="n">Length</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&amp;&amp;</span> <span class="n">Obstacles</span><span class="p">[</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span><span class="p">]</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="m">1</span> <span class="p">==</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">X</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 如果当前节点左边是一个障碍，且相邻结点在障碍的上方或下方，则该节点不可直接穿墙角到该相邻结点。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&gt;=</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&lt;=</span> <span class="n">Length</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&amp;&amp;</span> <span class="n">Obstacles</span><span class="p">[</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span><span class="p">]</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="m">1</span> <span class="p">==</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">X</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 如果当前节点上方是一个障碍，且相邻结点在障碍的左边或右边，则该节点不可直接穿墙角到该相邻结点。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="m">1</span> <span class="p">&gt;=</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="m">1</span> <span class="p">&lt;=</span> <span class="n">Width</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&amp;&amp;</span> <span class="n">Obstacles</span><span class="p">[</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="m">1</span><span class="p">]</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="m">1</span> <span class="p">==</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 如果当前节点下方是一个障碍，且相邻结点在障碍的左边或右边，则该节点不可直接穿墙角到该相邻结点。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&gt;=</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&lt;=</span> <span class="n">Width</span> <span class="p">-</span> <span class="m">1</span> <span class="p">&amp;&amp;</span> <span class="n">Obstacles</span><span class="p">[</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="m">1</span><span class="p">]</span> <span class="p">&amp;&amp;</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="m">1</span> <span class="p">==</span> <span class="n">nextLocation</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// A*算法类
+</span><span class="c1"></span>    <span class="k">public</span> <span class="k">class</span> <span class="nc">AStar</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">Map</span> <span class="n">map</span><span class="p">;</span>
+        <span class="c1">// 起始节点
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">Location</span> <span class="n">source</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Node</span> <span class="n">startNode</span><span class="p">;</span>
+        <span class="c1">// 终点节点
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">Location</span> <span class="n">destination</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Node</span> <span class="n">endNode</span><span class="p">;</span>
+        <span class="c1">// 最小代价F节点
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">Node</span> <span class="n">minCostFNode</span><span class="p">;</span>
+        <span class="c1">// 存放Direction类型的八个方向。
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Direction</span><span class="p">&gt;</span> <span class="n">directionList</span><span class="p">;</span>
+        <span class="c1">// open表用于存放待处理的节点
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">openList</span><span class="p">;</span>
+        <span class="c1">// close表用于存放已经处理过的节点
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">closeList</span><span class="p">;</span>
+        <span class="c1">// 最短路径
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">route</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">OpenList</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">openList</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">openList</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">CloseList</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">closeList</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">closeList</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">Node</span> <span class="n">StartNode</span> <span class="p">{</span> <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">startNode</span><span class="p">;</span> <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">startNode</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="c1">// A*类构造函数，参数为：地图，起点坐标，终点坐标
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">AStar</span><span class="p">(</span><span class="n">Map</span> <span class="n">map</span><span class="p">,</span> <span class="n">Location</span> <span class="n">source</span><span class="p">,</span> <span class="n">Location</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">map</span> <span class="p">=</span> <span class="n">map</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">source</span> <span class="p">=</span> <span class="n">source</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">destination</span> <span class="p">=</span> <span class="n">destination</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">startNode</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="n">destination</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="p">+</span> <span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="n">destination</span><span class="p">.</span><span class="n">Y</span><span class="p">))</span> <span class="p">*</span> <span class="m">10</span><span class="p">);</span>
+            <span class="c1">// 终点的代价G默认为无穷大
+</span><span class="c1"></span>            <span class="k">this</span><span class="p">.</span><span class="n">endNode</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">openList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;();</span>
+            <span class="c1">// 将起点加入open表等待处理
+</span><span class="c1"></span>            <span class="k">this</span><span class="p">.</span><span class="n">closeList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;();</span>
+            <span class="n">openList</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">startNode</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">route</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;();</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">directionList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Direction</span><span class="p">&gt;</span> <span class="p">{</span> <span class="n">Direction</span><span class="p">.</span><span class="n">North</span><span class="p">,</span> <span class="n">Direction</span><span class="p">.</span><span class="n">NorthEast</span><span class="p">,</span> <span class="n">Direction</span><span class="p">.</span><span class="n">East</span><span class="p">,</span> <span class="n">Direction</span><span class="p">.</span><span class="n">SouthEast</span><span class="p">,</span> <span class="n">Direction</span><span class="p">.</span><span class="n">South</span><span class="p">,</span> <span class="n">Direction</span><span class="p">.</span><span class="n">SouthWest</span><span class="p">,</span> <span class="n">Direction</span><span class="p">.</span><span class="n">West</span><span class="p">,</span> <span class="n">Direction</span><span class="p">.</span><span class="n">NorthWest</span> <span class="p">};</span>
+        <span class="p">}</span>
+
+        <span class="c1">// A*算法具体的递归执行函数
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">DoAStar</span><span class="p">(</span><span class="n">Node</span> <span class="n">currentNode</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">openList</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Node</span><span class="p">&gt;</span> <span class="n">closeList</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 每次寻找相邻节点时，先把open表中所有节点的IsVisted标志位置为true，表示它们已经被访问过。
+</span><span class="c1"></span>            <span class="k">foreach</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="k">in</span> <span class="n">openList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">node</span><span class="p">.</span><span class="n">IsVisted</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 开始遍历当前节点周围的八个方向寻找相邻节点
+</span><span class="c1"></span>            <span class="k">foreach</span> <span class="p">(</span><span class="n">Direction</span> <span class="n">direction</span> <span class="k">in</span> <span class="n">directionList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// 获取某个方向上的相邻节点
+</span><span class="c1"></span>                <span class="n">Node</span> <span class="n">nextNode</span> <span class="p">=</span> <span class="n">GetAdjacentLocation</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">direction</span><span class="p">);</span>
+                <span class="c1">// 判断该节点位置是否能够到达，不能到达直接跳过本次循环，继续寻找下一个方向
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(!</span><span class="n">map</span><span class="p">.</span><span class="n">isWalkable</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">nextNode</span><span class="p">.</span><span class="n">Location</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// 如果相邻节点的估价H为0，表示该相邻节点是终点
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="n">nextNode</span><span class="p">.</span><span class="n">CostH</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">// 把终点的父节点指向当前节点
+</span><span class="c1"></span>                    <span class="n">nextNode</span><span class="p">.</span><span class="n">Father</span> <span class="p">=</span> <span class="n">currentNode</span><span class="p">;</span>
+                    <span class="c1">// 沿着终点的父节点回溯得到最短路径
+</span><span class="c1"></span>                    <span class="k">while</span> <span class="p">(</span><span class="n">nextNode</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="c1">// 由于是回溯，因此需要依次将节点插入到route的第一个位置
+</span><span class="c1"></span>                        <span class="n">route</span><span class="p">.</span><span class="n">Insert</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">nextNode</span><span class="p">);</span>
+                        <span class="n">nextNode</span> <span class="p">=</span> <span class="n">nextNode</span><span class="p">.</span><span class="n">Father</span><span class="p">;</span>
+                    <span class="p">}</span>
+                    <span class="c1">// 返回最短路径，A*算法结束
+</span><span class="c1"></span>                    <span class="k">return</span> <span class="n">route</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// 如果相邻节点已经在open表，即已经被访问过，就判断当前节点的代价G加上到该相邻节点的代价G，是否小于该相邻节点之前的代价G。
+</span><span class="c1"></span>                <span class="c1">// 如果是，就更新该相邻节点的代价G和代价F，已经更改它的父节点为当前节点。如果不是，则不做任何操作。
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="n">isOpened</span><span class="p">(</span><span class="n">nextNode</span><span class="p">.</span><span class="n">Location</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="n">nextNode</span><span class="p">.</span><span class="n">Father</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">nextNode</span><span class="p">.</span><span class="n">CostG</span> <span class="p">&lt;</span> <span class="n">nextNode</span><span class="p">.</span><span class="n">Father</span><span class="p">.</span><span class="n">CostG</span> <span class="p">+</span> <span class="n">nextNode</span><span class="p">.</span><span class="n">Father</span><span class="p">.</span><span class="n">StepCost</span><span class="p">(</span><span class="n">nextNode</span><span class="p">.</span><span class="n">Location</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="c1">// 如果是就说明找到了一条经过该相邻节点的更短路径，把该相邻节点的父节点改为当前节点。因为该相邻节点的代价H是不会变，代价G变小了，因此代价F也就更小了。
+</span><span class="c1"></span>                    <span class="n">nextNode</span><span class="p">.</span><span class="n">Father</span> <span class="p">=</span> <span class="n">currentNode</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// 如果相邻节点不在open表和close表中，就说明该相邻节点是一个新节点，把它的父节点指向当前节点并加入到open表中。
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(!</span><span class="n">isOpened</span><span class="p">(</span><span class="n">nextNode</span><span class="p">.</span><span class="n">Location</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="n">isClosed</span><span class="p">(</span><span class="n">nextNode</span><span class="p">.</span><span class="n">Location</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="n">nextNode</span><span class="p">.</span><span class="n">Father</span> <span class="p">=</span> <span class="n">currentNode</span><span class="p">;</span>
+                    <span class="c1">// 每一轮代价F排序先从新加入的节点开始，这里的nextNode只是一个“哨兵”，具体值不重要。
+</span><span class="c1"></span>                    <span class="n">minCostFNode</span> <span class="p">=</span> <span class="n">nextNode</span><span class="p">;</span>
+                    <span class="n">openList</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">nextNode</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 当周围八个方向上的相邻结点都已经处理过了，就把该当前节点移除open表加入到close表中，表示该节点不再处理及参与代价F的排序。
+</span><span class="c1"></span>            <span class="n">openList</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">currentNode</span><span class="p">);</span>
+            <span class="n">closeList</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">currentNode</span><span class="p">);</span>
+
+            <span class="c1">// 从open表中获取一个最小代价F节点，作为最短路径上的下一个节点。
+</span><span class="c1"></span>            <span class="n">minCostFNode</span> <span class="p">=</span> <span class="n">GetMinCostFNode</span><span class="p">();</span>
+            <span class="c1">// 如果最小代价F节点为空，即open表为空，A*算法搜索失败，没有找到最短路径。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">minCostFNode</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="c1">// 把最小代价F节点的父节点指向当前节点，确保最短路径上的结点不“断链”。
+</span><span class="c1"></span>            <span class="n">minCostFNode</span><span class="p">.</span><span class="n">Father</span> <span class="p">=</span> <span class="n">currentNode</span><span class="p">;</span>
+
+            <span class="c1">// 把最小代价F节点作为下一轮递归执行的开始结点
+</span><span class="c1"></span>            <span class="k">return</span> <span class="n">DoAStar</span><span class="p">(</span><span class="n">minCostFNode</span><span class="p">,</span> <span class="n">openList</span><span class="p">,</span> <span class="n">closeList</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 显示最短路径
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">void</span> <span class="n">ShowRoute</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">bool</span> <span class="n">flag</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Width</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">map</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="c1">// 显示障碍物
+</span><span class="c1"></span>                    <span class="k">if</span> <span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="n">Obstacles</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+                    <span class="p">{</span>
+                        <span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&#34;■ &#34;</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="c1">// 显示起点和终点
+</span><span class="c1"></span>                    <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">j</span> <span class="p">==</span> <span class="n">source</span><span class="p">.</span><span class="n">X</span> <span class="p">&amp;&amp;</span> <span class="n">i</span> <span class="p">==</span> <span class="n">source</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="p">||</span> <span class="p">(</span><span class="n">j</span> <span class="p">==</span> <span class="n">destination</span><span class="p">.</span><span class="n">X</span> <span class="p">&amp;&amp;</span> <span class="n">i</span> <span class="p">==</span> <span class="n">destination</span><span class="p">.</span><span class="n">Y</span><span class="p">))</span>
+                    <span class="p">{</span>
+                        <span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&#34;◆ &#34;</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span>
+                    <span class="p">{</span>
+                        <span class="n">flag</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+                        <span class="k">foreach</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="k">in</span> <span class="n">route</span><span class="p">)</span>
+                        <span class="p">{</span>
+                            <span class="c1">// 显示最短路径上的节点
+</span><span class="c1"></span>                            <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="p">==</span> <span class="n">node</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">&amp;&amp;</span> <span class="n">i</span> <span class="p">==</span> <span class="n">node</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span>
+                            <span class="p">{</span>
+                                <span class="n">flag</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&#34;▲ &#34;</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                        <span class="c1">// 显示其他可到达的节点
+</span><span class="c1"></span>                        <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="p">==</span> <span class="k">false</span><span class="p">)</span>
+                        <span class="p">{</span>
+                            <span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&#34;□ &#34;</span><span class="p">);</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 获取最小代价F节点
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">Node</span> <span class="n">GetMinCostFNode</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// 如果open表为空，则最小代价F节点为空
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">openList</span><span class="p">.</span><span class="n">Count</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 如果open表中的所有节点都已经被访问过，则重新遍历open表寻找最小代价F节点。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">isAllVisited</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">minCostFNode</span> <span class="p">=</span> <span class="n">openList</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+                <span class="k">foreach</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="k">in</span> <span class="n">openList</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">CostF</span> <span class="p">&lt;</span> <span class="n">minCostFNode</span><span class="p">.</span><span class="n">CostF</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">minCostFNode</span> <span class="p">=</span> <span class="n">node</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 如果有新加入的节点和代价F更新的节点，就从这些节点中找最小代价节点，基准元素就是刚才的“哨兵”。
+</span><span class="c1"></span>            <span class="k">foreach</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="k">in</span> <span class="n">openList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">CostF</span> <span class="p">&lt;</span> <span class="n">minCostFNode</span><span class="p">.</span><span class="n">CostF</span> <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="n">node</span><span class="p">.</span><span class="n">IsVisted</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">minCostFNode</span> <span class="p">=</span> <span class="n">node</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">minCostFNode</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 判断open表中的所有节点是否已经被访问过
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">bool</span> <span class="n">isAllVisited</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="k">in</span> <span class="n">openList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="n">node</span><span class="p">.</span><span class="n">IsVisted</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 判断相邻节点是否已经在open表中
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">bool</span> <span class="n">isOpened</span><span class="p">(</span><span class="n">Location</span> <span class="n">location</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="k">in</span> <span class="n">openList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">==</span> <span class="n">location</span><span class="p">.</span><span class="n">X</span> <span class="p">&amp;&amp;</span> <span class="n">node</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">==</span> <span class="n">location</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 判断相邻节点是否已经在close表中
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">bool</span> <span class="n">isClosed</span><span class="p">(</span><span class="n">Location</span> <span class="n">location</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="n">Node</span> <span class="n">node</span> <span class="k">in</span> <span class="n">closeList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">==</span> <span class="n">location</span><span class="p">.</span><span class="n">X</span> <span class="p">&amp;&amp;</span> <span class="n">node</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">==</span> <span class="n">location</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 获取当前节点某个位置的相邻节点
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">Node</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">Node</span> <span class="n">currentNode</span><span class="p">,</span> <span class="n">Location</span> <span class="n">location</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 该相邻节点的代价G为当前节点的代价G加上到该相邻节点位置上这一步的代价
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">costG</span> <span class="p">=</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">CostG</span> <span class="p">+</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">StepCost</span><span class="p">(</span><span class="n">location</span><span class="p">);</span>
+            <span class="c1">// 采用曼哈顿距离估算该相邻节点到终点的代价H
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">costH</span> <span class="p">=</span> <span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="n">endNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="p">+</span> <span class="n">Math</span><span class="p">.</span><span class="n">Abs</span><span class="p">(</span><span class="n">location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="n">endNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span><span class="p">))</span> <span class="p">*</span> <span class="m">10</span><span class="p">;</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">costG</span><span class="p">,</span> <span class="n">costH</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 获取当前节点某个方向上的相邻节点
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">Node</span> <span class="n">GetAdjacentLocation</span><span class="p">(</span><span class="n">Node</span> <span class="n">currentNode</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">switch</span> <span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">North</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationNorth</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationNorth</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">NorthEast</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationNorthEast</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationNorthEast</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">East</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationEast</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationEast</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">SouthEast</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationSouthEast</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationSouthEast</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">South</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationSouth</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationSouth</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">SouthWest</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationSouthWest</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationSouthWest</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">West</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationWest</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationWest</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">case</span> <span class="n">Direction</span><span class="p">.</span><span class="n">NorthWest</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="n">Location</span> <span class="n">locationNorthWest</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">X</span> <span class="p">-</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentNode</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">GetNode</span><span class="p">(</span><span class="n">currentNode</span><span class="p">,</span> <span class="n">locationNorthWest</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="k">default</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="k">return</span> <span class="n">currentNode</span><span class="p">;</span>
+                    <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 设置障碍
+</span><span class="c1"></span>            <span class="n">List</span><span class="p">&lt;</span><span class="n">Location</span><span class="p">&gt;</span> <span class="n">obstacleList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Location</span><span class="p">&gt;()</span> <span class="p">{</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span> <span class="p">};</span>
+            <span class="c1">// 创建地图
+</span><span class="c1"></span>            <span class="n">Map</span> <span class="n">map</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Map</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="n">obstacleList</span><span class="p">);</span>
+            <span class="c1">// 指定地图，起点坐标，终点坐标，开始初始化A*算法对象。
+</span><span class="c1"></span>            <span class="n">AStar</span> <span class="n">aStar</span> <span class="p">=</span> <span class="k">new</span> <span class="n">AStar</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="k">new</span> <span class="n">Location</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="m">2</span><span class="p">));</span>
+            <span class="c1">// 指定开始节点，open表，close表，开始执行A*算法，并返回最短路径。
+</span><span class="c1"></span>            <span class="n">aStar</span><span class="p">.</span><span class="n">DoAStar</span><span class="p">(</span><span class="n">aStar</span><span class="p">.</span><span class="n">StartNode</span><span class="p">,</span> <span class="n">aStar</span><span class="p">.</span><span class="n">OpenList</span><span class="p">,</span> <span class="n">aStar</span><span class="p">.</span><span class="n">CloseList</span><span class="p">);</span>
+            <span class="c1">//List&lt;Node&gt; route = aStar.DoAStar(aStar.StartNode, aStar.OpenList, aStar.CloseList);
+</span><span class="c1"></span>            <span class="c1">//// 输出最短路径节点
+</span><span class="c1"></span>            <span class="c1">//foreach (Node node in route)
+</span><span class="c1"></span>            <span class="c1">//{
+</span><span class="c1"></span>            <span class="c1">//    Console.WriteLine(&#34;({0},{1}):{2} &#34;, node.Location.X, node.Location.Y, node.CostG);
+</span><span class="c1"></span>            <span class="c1">//}
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;显示最短路径: &#34;</span><span class="p">);</span>
+            <span class="n">aStar</span><span class="p">.</span><span class="n">ShowRoute</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 输出结果：
+</span><span class="c1">// 显示最短路径（三角形节点连起来就是最短路径）：
+</span><span class="c1">// □ □ □ □ □ □ □ □ 
+</span><span class="c1">// □ □ □ □ ■ □ □ □ 
+</span><span class="c1">// □ □ ◆ ▲ ■ □ ◆ □ 
+</span><span class="c1">// □ □ □ ▲ ■ □ ▲ □ 
+</span><span class="c1">// □ □ □ ▲ ▲ ▲ □ □ 
+</span><span class="c1">// □ □ □ □ □ □ □ □ 
+</span></code></pre></td></tr></table>
+</div>
+</div><p>参考资料：<a href="https://blog.csdn.net/hitwhylz/article/details/23089415">A星算法详解(个人认为最详细,最通俗易懂的一个版本)</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-11-01
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/a%E7%AE%97%E6%B3%95/">A*算法</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3xlua%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">深入理解xLua热更新原理</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E6%8E%92%E5%BA%8F/">
+            <span class="next-text nav-default">排序</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

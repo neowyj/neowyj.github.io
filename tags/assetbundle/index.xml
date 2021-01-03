@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AssetBundle on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/assetbundle/</link>
+    <description>Recent content in AssetBundle on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Sep 2020 20:16:56 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/assetbundle/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AssetBundle详解</title>
+      <link>https://neowyj.github.io/post/assetbundle%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Sun, 20 Sep 2020 20:16:56 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/assetbundle%E8%AF%A6%E8%A7%A3/</guid>
+      <description>&lt;h4 id=&#34;ab包简介&#34;&gt;AB包简介&lt;/h4&gt;
+&lt;p&gt;AssetBundle（简称AB包）是一个资源压缩包，包括模型、贴图、预制体、声音甚至整个游戏场景，它可以在游戏运行时加载。AssetBundle能够自动处理资源的依赖关系，比如一个AB包的材质能够引用另一个AB包中的贴图。通过将游戏资源打包成AB包并上传服务器，这样可以避免所有资源都打包进APK，从而减少APK的大小，直到在游戏的运行过程中再按需加载AB包资源。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

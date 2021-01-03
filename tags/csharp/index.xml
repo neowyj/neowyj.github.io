@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSharp on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/csharp/</link>
+    <description>Recent content in CSharp on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 23 Mar 2019 17:00:37 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/csharp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unity脚本CSharp入门</title>
+      <link>https://neowyj.github.io/post/unity%E8%84%9A%E6%9C%ACcsharp%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sat, 23 Mar 2019 17:00:37 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/unity%E8%84%9A%E6%9C%ACcsharp%E5%85%A5%E9%97%A8/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://www.mikedane.com/programming-languages/csharp/introduction.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;C#是一门由微软公司开发的面向对象语言。首先声明，C#并不是一门动态脚本语言。C#与JAVA和C++很相似，具备面向对象语言大多数特性，如类、对象、继承、重载和多态等。由于微软公司早期的封闭战略，C#语言只能在微软生态里运行。大部分开发者无法忍受微软公司的傲慢，纷纷放弃C#转而选择了JAVA语言，C#从此逐渐开始没落。直到新任CEO纳德拉上台后，微软开始大刀阔斧的改革，开始开源并支持跨平台。再加上.NET框架的性能优化和提升，C#语言正在焕发新的生机。尽管C#影响力大不如前，但在Unity应用领域，C#依然是绝大多数开发者的首选编程语言。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

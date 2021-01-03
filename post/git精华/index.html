@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Git精华 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="以前一般用CVS或者SVN等集中式版本控制系统，现在使用git分布式版本控制系统。集中式版本控制系统需要有一台中央服务器，工作时到中央服务器下载代码，工作完就推送到中央服务器。而且这需要联网，一旦没有网络则会导致无法工作。而git是分布式版本控制系统，每人的电脑上都有一个完整的代码库。联网只是为电脑之间交换修改提供了方便。因此，需要一台中央服务器，为大家提供交换方便。没有这台“中央服务器”，大家一样能进行工作。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/git%E7%B2%BE%E5%8D%8E/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Git精华" />
+<meta property="og:description" content="以前一般用CVS或者SVN等集中式版本控制系统，现在使用git分布式版本控制系统。集中式版本控制系统需要有一台中央服务器，工作时到中央服务器下载代码，工作完就推送到中央服务器。而且这需要联网，一旦没有网络则会导致无法工作。而git是分布式版本控制系统，每人的电脑上都有一个完整的代码库。联网只是为电脑之间交换修改提供了方便。因此，需要一台中央服务器，为大家提供交换方便。没有这台“中央服务器”，大家一样能进行工作。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/git%E7%B2%BE%E5%8D%8E/" />
+<meta property="article:published_time" content="2016-04-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-04-03T00:00:00+00:00" />
+<meta itemprop="name" content="Git精华">
+<meta itemprop="description" content="以前一般用CVS或者SVN等集中式版本控制系统，现在使用git分布式版本控制系统。集中式版本控制系统需要有一台中央服务器，工作时到中央服务器下载代码，工作完就推送到中央服务器。而且这需要联网，一旦没有网络则会导致无法工作。而git是分布式版本控制系统，每人的电脑上都有一个完整的代码库。联网只是为电脑之间交换修改提供了方便。因此，需要一台中央服务器，为大家提供交换方便。没有这台“中央服务器”，大家一样能进行工作。">
+<meta itemprop="datePublished" content="2016-04-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-04-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2980">
+
+
+
+<meta itemprop="keywords" content="Git," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Git精华"/>
+<meta name="twitter:description" content="以前一般用CVS或者SVN等集中式版本控制系统，现在使用git分布式版本控制系统。集中式版本控制系统需要有一台中央服务器，工作时到中央服务器下载代码，工作完就推送到中央服务器。而且这需要联网，一旦没有网络则会导致无法工作。而git是分布式版本控制系统，每人的电脑上都有一个完整的代码库。联网只是为电脑之间交换修改提供了方便。因此，需要一台中央服务器，为大家提供交换方便。没有这台“中央服务器”，大家一样能进行工作。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Git精华</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-04-03 </span>
+        <div class="post-category">
+            <a href="/categories/git/"> Git </a>
+            </div>
+          <span class="more-meta"> 2980 words </span>
+          <span class="more-meta"> 6 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>以前一般用CVS或者SVN等集中式版本控制系统，现在使用git分布式版本控制系统。集中式版本控制系统需要有一台中央服务器，工作时到中央服务器下载代码，工作完就推送到中央服务器。而且这需要联网，一旦没有网络则会导致无法工作。而git是分布式版本控制系统，每人的电脑上都有一个完整的代码库。联网只是为电脑之间交换修改提供了方便。因此，需要一台中央服务器，为大家提供交换方便。没有这台“中央服务器”，大家一样能进行工作。</p>
+<p>工作区，即文件目录里的目录文件。缓存区（暂存区），即git与其他版本控制系统的区别。git add将文件提交到缓存区，git commit将文件提交到工作区。一次提交是把缓存区里的所有文件放到工作区。此外，工作区里还有一个隐藏目录.git。用于存放版本库，以及一个master主干，和指向master的HEAD。相当于工作区新添加的文件，然后add到stage里，然后commit到master。HEAD指针指向master。</p>
+<p>只要没有把代码推送到远程代码库，所有的修改都可以通过git reset 或git checkout来回退到想要的版本。
+1）、如果只是在工作区进行了修改，没有提交到暂存区stage，可以使用git checkout &ndash; file。注意&ndash;千万不能省略，不然会变成切换到另一分支的命令。
+2）、如果不仅修改了，还提交到了缓存区，那么先用git reset HEAD file 回到1，再用git checkout &ndash; file。
+3）、如果你修改了，还commit了，那可以采用git reset &ndash;hard commit_id。</p>
+<p>删除文件也是一种修改。可以从文件管理器修改，也可以从git里删除。但是删除前请确保版本库里有文件，这样即使你误删了，依然可以退回到以前的版本。git checkout &ndash; file 本质上是将版本库里的文件与工作区里的文件进行交换。但是回复只能回复到最新版本，而之前的修改无法看到。</p>
+<p>git默认建立了一个master分支，HEAD指针不是指向提交，而是指向master，master指向提交。每次提交，master分支都会向前移动一步，这样不断提交，master主分支就会越来越长。</p>
+<p>git中相比其他集中式版本管理系统而言，创建分支删除分支很快。因为仅仅需要设置上删除指针即可。不涉及文件的修改，可以再把分支合并到主分支后，再删除分支，其实只是删除了指针。并没有涉及文件。合并只需要把原先指向dev分支的指针再转移到master指针即可。在自己分支上做的修改不会同步到master上，切换到master后，不会看到他的改变。</p>
+<p>通常我们先把任务代码clone到本地仓库，然后创建自己的分支，在自己分支上进行修改。改了之后，再merge合并，合并完再删除分支。在多人协同时，我们可以随时创建自己的分支进行修改，随时上传到origin代码库。这样避免耽误进度，避免自己做完才上传。正在使用分支时，不能删除分支。</p>
+<p>fast forword快速融合会丢失分支合并信息，而git merge &ndash;no-ff -m &ldquo;off fast forword&rdquo; dev 表示禁用快速融合，即普通融合方式。这种方式可以保留分支的历史信息。在实际开发中，master是相对稳定的，一般用来发布新版本的。各个协同人员需要创建自己的分支，在自己的分支上进行开发。然后随时进行创建和合并。以保持团队的进度。注意，一定要加上&ndash;no-ff，变成普通融合提交模式。融合最好切换到master主分支再融合，再删除。如果在dev分支融合，很有可能会提示没有merge。</p>
+<p>如果master和dev都提交commit那么会冲突，通常是master不变，dev变化，再merge融合，融合后再commit。这样可以避免冲突。如果发生冲突，应该先解决冲突conflict再融合，再commit。所谓创建分支，实际上是当前的代码的一个副本，代码完全一样。只是，在分支上的改变，不融合的话，无法再master上看到。通常是在dev分支上把任务做完了，add、commit后，再把最终版本merge到master上去。合并后再删除dev，最终团队所有成员都在各自的分支上完成任务后，再融合merge到master上进行调试发布。</p>
+<p>commit和merge时必须写-m说明，如果不写有可能有bug。此外，每一个新feature都最好创建一个分支，分支add、commit后再进行合并融合删除。如果当前分支没有进行融合，那么删除会提示风险，这是用git branch -D name 强行删除。</p>
+<p>将分支储存在stash里，用时通过git stash list 进行查看，然后进行恢复。1、先git stash apply，然后再删除stash里的内容。2、直接git stash pop恢复的同时删除了stash里的内容。</p>
+<p>分支推送，一般master分支需要与远程仓库时刻保持一致。dev分支是团队人员自己的开发分支，必须与远程相关。bug分支，一般不推送，除非领导要看你一周修复了多少个bug。feature分支，一般看是否有伙伴协同工作。如果有，那么需要推送。git remote可查看origin仓库信息，git remote -v可查看详细的origin仓库信息。</p>
+<p>解决冲突，可通过手工修改各自的分支的文件。多人合作模式，通常是自己想试图push自己的dev。如果失败，说明其他人的dev比我更新。那么，将最新的dev pull下来，如果pull失败，说明本地dev没有与origin dev关联。可以设置setup关联，然后pull下来进行修改。如果修改有conflict，那么手工解决conflict，再push。</p>
+<p>标签tag实际上是一个版本库的快照。默认的tag是打在最新提交的commit版本上，所以tag name 后面没有跟上commit_id.如果要指定给历史提交的某一个版本，只需要在name后加上相应commit-id。即可为之前遗忘的版本进行tag标记。</p>
+<p>我们把tag推送到origin上，可以单独push也可以一次性push多个.也可是删除tag，删除时先删除本地tag，再删除远程tag。同时再进行查看远程tag。</p>
+<p>github的使用，通常我们把一个开源项目fork到自己仓库后。我们就拥有对该仓库的读写权限，然后再clone到本地仓库。然后创建自己的开发分支，开发完后，merge到master。然后到该开源项目上进行pull request。对方如果接受，则你对该开源项目做了贡献。</p>
+<p>git配置，git可以设置gitignore忽略你不想提交的文件。此外，还可以通过&ndash;global设置全局参数。&ndash;global是对当前用户起作用，如果不用&ndash;global那么只是对当前仓库起作用。此外，每个仓库的git设置都保存在.git/config文件中。git是一个隐藏文件夹。工作区不可见。git可以通过配置简单的别名，进而少输入一些字母，提高工作效率。不过，建议新手不要设置简写，先熟悉基本操作，再简写形式输入。</p>
+<p>github是一个免费托管开源代码的远程仓库。如果你想设置私人仓库，你需要付费。通常我们可以自己搭建Git服务器作为私人仓库。除此之外，还可以使用bitbucket。bitbucket的优势在于可以设置无限制的私人仓库，同样支持git分布式版本控制系统。但团队人数上限为5人，但对于小团队已经足够了。</p>
+<p>以上为自己根据廖雪峰老师的Git教程学习总结所得，可能部分有重合。详细教程参考廖雪峰老师的Git教程。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2016-04-03
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/git/">Git</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%90%AD%E5%BB%BA%E8%BF%99%E4%B8%AA%E5%8D%9A%E5%AE%A2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">为什么搭建这个博客？</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E6%88%91%E5%9C%A8%E8%B4%A8%E7%96%91%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/">
+            <span class="next-text nav-default">我在质疑我的学习方法</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

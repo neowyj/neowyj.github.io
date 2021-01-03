@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>链表 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="简介 链表（LinkedList）是一种物理存储结构上非连续的线性表结构，数据元素的逻辑顺序通过链表中的指针链接次序来实现。实际上，链表就是线性表的链式存储结构。链表是由一系列结点组成，链表中每一个数据元素表示一个节点，节点可以在运行时动态生成。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E9%93%BE%E8%A1%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="链表" />
+<meta property="og:description" content="简介
+链表（LinkedList）是一种物理存储结构上非连续的线性表结构，数据元素的逻辑顺序通过链表中的指针链接次序来实现。实际上，链表就是线性表的链式存储结构。链表是由一系列结点组成，链表中每一个数据元素表示一个节点，节点可以在运行时动态生成。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E9%93%BE%E8%A1%A8/" />
+<meta property="article:published_time" content="2019-06-27T22:04:41+00:00" />
+<meta property="article:modified_time" content="2019-06-27T22:04:41+00:00" />
+<meta itemprop="name" content="链表">
+<meta itemprop="description" content="简介
+链表（LinkedList）是一种物理存储结构上非连续的线性表结构，数据元素的逻辑顺序通过链表中的指针链接次序来实现。实际上，链表就是线性表的链式存储结构。链表是由一系列结点组成，链表中每一个数据元素表示一个节点，节点可以在运行时动态生成。">
+<meta itemprop="datePublished" content="2019-06-27T22:04:41+00:00" />
+<meta itemprop="dateModified" content="2019-06-27T22:04:41+00:00" />
+<meta itemprop="wordCount" content="3398">
+
+
+
+<meta itemprop="keywords" content="链表," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="链表"/>
+<meta name="twitter:description" content="简介
+链表（LinkedList）是一种物理存储结构上非连续的线性表结构，数据元素的逻辑顺序通过链表中的指针链接次序来实现。实际上，链表就是线性表的链式存储结构。链表是由一系列结点组成，链表中每一个数据元素表示一个节点，节点可以在运行时动态生成。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">链表</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-06-27 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+            </div>
+          <span class="more-meta"> 3398 words </span>
+          <span class="more-meta"> 7 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="简介">简介</h4>
+<p>链表（LinkedList）是一种物理存储结构上非连续的线性表结构，数据元素的逻辑顺序通过链表中的指针链接次序来实现。实际上，链表就是线性表的<strong>链式存储结构</strong>。链表是由一系列结点组成，链表中每一个数据元素表示一个节点，节点可以在运行时动态生成。</p>
+<p>链表中每一个节点包括两部分：一个是存储数据元素的数据域data，另一个是存储下一个节点的指针域next。指针是一个变量，存放值的内存地址，而不是值本身。链表分为单向链表（单链表）、双向链表（双链表）和循环链表。最简单的是单链表，其结构示意图如下：</p>
+<p><img src="https://wx3.sinaimg.cn/large/006WUoxdgy1g7qtcy5ngwj30pi036dg0.jpg" alt=""></p>
+<p>上图为带头结点的单链表，头结点的指针域为head头指针。链表中的头结点通常不包含数据域，只有指针域。如果不带头结点，head头指针就直接指向第一个节点p1。不管有没有头结点，头指针head始终指向链表中的第一个节点。链表节点中的数据域data存有该节点的数据，指针域next存有下一个节点的内存地址，即上一个节点的指针域指向下一个节点。非循环链表尾结点的指针域next为NULL，表示已经到了链表的尾部。</p>
+<h4 id="优点">优点</h4>
+<p>由于链表的存储结构不要求必须是连续的，因此避免了内存碎片的产生，提高了内存空间的利用率。此外，链表支持动态增加加或删除节点，即动态增加或删除数据元素。因此，使用链表时不需要像数组一样在声明时指定数组的长度大小。</p>
+<p>链表增加或删除数据元素的操作本身时间复杂度为O(1)，直接更改指针域的链接次序即可。但增加或删除时需要先定位，定位时必须从头结点开始依次查找对应位置，定位操作时间复杂度为O(n)。所以链表增加或删除数据元素操作总的时间复杂度为O(n)。</p>
+<p>尽管而数组增加或删除数据元素的时间复杂度也为O(n)，但数组中增加或删除数据元素时需要移动该数据元素之后的其他所有元素，移动比定位查找更消耗性能，因此链表增加或删除数据元素的效率仍然比数组高。</p>
+<h4 id="缺点">缺点</h4>
+<p>由于链表中每一个节点都包含指针域，这会带来一定的内存开销。此外，由于链表的存储结构不要求必须是连续的，因此不支持像数组一样通过下标索引随机存取数据元素。每次访问元素时都需要从头结点开始从前往后依次查找对应的元素。链表查找数据元素的时间复杂度为O(n)，而数组对应的时间复杂度为O(1)。</p>
+<h4 id="应用场景">应用场景</h4>
+<p>链表一般用于元素数量不确定，需要频繁增加或删除元素时的情况。综合对比数组和链表的优缺点发现，链表擅长增加或删除元素，数组擅长访问元素。</p>
+<h4 id="基本操作">基本操作</h4>
+<p>1、在C#中定义一个链表节点类型，C#中没有指针概念，因此我们用引用变量来代替。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 定义一个链表节点类型
+</span><span class="c1"></span><span class="k">public</span> <span class="k">class</span> <span class="nc">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="n">T</span> <span class="n">data</span><span class="p">;</span> <span class="c1">// 数据域，存储当前节点的数据
+</span><span class="c1"></span>    <span class="k">private</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">next</span><span class="p">;</span> <span class="c1">// 引用域，存储下一个节点的内存地址
+</span><span class="c1"></span>    
+    <span class="k">public</span> <span class="n">T</span> <span class="n">Data</span>
+    <span class="p">{</span>
+        <span class="k">get</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">set</span>
+        <span class="p">{</span>
+            <span class="n">data</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">Next</span>
+    <span class="p">{</span>
+        <span class="k">get</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">set</span>
+        <span class="p">{</span>
+            <span class="n">next</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 链表节点构造函数
+</span><span class="c1"></span>    <span class="k">public</span> <span class="n">Node</span><span class="p">(</span><span class="n">T</span> <span class="n">data</span><span class="p">,</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">data</span> <span class="p">=</span> <span class="n">data</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">next</span> <span class="p">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 链表节点构造函数
+</span><span class="c1"></span>    <span class="k">public</span> <span class="n">Node</span><span class="p">(</span><span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">next</span> <span class="p">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 链表节点构造函数
+</span><span class="c1"></span>    <span class="k">public</span> <span class="n">Node</span><span class="p">(</span><span class="n">T</span> <span class="n">data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">data</span> <span class="p">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 链表尾节点的构造函数
+</span><span class="c1"></span>    <span class="k">public</span> <span class="n">Node</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">data</span> <span class="p">=</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+        <span class="n">next</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、定义一个单链表类型，以及获取长度和判空等基本函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">public</span> <span class="k">class</span> <span class="nc">SingleLinkedList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="c1">// 头引用（头指针）head
+</span><span class="c1"></span>    <span class="k">private</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">head</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">Head</span>
+    <span class="p">{</span>
+        <span class="k">get</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">set</span>
+        <span class="p">{</span>
+            <span class="n">head</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 构造函数初始化一个空表
+</span><span class="c1"></span>    <span class="k">public</span> <span class="n">SingleLinkedList</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">head</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">GetLength</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// 获取链表的头引用（头指针）
+</span><span class="c1"></span>        <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">p</span> <span class="p">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">len</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="c1">// 当引用不为空，则表示下一个节点存在。
+</span><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">len</span><span class="p">++;</span>
+            <span class="n">p</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">len</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">public</span> <span class="k">void</span> <span class="n">Clear</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// 头引用head为空，其余节点对象依然会存储在内存中，不会立刻销毁。
+</span><span class="c1"></span>        <span class="c1">// 但当其他节点对象不再使用时，CLR中的GC会回收并销毁这些节点对象。
+</span><span class="c1"></span>        <span class="n">head</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 单链表是否为空只需要判断其head头引用是否为null。
+</span><span class="c1"></span>    <span class="k">public</span> <span class="kt">bool</span> <span class="n">isEmpty</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">head</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、为上面的单链表类型定义<strong>增加元素</strong>方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 在单链表末尾添加元素
+</span><span class="c1"></span><span class="k">public</span> <span class="k">void</span> <span class="n">Append</span><span class="p">(</span><span class="n">T</span> <span class="n">item</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 待添加的元素节点
+</span><span class="c1"></span>    <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">q</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">item</span><span class="p">);</span>
+    <span class="c1">// 单链表的尾节点，引用域为null。
+</span><span class="c1"></span>    <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">p</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;();</span>
+  
+    <span class="k">if</span> <span class="p">(</span><span class="n">head</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 如果链表为空，直接添加新元素，将新元素节点赋值给head头引用即可。
+</span><span class="c1"></span>        <span class="n">head</span> <span class="p">=</span> <span class="n">q</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="c1">// 由于链表不支持顺序存储，因此添加定位时必须从头开始遍历。
+</span><span class="c1"></span>        <span class="n">p</span> <span class="p">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Next</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">p</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// 当p.Next为空时，表示该节点为链表的尾节点，直接赋值添加即可。
+</span><span class="c1"></span>        <span class="n">p</span><span class="p">.</span><span class="n">Next</span> <span class="p">=</span> <span class="n">q</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 在单链表某个元素位置之后添加元素
+</span><span class="c1"></span><span class="k">public</span> <span class="k">void</span> <span class="n">InsertPost</span><span class="p">(</span><span class="n">T</span> <span class="n">item</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 头引用（头指针）
+</span><span class="c1"></span>    <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">p</span> <span class="p">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="c1">// 待添加的节点
+</span><span class="c1"></span>    <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">q</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">item</span><span class="p">);</span>
+    <span class="c1">// 索引计数器 
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+    
+    <span class="c1">// 线性表的索引是从1开始而不是0，并且头结点一般不作为链表的第一个节点。
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">isEmpty</span><span class="p">()</span> <span class="p">||</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;List is empty or index is error&#34;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Next</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">p</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+        <span class="n">j</span><span class="p">++;</span>
+    <span class="p">}</span>
+  
+    <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="p">==</span> <span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 先把插入位置处已存在元素p的引用域，赋给待添加元素q的引用域
+</span><span class="c1"></span>        <span class="c1">// 即先让q的引用域指向p引用域所指向的节点
+</span><span class="c1"></span>        <span class="n">q</span><span class="p">.</span><span class="n">Next</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+        <span class="c1">// 再让p的引用域指向q节点
+</span><span class="c1"></span>        <span class="n">p</span><span class="p">.</span><span class="n">Next</span> <span class="p">=</span> <span class="n">q</span><span class="p">;</span>
+        <span class="c1">// 在链表中插入或删除元素时，必须先更改引用域（指针域），再断开链表，不然链表节点将会丢失。
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;Index is out of range.&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>4、为上面的单链表类型定义<strong>删除元素</strong>方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 删除单链表某个位置的元素
+</span><span class="c1"></span><span class="k">public</span> <span class="k">void</span> <span class="n">Delete</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">p</span> <span class="p">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+    
+    <span class="c1">// 如果链表为空，则不能删除元素。
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">head</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;List is empty.&#34;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+  
+    <span class="c1">// 获取到要删除元素的前一个元素p
+</span><span class="c1"></span>    <span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Next</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">i</span><span class="p">-</span><span class="m">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">p</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+        <span class="n">j</span><span class="p">++;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="p">==</span> <span class="n">i</span><span class="p">-</span><span class="m">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 通过p.Next.Next获取到待删除元素的下一个元素，然后将p的引用域直接指向这个元素即可。
+</span><span class="c1"></span>        <span class="n">p</span><span class="p">.</span><span class="n">Next</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;Index is out of range.&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、为上面的单链表类型定义<strong>获取元素</strong>方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 获取某个元素
+</span><span class="c1"></span><span class="k">public</span> <span class="n">T</span> <span class="n">GetElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Node</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">p</span> <span class="p">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">head</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;List is empty.&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Next</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">p</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+        <span class="n">j</span><span class="p">++;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="p">==</span> <span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 返回节点的值
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">p</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;Index is out of range.&#34;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">default</span><span class="p">(</span><span class="n">T</span><span class="p">);</span> <span class="c1">// 找不到时，就直接返回泛型的默认值。
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、使用该单链表类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">class</span> <span class="nc">Client</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 新建一个单链表
+</span><span class="c1"></span>        <span class="n">SingleLinkedList</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">sgl</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SingleLinkedList</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+        <span class="c1">// 添加元素
+</span><span class="c1"></span>        <span class="n">sgl</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+        <span class="n">sgl</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+        <span class="c1">// 在索引1处添加元素2
+</span><span class="c1"></span>        <span class="n">sgl</span><span class="p">.</span><span class="n">InsertPost</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
+        <span class="c1">// 删除索引2处的元素
+</span><span class="c1"></span>        <span class="n">sgl</span><span class="p">.</span><span class="n">Delete</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+        <span class="c1">// 获取单链表长度
+</span><span class="c1"></span>        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">sgl</span><span class="p">.</span><span class="n">GetLength</span><span class="p">());</span>
+        <span class="c1">// 判断链表是否为空
+</span><span class="c1"></span>        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">sgl</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">());</span>
+        <span class="c1">// 获取索引1处的元素
+</span><span class="c1"></span>        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">sgl</span><span class="p">.</span><span class="n">GetElement</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="拓展">拓展</h4>
+<h6 id="双向链表">双向链表</h6>
+<p><img src="https://wx2.sinaimg.cn/large/006WUoxdgy1g7r6kuf7bpj30q2046aae.jpg" alt=""></p>
+<p>在单链表中没有指向直接前驱的指针域，因此访问前驱节点时只能从前往后依次遍历，时间复杂度为O(n)。为了克服这个缺点，双链表应运而生。双向链表又称双链表，它的每个节点除了一个数据域data之外，还有两个指针域，分别指向该节点的直接前驱prior和直接后继next。</p>
+<p>正是因为这个两个指针域，双链表可以直接访问某个元素的前驱节点和后继节点，时间复杂度均为O(1)。但双链表查找定位元素依然要从头开始遍历，时间复杂度和单链表一样为O(n)。C#中内置了一个双向链表LinkedList类型，相关操作如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">LinkedListExample</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 声明并初始化双向链表
+</span><span class="c1"></span>            <span class="n">LinkedList</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">numbers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+            <span class="c1">// 声明并初始化节点
+</span><span class="c1"></span>            <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">node1</span> <span class="p">=</span> <span class="k">new</span> <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;(</span><span class="m">1</span><span class="p">);</span>
+            <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">node2</span> <span class="p">=</span> <span class="k">new</span> <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;(</span><span class="m">2</span><span class="p">);</span>
+            <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">node3</span> <span class="p">=</span> <span class="k">new</span> <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;(</span><span class="m">3</span><span class="p">);</span>
+            <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">node4</span> <span class="p">=</span> <span class="k">new</span> <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;(</span><span class="m">4</span><span class="p">);</span>
+
+            <span class="c1">// 添加节点，添加后的最终顺序为1、6、3、2、5、4
+</span><span class="c1"></span>            <span class="n">numbers</span><span class="p">.</span><span class="n">AddFirst</span><span class="p">(</span><span class="n">node1</span><span class="p">);</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">AddAfter</span><span class="p">(</span><span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">);</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">AddBefore</span><span class="p">(</span><span class="n">node2</span><span class="p">,</span> <span class="n">node3</span><span class="p">);</span>
+            <span class="c1">// 可以直接添加对应的值
+</span><span class="c1"></span>            <span class="n">numbers</span><span class="p">.</span><span class="n">AddAfter</span><span class="p">(</span><span class="n">node2</span><span class="p">,</span> <span class="m">5</span><span class="p">);</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">AddBefore</span><span class="p">(</span><span class="n">node3</span><span class="p">,</span> <span class="m">6</span><span class="p">);</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">AddLast</span><span class="p">(</span><span class="n">node4</span><span class="p">);</span>
+
+            <span class="c1">// 删除节点，直接删除对应的值，而不是该索引位置上的元素。
+</span><span class="c1"></span>            <span class="n">numbers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">RemoveLast</span><span class="p">();</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">RemoveFirst</span><span class="p">();</span>
+
+            <span class="c1">// 获取双向链表的长度
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+
+            <span class="c1">// 输出双向链表的值
+</span><span class="c1"></span>            <span class="c1">// 从双向链表的第一个节点（不是头结点）开始遍历
+</span><span class="c1"></span>            <span class="n">LinkedListNode</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">p</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">First</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Value</span><span class="p">);</span>
+                <span class="n">p</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Next</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span>
+
+            <span class="c1">// 查找元素，直接查找对应的值，而不是该索引位置上的元素。
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="n">Value</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h6 id="循环链表">循环链表</h6>
+<p><img src="https://wx3.sinaimg.cn/large/006WUoxdgy1g7r76rhld9j30ps04mdg5.jpg" alt=""></p>
+<p>循环链表和单链表的区别在于，循环链表中最后一个节点的指针域next不是NULL，而是指向头结点，从而使整个链表形成一个环。循环链表往往和双向链表一同使用组合成双向循环链表，但这同时也增加了链表的复杂度。对于由循环链表而言，判空条件不再是看头节点指针域是否为NULL，而是看它是否等于头指针。</p>
+<p>由于循环链表是一个环，因此不再必须从头结点开始遍历，从表中任意一个元素节点开始遍历都行。在循环链表中，设置尾指针比设置头指针操作效率更高。因为设置头指针时，如果要对尾节点进行操作，就必须从头开始遍历，时间复杂度为O(n)。而设置尾指针后可同时操作尾结点和头结点，时间复杂度均为O(1)，因为循环链表的尾指针直接指向头结点。由于循环链表与单链表大同小异，这里就不用代码实现了。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-06-27
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">装饰器模式</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E6%95%B0%E7%BB%84/">
+            <span class="next-text nav-default">数组</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>数组 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="简介 数组（Array）是由相同类型的元素的集合所组成的数据结构。数组采用一块连续的内存空间来存储数据，利用数组下标索引可以随机存取对应的元素。数组元素的类型除了int、float、double和char等基本类型，还可以是类、枚举和结构体等复杂类型。借助数组可以实现线性表的顺序存储结构（即顺序表）。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E6%95%B0%E7%BB%84/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="数组" />
+<meta property="og:description" content="简介
+数组（Array）是由相同类型的元素的集合所组成的数据结构。数组采用一块连续的内存空间来存储数据，利用数组下标索引可以随机存取对应的元素。数组元素的类型除了int、float、double和char等基本类型，还可以是类、枚举和结构体等复杂类型。借助数组可以实现线性表的顺序存储结构（即顺序表）。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E6%95%B0%E7%BB%84/" />
+<meta property="article:published_time" content="2019-06-20T22:04:41+00:00" />
+<meta property="article:modified_time" content="2019-06-20T22:04:41+00:00" />
+<meta itemprop="name" content="数组">
+<meta itemprop="description" content="简介
+数组（Array）是由相同类型的元素的集合所组成的数据结构。数组采用一块连续的内存空间来存储数据，利用数组下标索引可以随机存取对应的元素。数组元素的类型除了int、float、double和char等基本类型，还可以是类、枚举和结构体等复杂类型。借助数组可以实现线性表的顺序存储结构（即顺序表）。">
+<meta itemprop="datePublished" content="2019-06-20T22:04:41+00:00" />
+<meta itemprop="dateModified" content="2019-06-20T22:04:41+00:00" />
+<meta itemprop="wordCount" content="5490">
+
+
+
+<meta itemprop="keywords" content="数组," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数组"/>
+<meta name="twitter:description" content="简介
+数组（Array）是由相同类型的元素的集合所组成的数据结构。数组采用一块连续的内存空间来存储数据，利用数组下标索引可以随机存取对应的元素。数组元素的类型除了int、float、double和char等基本类型，还可以是类、枚举和结构体等复杂类型。借助数组可以实现线性表的顺序存储结构（即顺序表）。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">数组</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-06-20 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+            </div>
+          <span class="more-meta"> 5490 words </span>
+          <span class="more-meta"> 11 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="简介">简介</h4>
+<p>数组（Array）是由相同类型的元素的集合所组成的数据结构。数组采用一块连续的内存空间来存储数据，利用数组下标索引可以随机存取对应的元素。数组元素的类型除了int、float、double和char等基本类型，还可以是类、枚举和结构体等复杂类型。借助数组可以实现线性表的<strong>顺序存储结构</strong>（即顺序表）。</p>
+<p>在C#中，数组属于引用类型，数组变量本身是一个引用类型变量。**为了更好地学习后续的数据结构和算法，先介绍下C#中的变量类型。**C#变量类型分为值类型和引用类型，值类型包括基本类型（int、float、double、bool和char等类型）、结构体和枚举，引用类型包括数组、字符串、类、对象、接口和委托。</p>
+<p>值类型变量直接存储变量的值，并将其存储在堆栈（Stack）中。引用类型变量实际的值则存放在托管堆（Heap）中（通过new关键字创建的实例变量的值都是存放在堆中），引用类型变量本身存储的是变量值在堆中存储的内存地址。但如果值类型嵌套进引用类型，即值类型作为引用类型的成员变量，则此时的值类型将作为引用类型的一部分存放在托管堆中。而引用类型即使嵌套进值类型，依然也是存放在托管堆中。</p>
+<p>值类型由C#系统本身负责内存空间的分配和释放，当程序超过变量作用域范围后，就自动释放变量在栈中的内存空间。而引用类型由CLR中GC（Garbage Collector）负责内存空间的分配和释放，当对象不再使用或为null时，GC将会释放其在托管堆中的内存空间。栈的存储空间小，访问速度快；而堆的存储空间大，访问速度慢。</p>
+<p>在C#中，所有的变量类型（值类型和引用类型）都间接或直接继承自System.Object类型，System.Object类型本身是引用类型。值类型继承自System.ValueType，而System.ValueType又继承自System.Object类型。System.ValueType重写了System.Object类型的Equals方法，用来比较两个变量的值是否相等。而引用类型几乎直接继承自System.Object类型，其Equals方法用来比较两个对象的引用地址是否相等。</p>
+<p>值类型默认值为0，引用类型默认值为null。值类型转换为引用类型称为”装箱”，引用类型转换为值类型称为“拆箱”。由于值类型和引用类型之间的转换涉及到数据复制和类型转换，这些操作比较耗费性能，因此尽量避免频繁的&quot;装箱&quot;和&quot;拆箱&quot;操作。&ldquo;装箱&quot;和&quot;拆箱&quot;操作如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="c1">// 值类型
+</span><span class="c1"></span><span class="kt">object</span> <span class="n">o</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">object</span><span class="p">();</span> <span class="c1">// 引用类型
+</span><span class="c1"></span>
+<span class="c1">// 装箱
+</span><span class="c1"></span><span class="n">o</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// 隐式转换
+</span><span class="c1"></span>
+<span class="c1">// 拆箱
+</span><span class="c1"></span><span class="n">i</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">o</span><span class="p">;</span> <span class="c1">// 强制类型转换
+</span></code></pre></td></tr></table>
+</div>
+</div><p>经过上面的介绍，相信对C#中的值类型和引用类型有了一定的理解。在下边的数组拓展中，我会讲到动态数组和泛型列表的区别和联系。</p>
+<h4 id="优点">优点</h4>
+<p>数组可以根据下标索引随机存取（访问）对应的元素。</p>
+<h4 id="缺点">缺点</h4>
+<p>由于数组采用一块连续的内存空间，因此增加或删除数组中的元素会导致内存中其他元素位置跟着移动，这会产生额外的性能消耗。此外，数组声明时必须指定数组长度大小，如果实际用到的数组长度小于声明时指定的长度，会产生内存碎片，造成内存空间的浪费。</p>
+<p>如果大于声明时指定的数组长度，会造成内存空间不够用，只能新建一个更大的数组，因为数组不支持动态地增加或减少数组大小。正因为如此，数组中没有直接增加或删除数组元素的函数，需要我们自己去写。</p>
+<h4 id="应用场景">应用场景</h4>
+<p>当我们需要经常访问数组元素，而不需要频繁改动数组大小（即知道实际所用数组的大小）时，可以使用数组。</p>
+<h4 id="基本操作">基本操作</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ArrayExample</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="c1">// 增加数组元素
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">static</span> <span class="n">T</span><span class="p">[]</span> <span class="n">AddElement</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">T</span><span class="p">[]</span> <span class="n">oldArray</span><span class="p">,</span> <span class="k">params</span> <span class="n">T</span><span class="p">[]</span> <span class="n">elements</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">oldLen</span> <span class="p">=</span> <span class="n">oldArray</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">eleLen</span> <span class="p">=</span> <span class="n">elements</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">newLen</span> <span class="p">=</span> <span class="n">oldLen</span> <span class="p">+</span> <span class="n">eleLen</span><span class="p">;</span>
+            <span class="n">T</span><span class="p">[]</span> <span class="n">newArray</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">newLen</span><span class="p">];</span>
+
+            <span class="c1">//for (int i = 0; i &lt; oldLen; i++)
+</span><span class="c1"></span>            <span class="c1">//{
+</span><span class="c1"></span>            <span class="c1">//    newArray[i] = oldArray[i];
+</span><span class="c1"></span>            <span class="c1">//}
+</span><span class="c1"></span>            <span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">oldArray</span><span class="p">,</span> <span class="n">newArray</span><span class="p">,</span> <span class="n">oldLen</span><span class="p">);</span>
+
+            <span class="c1">//for (int i = 0; i &lt; eleLen; i++)
+</span><span class="c1"></span>            <span class="c1">//{
+</span><span class="c1"></span>            <span class="c1">//    newArray[oldLen+i] = elements[i];
+</span><span class="c1"></span>            <span class="c1">//}
+</span><span class="c1"></span>            <span class="n">elements</span><span class="p">.</span><span class="n">CopyTo</span><span class="p">(</span><span class="n">newArray</span><span class="p">,</span> <span class="n">oldLen</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="n">newArray</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 初始化数组方式一
+</span><span class="c1"></span>            <span class="c1">//int[] numbers = new int[5];
+</span><span class="c1"></span>          
+            <span class="c1">// 初始化数组方式二
+</span><span class="c1"></span>            <span class="c1">//int[] numbers2 = new int[5] { 1, 2, 3, 4, 5 };
+</span><span class="c1"></span>          
+            <span class="c1">// 初始化数组方式三
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[]</span> <span class="n">numbers</span> <span class="p">=</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span> <span class="p">};</span>
+
+            <span class="c1">// 访问数组元素并修改元素值
+</span><span class="c1"></span>            <span class="n">numbers</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+
+            <span class="c1">// 获取数组长度
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+
+            <span class="c1">// 增加数组元素
+</span><span class="c1"></span>            <span class="n">numbers</span> <span class="p">=</span> <span class="n">AddElement</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;(</span><span class="n">numbers</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">8</span><span class="p">);</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="k">in</span> <span class="n">numbers</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 输出结果：512345678
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="拓展">拓展</h4>
+<h6 id="多维数组">多维数组</h6>
+<p>多维数组是数组的数组，最常用的多维数组是二维数组。多维数组中的每一个元素都是数组，直到最内层数组为止，最内层数组就是一个普通的一维数组。以二维数组为例，可以把二维数组看做是一个矩阵，系统默认采用行优先存储。每一行就是一个一维数组，多个一维数组组成二维数组。</p>
+<p>但要注意C#中的二维数组和C/C++、JAVA不同，C#中二维数组只能访问矩阵中的单个值，无法访问每一行或者每一列对应的数组。C/C++和JAVA中的二维数组在C#里称为交错数组，即可以访问每一行的一维数组。下面是二维数组在C#中的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ArrayExample2</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main1</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// C#二维数组
+</span><span class="c1"></span>            <span class="c1">// 初始化方式一
+</span><span class="c1"></span>            <span class="c1">//int[,] numbers = new int[3, 4];
+</span><span class="c1"></span>
+            <span class="c1">// 初始化方式二
+</span><span class="c1"></span>            <span class="c1">//int[,] numbers = new int[3, 4]
+</span><span class="c1"></span>            <span class="c1">//{
+</span><span class="c1"></span>            <span class="c1">//    { 1, 2, 3, 4 },
+</span><span class="c1"></span>            <span class="c1">//    { 5, 6, 7, 8 },
+</span><span class="c1"></span>            <span class="c1">//    { 9, 10, 11, 12 }
+</span><span class="c1"></span>            <span class="c1">//};
+</span><span class="c1"></span>
+            <span class="c1">// 初始化方式三
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[,]</span> <span class="n">numbers</span> <span class="p">=</span>
+            <span class="p">{</span>
+                <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">8</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="m">9</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">12</span> <span class="p">}</span>
+            <span class="p">};</span>
+            <span class="kt">int</span> <span class="n">num</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">];</span>
+            <span class="c1">//int[] nums = numbers[1]; 报错
+</span><span class="c1"></span>
+            <span class="c1">// C#交错数组
+</span><span class="c1"></span>            <span class="c1">// 初始化方式一，初始化时不能指定列数
+</span><span class="c1"></span>            <span class="c1">//int[][] numbers2 = new int[3][];
+</span><span class="c1"></span>
+            <span class="c1">// 初始化方式二
+</span><span class="c1"></span>            <span class="c1">//int[][] numbers2 = new int[3][]
+</span><span class="c1"></span>            <span class="c1">//{
+</span><span class="c1"></span>            <span class="c1">//    new int[1],
+</span><span class="c1"></span>            <span class="c1">//    new int[2],
+</span><span class="c1"></span>            <span class="c1">//    new int[3]
+</span><span class="c1"></span>            <span class="c1">//};
+</span><span class="c1"></span>
+            <span class="c1">// 不支持直接初始化赋值
+</span><span class="c1"></span>            <span class="c1">//int[][] numbers2 = {
+</span><span class="c1"></span>            <span class="c1">//    { 1 },
+</span><span class="c1"></span>            <span class="c1">//    { 1, 2 },
+</span><span class="c1"></span>            <span class="c1">//    { 1, 2, 3 }
+</span><span class="c1"></span>            <span class="c1">//};
+</span><span class="c1"></span>
+            <span class="c1">// 初始化方式三
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[][]</span> <span class="n">numbers2</span> <span class="p">=</span> <span class="p">{</span>
+                <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">{</span> <span class="m">1</span> <span class="p">},</span>
+                <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span> <span class="p">},</span>
+                <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="m">3</span><span class="p">]</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span> <span class="p">}</span>
+            <span class="p">};</span>
+            <span class="c1">// 支持直接访问行数组
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[]</span> <span class="n">nums2</span> <span class="p">=</span> <span class="n">numbers2</span><span class="p">[</span><span class="m">1</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h6 id="动态数组">动态数组</h6>
+<p>由于数组（静态数组）不能动态修改大小，因此动态数组应运而生。C#中的动态数组由<strong>ArrayList</strong>类型表示，位于System.Collections命名空间下，因此使用时必须引入System.Collections命名空间。ArrayList可以动态地增加或删除数组元素，因此使用时不需要指定其数组长度大小。此外，由于ArrayList元素类型是System.Object类型，因此动态数组中的元素可以是任何类型的元素。因为，在C#中，所有变量或对象都是Object类型。</p>
+<p>任何事物都有两面性。由于动态数组所有元素类型均采用Object类型，没有明确指定元素具体的类型，这会带来类型安全问题。因为使用动态数组时，很可能造成类型不匹配的问题。此外，如果动态数组实际的元素类型是值类型，那么存储元素时动态数组内部产生“装箱”操作，索引取值时就会产生&quot;拆箱&quot;操作，这样频繁的&quot;装箱&quot;和&quot;拆箱&quot;操会带来额外的性能消耗。下面是动态数组的基本操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ArrayExample3</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 声明并初始化
+</span><span class="c1"></span>            <span class="n">ArrayList</span> <span class="n">al</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="p">();</span>
+
+            <span class="c1">// 添加元素
+</span><span class="c1"></span>            <span class="n">al</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+            <span class="n">al</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">);</span>
+
+            <span class="c1">// 删除元素
+</span><span class="c1"></span>            <span class="n">al</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+
+            <span class="c1">// 索引取值
+</span><span class="c1"></span>            <span class="n">al</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;test2&#34;</span><span class="p">;</span>
+
+            <span class="c1">// 查找元素
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">al</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="s">&#34;test2&#34;</span><span class="p">));</span> <span class="c1">// 输出True
+</span><span class="c1"></span>
+            <span class="c1">// 获取数组长度
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">al</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span> <span class="c1">// 输出1
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h6 id="泛型列表">泛型列表</h6>
+<p>为了解决动态数组中频繁的&quot;装箱&quot;和&quot;拆箱&quot;操作，C#提供了泛型列表List来代替动态数组。**为了更好地理解泛型列表List，我们先介绍下什么是泛型。**泛型是指通过数据类型的替代参数来预先编写类或方法，等到类或方法实际使用时才去指定实际的数据类型。</p>
+<p>换言之，泛型允许我们延迟绑定类或方法具体的数据类型，等到程序使用时才去指定具体的数据类型。这样可以最大程序的重用代码，保证数据的类型安全以及避免频繁的&quot;装箱&quot;和&quot;拆箱&quot;操作带来的性能开销问题。所以在实际开发中，不建议使用动态数组，而是用泛型列表代替。</p>
+<p>泛型List位于System.Collections.Generic命名空间内，因此在使用时必须引用对应的命名空间。泛型List即结合了数组中利用下标索引随机存取元素的优点，又支持像动态数组一样动态地增加和删除数据元素，同时还避免了动态数组因频繁的&quot;装箱&quot;和&quot;拆箱&quot;操作带来的性能开销问题。下面是泛型List的基本操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ArrayExample4</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 声明并初始化
+</span><span class="c1"></span>            <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">numbers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+
+            <span class="c1">// 添加元素
+</span><span class="c1"></span>            <span class="n">numbers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+
+            <span class="c1">// 删除元素
+</span><span class="c1"></span>            <span class="n">numbers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+
+            <span class="c1">// 索引取值
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="m">0</span><span class="p">]);</span> <span class="c1">// 输出1
+</span><span class="c1"></span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h6 id="哈希表">哈希表</h6>
+<p>哈希表（Hash Table，又称散列表），是根据关键码值（Key-Value键值对）直接访问元素的数据结构。即通过把一个关键码值映射到<strong>表中的一个位置</strong>来访问记录（元素），以加快查找速度。这个映射函数称为<strong>哈希函数或散列函数</strong>，存放记录的数组称为<strong>哈希表或散列表</strong>，表中的这个位置称为<strong>哈希地址</strong>。</p>
+<p>哈希表中一个元素关键字值为key，则通过哈希函数f(key)处理后可以得到这个元素在表中的地址，从而直接通过地址访问该元素，这样可以加快该元素的访问速度。理想情况下，哈希表访问某个元素的时间复杂度为O(1)。但如果通过不同的关键码值得到了相同的表中元素地址，就会造成地址冲突，这称为哈希冲突。因为我们希望元素和表中地址是一一对应的，这样就不会在查找时对同一表中地址的多个元素进行值比较的情况，从而降低查找效率。</p>
+<p>因此，哈希表在查找元素过程中，关键码的比较次数至关重要。产生的哈希冲突越少，关键码的比较次数就比较少，查找效率就高。反之，产生的哈希冲突越多，关键码就需要与同一地址的其他元素多次比较值，这样时间复杂度就会提高，查找效率变低。</p>
+<p>哈希表最常见的例子是用学号来检索学生的成绩。对于学生来说，学号是唯一的，所以不存在哈希冲突。但如果以学生出生年月日的后三位为键，就会产生哈希冲突。因为会存在同年同月同日生的学生，这时就比较学生的实际信息了。但我们可以通过哈希函数，在构造哈希表时，将学生的出生日期映射成不同的键，降低冲突的发生率，从而提高查找效率。</p>
+<p>因此要想构造一个成功的哈希表，就必须降低或减少哈希冲突的发生率，因为冲突无法避免。而降低哈希冲突发生率的关键在于哈希函数，如果哈希函数选取不好就会经常发生哈希冲突，这会非常影响哈希表的性能。常用的哈希函数有<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">直接寻址法</a>、<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">数字分析法</a>、<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">平方取中法</a>和<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">随机数法</a>等，处理冲突的方法有<a href="https://baike.baidu.com/item/%E5%BC%80%E6%94%BE%E5%AF%BB%E5%9D%80%E6%B3%95">开放寻址法</a>和<a href="https://baike.baidu.com/item/%E5%BC%80%E6%94%BE%E5%AF%BB%E5%9D%80%E6%B3%95">再散列法</a>等。</p>
+<p>哈希表实际上是一个一维数组，如果考虑到哈希冲突，也可视为二维数组。哈希表通过关键值映射为地址来存储元素，哈希地址很难像数组地址一样均匀地连续分布，必然会出现空缺的地址。如果哈希函数选取不当，哈希地址之间间隔增大，会让哈希表变成一个稀疏数组。因此，存储相同数量的元素，哈希表所需内存空间比数组更大。</p>
+<p>但与数组相比，哈希表的效率更高。哈希表增删改查的时间复杂度都是O(1)，而数组无法直接增加和删除元素，修改（修改之前要先查找）和查找元素的时间复杂度是O(n)。因为哈希表可以直接通过关键字的映射地址进行直接查找，而数组只能通过索引下标从前往后开始遍历查找，所以哈希表的效率更高。即<strong>哈希表是用空间换时间</strong>。</p>
+<p>在C#中，哈希表是通过System.Collections命名空间下的HashTable类型来实现。但由于HashTable的元素类型为Object类型，使用时会造成频繁的”装箱“和”拆箱“操作，造成额外性能开销。因此C#推出了字典Dictionary&lt;Tkey, TValue&gt;，C#字典位于System.Collections.Generic命名空间下。</p>
+<p>字典Dictionary&lt;Tkey, TValue&gt;是HashTable的泛型实现，效率更高。此外，字典是类型安全的，而HashTable会出现类型不匹配的情况。因此，在实际开发中，优先推荐使用字典Dictionary&lt;Tkey, TValue&gt;。C#字典中的键是唯一的，键和值都可以为任意类型，但键不能为空引用类型null。下面是C#字典的基本操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HashTable</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 新建一个学生生日信息字典，键为生日，值为姓名。
+</span><span class="c1"></span>            <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">students</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;();</span>
+
+            <span class="c1">// 添加学生生日信息
+</span><span class="c1"></span>            <span class="n">students</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#34;2月1日&#34;</span><span class="p">,</span> <span class="s">&#34;张三&#34;</span><span class="p">);</span>
+            <span class="n">students</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#34;2月2日&#34;</span><span class="p">,</span> <span class="s">&#34;李四&#34;</span><span class="p">);</span>
+            <span class="n">students</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#34;2月3日&#34;</span><span class="p">,</span> <span class="s">&#34;王五&#34;</span><span class="p">);</span>
+            <span class="n">students</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&#34;2月4日&#34;</span><span class="p">,</span> <span class="s">&#34;刘六&#34;</span><span class="p">);</span>
+
+            <span class="c1">// 删除生日为2月2日的学生信息
+</span><span class="c1"></span>            <span class="n">students</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&#34;2月2日&#34;</span><span class="p">);</span>
+
+            <span class="c1">// 直接访问并修改生日为“2月1日”的学生姓名
+</span><span class="c1"></span>            <span class="n">students</span><span class="p">[</span><span class="s">&#34;2月1日&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;王麻子&#34;</span><span class="p">;</span>
+            
+            <span class="c1">// 返回一个字符数组表示所有的生日，输出所有学生的生日
+</span><span class="c1"></span>            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">key</span> <span class="k">in</span> <span class="n">students</span><span class="p">.</span><span class="n">Keys</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">key</span><span class="p">);</span> <span class="c1">// 2月1日、2月3日、2月4日
+</span><span class="c1"></span>            <span class="p">}</span>
+
+            <span class="c1">// 返回一个字符数组表示所有的姓名，输出所有的学生姓名
+</span><span class="c1"></span>            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="k">value</span> <span class="k">in</span> <span class="n">students</span><span class="p">.</span><span class="n">Values</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>  <span class="c1">// 王麻子、王五、刘六
+</span><span class="c1"></span>            <span class="p">}</span>
+
+            <span class="c1">// 该字典是否包含生日为”2月2日”的学生信息
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">students</span><span class="p">.</span><span class="n">ContainsKey</span><span class="p">(</span><span class="s">&#34;2月2日&#34;</span><span class="p">));</span> <span class="c1">// False
+</span><span class="c1"></span>            <span class="c1">// 该字典是否包含姓名为”张三”的学生信息
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">students</span><span class="p">.</span><span class="n">ContainsValue</span><span class="p">(</span><span class="s">&#34;张三&#34;</span><span class="p">));</span> <span class="c1">// False
+</span><span class="c1"></span>
+            <span class="c1">// 清空字典的所有数据
+</span><span class="c1"></span>            <span class="n">students</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+
+            <span class="c1">// 获取字典的长度
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">students</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span> <span class="c1">// 0
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-06-20
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%95%B0%E7%BB%84/">数组</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E9%93%BE%E8%A1%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">链表</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E7%AE%97%E6%B3%95%E6%95%88%E7%8E%87/">
+            <span class="next-text nav-default">算法效率</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

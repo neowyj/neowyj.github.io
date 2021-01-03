@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>排序 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E6%8E%92%E5%BA%8F/</link>
+    <description>Recent content in 排序 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 13 Oct 2019 22:04:41 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E6%8E%92%E5%BA%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>排序</title>
+      <link>https://neowyj.github.io/post/%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Sun, 13 Oct 2019 22:04:41 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%8E%92%E5%BA%8F/</guid>
+      <description>&lt;h4 id=&#34;排序概述&#34;&gt;&lt;strong&gt;排序概述&lt;/strong&gt;&lt;/h4&gt;
+&lt;h6 id=&#34;基本概念&#34;&gt;&lt;strong&gt;基本概念&lt;/strong&gt;&lt;/h6&gt;
+&lt;p&gt;&lt;strong&gt;排序&lt;/strong&gt;：重新排列表中元素，使其按关键字递增或递减的过程，一般是递增的。排序算法是数据结构中最基础的算法之一。&lt;strong&gt;排序算法的稳定性：&lt;strong&gt;如果a=b且排序前a在b的前面，使用某一排序算法排序后a依然在b的前面，就称这个排序算法是&lt;/strong&gt;稳定&lt;/strong&gt;的。反之，则称该排序算法是&lt;strong&gt;不稳定&lt;/strong&gt;的。注意，算法是否具有稳定性并不能衡量一个算法的优劣，它只是对一个算法的性质进行描述。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

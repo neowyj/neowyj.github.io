@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>装饰器模式 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 装饰器模式 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 17 Jul 2019 15:33:13 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>装饰器模式</title>
+      <link>https://neowyj.github.io/post/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Wed, 17 Jul 2019 15:33:13 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <description>&lt;h4 id=&#34;模式简介&#34;&gt;模式简介&lt;/h4&gt;
+&lt;p&gt;装饰器模式（Decorator Pattern）：在不改变现有对象结构的情况下，动态地给对象增加一些额外的职责，即给现有对象增加一些新的功能。装饰器对客户是透明的，要让客户感受不到该对象被装饰过。因此，装饰器必须要实现被装饰对象的接口方法，从而保证对象的用法不变，不然对象的结构就被改变了。装饰器模式别名又称包装器（Wrapper），与适配器模式别名相同，它属于对象结构型模式。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

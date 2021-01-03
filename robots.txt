@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://neowyj.github.io/sitemap.xml

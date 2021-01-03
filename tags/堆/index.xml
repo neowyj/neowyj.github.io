@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>堆 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E5%A0%86/</link>
+    <description>Recent content in 堆 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 17 Sep 2019 17:00:16 +0800</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E5%A0%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dijkstra算法及堆优化</title>
+      <link>https://neowyj.github.io/post/dijkstra%E7%AE%97%E6%B3%95%E5%8F%8A%E5%A0%86%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Tue, 17 Sep 2019 17:00:16 +0800</pubDate>
+      
+      <guid>https://neowyj.github.io/post/dijkstra%E7%AE%97%E6%B3%95%E5%8F%8A%E5%A0%86%E4%BC%98%E5%8C%96/</guid>
+      <description>&lt;h4 id=&#34;简介&#34;&gt;简介&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Dijkstra&lt;/strong&gt;（迪杰斯特拉）算法主要用于求解&lt;strong&gt;非负权图&lt;/strong&gt;中单源最短路径问题，即求一个顶点到图中其他顶点之间的最短路径。对于负权图的单源路径问题，一般采用&lt;strong&gt;Bellman–Ford&lt;/strong&gt;（贝尔曼-福特）算法进行求解。对于非负权图，Dijkstra算法是目前已知的最快的单源路径算法，该算法常用于路由算法或者作为其他图算法的子模块。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

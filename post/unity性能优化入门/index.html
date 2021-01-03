@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Unity性能优化入门 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="优化前提 Unity开发的游戏之所以比利用原生API开发的游戏包大，是因为Unity游戏包里有一个Mono虚拟机，游戏通过Mono虚拟机实现跨平台运行。在虚拟机上运行，游戏运行变卡变慢。因此，我们必须学会Unity性能优化，这样才能保证游戏的开发效率和游戏性能。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%85%A5%E9%97%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Unity性能优化入门" />
+<meta property="og:description" content="优化前提
+Unity开发的游戏之所以比利用原生API开发的游戏包大，是因为Unity游戏包里有一个Mono虚拟机，游戏通过Mono虚拟机实现跨平台运行。在虚拟机上运行，游戏运行变卡变慢。因此，我们必须学会Unity性能优化，这样才能保证游戏的开发效率和游戏性能。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%85%A5%E9%97%A8/" />
+<meta property="article:published_time" content="2019-08-18T13:46:09+00:00" />
+<meta property="article:modified_time" content="2019-08-18T13:46:09+00:00" />
+<meta itemprop="name" content="Unity性能优化入门">
+<meta itemprop="description" content="优化前提
+Unity开发的游戏之所以比利用原生API开发的游戏包大，是因为Unity游戏包里有一个Mono虚拟机，游戏通过Mono虚拟机实现跨平台运行。在虚拟机上运行，游戏运行变卡变慢。因此，我们必须学会Unity性能优化，这样才能保证游戏的开发效率和游戏性能。">
+<meta itemprop="datePublished" content="2019-08-18T13:46:09+00:00" />
+<meta itemprop="dateModified" content="2019-08-18T13:46:09+00:00" />
+<meta itemprop="wordCount" content="3105">
+
+
+
+<meta itemprop="keywords" content="性能优化," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Unity性能优化入门"/>
+<meta name="twitter:description" content="优化前提
+Unity开发的游戏之所以比利用原生API开发的游戏包大，是因为Unity游戏包里有一个Mono虚拟机，游戏通过Mono虚拟机实现跨平台运行。在虚拟机上运行，游戏运行变卡变慢。因此，我们必须学会Unity性能优化，这样才能保证游戏的开发效率和游戏性能。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Unity性能优化入门</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-18 </span>
+        <div class="post-category">
+            <a href="/categories/unity/"> Unity </a>
+            </div>
+          <span class="more-meta"> 3105 words </span>
+          <span class="more-meta"> 7 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="优化前提">优化前提</h4>
+<p>Unity开发的游戏之所以比利用原生API开发的游戏包大，是因为Unity游戏包里有一个Mono虚拟机，游戏通过Mono虚拟机实现跨平台运行。在虚拟机上运行，游戏运行变卡变慢。因此，我们必须学会Unity性能优化，这样才能保证游戏的开发效率和游戏性能。</p>
+<p>Unity性能优化最关键的指标是DrawCall的次数，DrawCall次数越多，性能越差。因此，优化时要降低游戏运行时的DrawCall次数。DrawCall就是CPU对绘制图形接口的调用，CPU通过调用图形库（DirectX或OpenGL）接口，命令GPU进行渲染操作。每次调用DrawCall前，CPU都会准备很多工作：检测渲染状态，提交渲染所需要的数据，提交渲染状态。这些准备工作会耗费大量的性能。</p>
+<p>此外，渲染的游戏物体越多，DrawCall次数越多。Batches是Unity内置的性能优化方法，将具有相同材质的一类游戏物体合并成一批进行处理，减少DrawCall次数。因此，减少DrawCall次数方法之一就是合并DrawCall。Statistics面板中的verts和tris顶点数与三角面数作为渲染数据也和游戏模型的数量有关。SetPass Call是指Shader里的Pass方法调用次数，Pass调用次数就是模型渲染次数，次数越多性能越差。Batches、DrawCall和SetPass Call彼此之间有一定的关系，三者次数的减少都意味着性能消耗降低。</p>
+<h4 id="资源优化">资源优化</h4>
+<p>资源优化主要是根据<a href="https://gameinstitute.qq.com/community/detail/124744">资源优化标准</a>，对Mesh、模型、骨骼、音乐格式（长时间音乐比如背景音乐Compressed In Memory，采用mp3压缩格式，游戏运行时只需解压一次。而短时间音乐比如音效Decompress On Load，采用wav非压缩格式，由于压缩空间不大不需要压缩，此外，这样还可以减少音乐播放所需要的解压次数。）、贴图（宽度小于1024）以及Shader（尽量减少复杂运算，减少discard操作）等资源进行格式处理和内容调节。常用的方法包括：贴图合并，材质合并，模型优化，减少三角面和顶点数等。</p>
+<p>除了资源自身，减少资源冗余也是必须的，要保证每一个文件只存在于唯一的目录位置，避免重复打包。Resources文件夹下不要放任何不相关的资源，因为Resources下的文件不管有没有使用都会被打包。StreamingAssets和Resources类似，只不过不会压缩该文件夹下的资源，而Resources会压缩。</p>
+<p>Unity打包资源的流程是先确定需要打包场景，然后再将场景中的游戏物体以及与游戏物体相关的资源进行打包。除了Resources文件，其他没有使用到的文件一律不会打包。在开发期间使用Resources进行资源管理可以提高开发效率，但在实际商用时必须采用AssetBundle打包。使用AssetBundle时要注意包之间的依赖，可以共享资源单独打包，避免AssetBundle多次打包。</p>
+<h4 id="渲染gpu优化">渲染(GPU)优化</h4>
+<p>在计算机中，GPU主要用于图形渲染，CPU主要用于数值计算。具体在游戏运行过程中，GPU主要用于场景渲染、特效处理和光照处理等，还用于大量并行的简单任务。CPU主要用于游戏中的伤害计算、随机数生成以及敌人AI的生成。此外，资源的实时加载也需要CPU。</p>
+<p>在Unity编辑器中的Gizmos有一个Selection Wire（选择网格线）勾选框，勾选后就可以看到模型的网格线。网格线越多，模型越精细。使用LOD-层级细节技术可以根据视野远近来动态显示加载的模型，从而最大程度上减少GPU图形渲染的性能开销。LOD-层级细节技术就是指当视野比较远时，就用比较粗糙的模型；当视野比较近时，就用比较精细的模型。因为当视野比较远时，精细和粗糙模型差别不大，这时如果用精细模型就会造成性能浪费。Unity中的LODGroup组件分别对应三个不同游戏模型，还可以调节每个模型的可视距离。当摄像机距离太远时，模型就直接不显示。</p>
+<p>LOD-层级细节技术只可以替换游戏模型，而遮挡剔除（Oculusion Culling）可以只渲染摄像机视野的游戏物体，视野外的物体直接不渲染。一般适用于游戏中需要渲染大量游戏物体时的场景。我们首先要将遮挡的游戏物体设置为Oculusider Static资源，然后Bake，再设置需要渲染场景的摄像机。当摄像机移动时，视野也会跟着变化，这样系统只会渲染摄像机看得见的游戏物体，摄像机看不见的游戏物体就不渲染。如果有多个不同的摄像机，不同的摄像机看到的视野不同，遮挡的范围也不同。通过LOD-层级细节技术，我们可以选择性加载我需要渲染的场景，从而节约性能开销。</p>
+<p>图形渲染离不开光，当场景中有很多光源时，光照计算会消耗大量性能。光照贴图（LightMapping），实际上是预先将各种光源呈现的效果制作成贴图来替代运行时的光照计算，这种光又称为死光。游戏中的静态场景一般采用光照贴图的方式来有优化性能。烘焙的时间与游戏中的个数有关。烘焙流程如下：先在游戏物体的Mesh Renderer或Terrain组件里弃用lightmaps，然后将要用于烘焙的光源设置为Baked模式，然后就可以直接在LightMapping窗口下选择Generating Lighting，最后生成的光照贴图会存放在该Scene的同名目录下。烘焙结束后，移除光源，场景中的游戏物体仍呈现之前的光照效果。</p>
+<p>除了优化资源的渲染方式，资源本身的数量也会影响GPU的渲染。在游戏场景效果没有明显差异的情况下，贴图、材质和Mesh越少，性能消耗越少。Mesh Render负责模型的外观渲染，Mesh Filter负责模型的形状。在Unity中，一般将使用相同材质Material的游戏物体Mesh进行合并。</p>
+<h4 id="代码cpu优化">代码(CPU)优化</h4>
+<p>CPU在给GPU发送DrawCall命令之前会准备大量的准备工作，准备工作做完后，就将这些数据传递给GPU进行渲染。因此游戏物体越多，CPU的准备工作就越多，就会增大CPU的性能开销。因此，我们可以通过代码来动态合并具有相同材质Material的游戏物体，然后再删除之前的物体，从而达到合并Mesh减少Material的目的。此外，开发过程中尽量使用较少的材质，一般一个物体对应一个材质，一个材质对应一个Shader。对于Shader里面的Reflection和Shadow阴影等高级特性也要尽量少用。</p>
+<p>除了通过合并游戏物体来减少游戏物体的数量之外，资源池Object Pool也是减少游戏物体的最佳方法之一。常见使用场景为：射击游戏中的子弹和跑酷游戏中的金币或障碍物等。如果游戏场景中，有频繁创建和销毁的游戏对象，都可以用Object Pool对象池技术。对象池的回收和激活是通过设置游戏对象SetActive函数的参数值为true或false来实现。对象池初始化几个未激活（SetActive(false)）的游戏对象，然后使用时就激活（SetActive(true)），使用完后恢复到初始化状态（SetActive(false)）后就放回了对象池。通过回收游戏对象可以避免多次重复实例化相同的游戏对象，从而减少渲染游戏对象所消耗的性能。</p>
+<h4 id="总结">总结</h4>
+<p>上面提到的优化技术只是最基本的Unity性能优化方法，这里推荐UWA出品的<a href="https://blog.uwa4d.com/archives/allinone.html">Unity性能优化技术专题</a>，可以利用空闲时间研究下。Unity性能优化涉及到的技术非常多，初学者只需了解一些常用的优化方法，更重要的是在游戏开发实践中不断摸索和进步！应用层面的软件开发一定要多实践，用项目去驱动学习，先会用再深入原理，这才是编程的最佳学习方法！</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-08-18
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/dijkstra%E7%AE%97%E6%B3%95%E5%8F%8A%E5%A0%86%E4%BC%98%E5%8C%96/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Dijkstra算法及堆优化</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/">
+            <span class="next-text nav-default">栈和队列</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

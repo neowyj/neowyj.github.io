@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>栈和队列 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="栈 简介 栈（Stack），又称堆栈，是只允许在一端进行插入和删除的线性表，即栈是受限线性表。允许插入和删除的一端称为栈顶（Top），不允许插入和删除的一端称为栈底（Bottom），栈底是固定的。栈的操作特点是后进先出LIFO（Last In First Out），故又称后进先出的线性表。空栈是不含任何元素的栈。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="栈和队列" />
+<meta property="og:description" content="栈
+简介
+
+栈（Stack），又称堆栈，是只允许在一端进行插入和删除的线性表，即栈是受限线性表。允许插入和删除的一端称为栈顶（Top），不允许插入和删除的一端称为栈底（Bottom），栈底是固定的。栈的操作特点是后进先出LIFO（Last In First Out），故又称后进先出的线性表。空栈是不含任何元素的栈。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" />
+<meta property="article:published_time" content="2019-07-20T22:04:41+00:00" />
+<meta property="article:modified_time" content="2019-07-20T22:04:41+00:00" />
+<meta itemprop="name" content="栈和队列">
+<meta itemprop="description" content="栈
+简介
+
+栈（Stack），又称堆栈，是只允许在一端进行插入和删除的线性表，即栈是受限线性表。允许插入和删除的一端称为栈顶（Top），不允许插入和删除的一端称为栈底（Bottom），栈底是固定的。栈的操作特点是后进先出LIFO（Last In First Out），故又称后进先出的线性表。空栈是不含任何元素的栈。">
+<meta itemprop="datePublished" content="2019-07-20T22:04:41+00:00" />
+<meta itemprop="dateModified" content="2019-07-20T22:04:41+00:00" />
+<meta itemprop="wordCount" content="2758">
+
+
+
+<meta itemprop="keywords" content="栈和队列," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="栈和队列"/>
+<meta name="twitter:description" content="栈
+简介
+
+栈（Stack），又称堆栈，是只允许在一端进行插入和删除的线性表，即栈是受限线性表。允许插入和删除的一端称为栈顶（Top），不允许插入和删除的一端称为栈底（Bottom），栈底是固定的。栈的操作特点是后进先出LIFO（Last In First Out），故又称后进先出的线性表。空栈是不含任何元素的栈。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">栈和队列</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-20 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+            </div>
+          <span class="more-meta"> 2758 words </span>
+          <span class="more-meta"> 6 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#栈">栈</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+        <li><a href="#队列">队列</a>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="栈">栈</h2>
+<h4 id="简介">简介</h4>
+<p><img src="https://wx4.sinaimg.cn/large/006WUoxdgy1g7sxht6f0oj30ba08wju0.jpg" style="zoom:80%;" /></p>
+<p><strong>栈</strong>（Stack），又称堆栈，是只允许在一端进行插入和删除的线性表，即栈是受限线性表。允许插入和删除的一端称为<strong>栈顶</strong>（Top），不允许插入和删除的一端称为<strong>栈底</strong>（Bottom），栈底是固定的。栈的操作特点是后进先出<strong>LIFO</strong>（Last In First Out），故又称后进先出的线性表。<strong>空栈</strong>是不含任何元素的栈。</p>
+<p>往栈中添加元素称为进栈（Push），删除元素称为出栈（Pop）。栈根据存储结构分为顺序栈（顺序存储）和链栈（链式存储）。上图为顺序栈，进栈和出栈的时间复杂度都是O(1)。如上图，五个元素进栈的顺序为a1a2a3a4a5，但依次出栈的顺序相反为a5a4a3a2a1。因为栈的操作特性为LIFO，所以在a5没出栈之前，a4是不能越过a5提前出栈的，其他元素同理。</p>
+<h4 id="应用场景">应用场景</h4>
+<p>1、游戏UI界面可以采用栈来存取，弹出UI页面称为出栈，关闭UI界面称为进栈。</p>
+<p>2、C#中的值类型存储在栈中，访问速度快，由C#系统本身负责值类型内存空间的分配和释放。</p>
+<p>3、栈可以用于括号匹配，将括号依次压入栈中，直到最近入栈的括号配对后，再依次配对其他括号。</p>
+<p>4、程序语言编译器中的表达式求值问题是栈的典型应用。</p>
+<p>5、递归中也大量使用了栈。</p>
+<h4 id="存储结构">存储结构</h4>
+<p>由于栈是受限的线性表，因此栈可以采用顺序存储和链式存储两种方式。采用顺序存储结构的栈称为<strong>顺序栈</strong>，采用链式存储结构的栈称为<strong>链栈</strong>。不同的存储结构就会有不同的操作特点。</p>
+<h4 id="基本操作">基本操作</h4>
+<p>C#内置了栈类型Stack，位于System.Collections命名空间下，该栈元素为Object类型，以下是基本操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">StackExample</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 新建一个栈
+</span><span class="c1"></span>            <span class="n">Stack</span> <span class="n">s</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="p">();</span>
+            <span class="c1">// 1进栈
+</span><span class="c1"></span>            <span class="n">s</span><span class="p">.</span><span class="n">Push</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+            <span class="c1">// “ok”进栈
+</span><span class="c1"></span>            <span class="n">s</span><span class="p">.</span><span class="n">Push</span><span class="p">(</span><span class="s">&#34;ok&#34;</span><span class="p">);</span>
+            <span class="c1">// Pop()弹出并返回栈顶元素
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">Pop</span><span class="p">());</span>
+            <span class="c1">// 栈中的Peek()只返回，不弹出栈顶元素
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">Peek</span><span class="p">());</span>
+            <span class="c1">// 获取栈的大小
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+            <span class="c1">// 清空栈
+</span><span class="c1"></span>            <span class="n">s</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="栈的实现">栈的实现</h4>
+<p>栈可以借助数组或链表实现，数组实现的栈称为顺序栈，而链表实现的栈称为链栈。下面是顺序栈的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Stack</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Stack</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="c1">// 初始栈容量
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">size</span> <span class="p">=</span> <span class="m">10</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">T</span><span class="p">[]</span> <span class="n">contents</span><span class="p">;</span>
+        <span class="c1">// 栈顶指针
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">top</span><span class="p">;</span>
+
+        <span class="c1">// 栈的构造函数
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">Stack</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">contents</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
+            <span class="n">top</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 判空
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">bool</span> <span class="n">isEmpty</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">top</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 入栈时，栈顶指针top先加1，再添加元素
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">void</span> <span class="n">Push</span><span class="p">(</span><span class="n">T</span> <span class="n">o</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 栈满时不能入栈
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">top</span> <span class="p">==</span> <span class="n">size</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="p">(</span><span class="s">&#34;stack is full.&#34;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">contents</span><span class="p">[++</span><span class="n">top</span><span class="p">]</span> <span class="p">=</span> <span class="n">o</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 出栈时，先删除元素，栈顶指针top再减一
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">T</span> <span class="n">Pop</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// 栈空时不能出栈
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">top</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="p">(</span><span class="s">&#34;stack is empty.&#34;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">contents</span><span class="p">[</span><span class="n">top</span><span class="p">--];</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 获取栈元素个数
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">int</span> <span class="n">GetSize</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">top</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Stack</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">stack</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+            <span class="n">stack</span><span class="p">.</span><span class="n">Push</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="n">Pop</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 输出结果：1
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="队列">队列</h2>
+<h4 id="简介-1">简介</h4>
+<p><img src="https://wx2.sinaimg.cn/large/006WUoxdgy1g7sxq9f7gfj30hg04c75v.jpg" style="zoom:80%;" /></p>
+<p><strong>队列</strong>（Queue），简称队，只允许在一端插入元素，而在另一端删除元素，也是受限线性表。允许删除元素的一端称为<strong>队头</strong>（Front），又称队首。而允许插入元素的一端称为<strong>队尾</strong>（Rear）。队列的操作特点是先进先出<strong>FIFO</strong>（First In First Out），故又称先进先出的线性表。这和我们日常生活中排队的情况一样，先到先得，先排先走。<strong>空队列</strong>是不含任何元素的队列。</p>
+<p>在队列中，插入元素称为入队（Enqueue），删除元素称为出队（Dequeue）。入队和出队的时间复杂度都是O(1)。如上图，五个元素的入队顺序为a1a2a3a4a5，由于队列的操作特点是先进先出，所以出队的顺序也是a1a2a3a4a5。</p>
+<h4 id="应用场景-1">应用场景</h4>
+<p>1、层次遍历需要用到队列，比如二叉树的层序遍历，依次从上往下和从左到右将树中节点入队，出队顺序不变。</p>
+<p>2、在计算机主机和外设的数据传输中，主机数据的输出速度远高于外设处理数据的速度，直接把数据传输给外设是不行的，这样外设处理不够来导致数据堆积。因此要在主机和外设之间设置一个缓冲区，主机将输出的数据写入缓冲区，写满就停止输出，直到外设依次将缓冲区的数据处理完，主机再输出数据到缓冲区。由此可见，缓冲区存储的数据就是一个队列。</p>
+<p>3、CPU资源请求中也用到了队列，当有多个程序请求资源时，可以按顺序依次为每个程序分配资源，先到先得。</p>
+<h4 id="存储结构-1">存储结构</h4>
+<p>由于队列也是受限的线性表，因此队列也可以采用顺序存储和链式存储两种方式。采用顺序存储结构的队列称为<strong>顺序队列</strong>，采用链式存储结构的队列称为<strong>链队</strong>。不同的存储结构就会有不同的操作特点。</p>
+<h4 id="基本操作-1">基本操作</h4>
+<p>C#内置了队列类型Queue，位于System.Collections命名空间下，该队列元素为Object类型，以下是基本操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">QueueExample</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 新建一个队列
+</span><span class="c1"></span>            <span class="n">Queue</span> <span class="n">q</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="p">();</span>
+            <span class="c1">// 1进队
+</span><span class="c1"></span>            <span class="n">q</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+            <span class="c1">// &#34;ok&#34;进队
+</span><span class="c1"></span>            <span class="n">q</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="s">&#34;ok&#34;</span><span class="p">);</span>
+            <span class="c1">// Dequeue()移除并返回队首元素
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">Dequeue</span><span class="p">());</span>
+            <span class="c1">// 队列中Peek()只返回，不移除队首元素
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">Peek</span><span class="p">());</span>
+            <span class="c1">// 获取队列的大小
+</span><span class="c1"></span>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+            <span class="c1">// 清空队列
+</span><span class="c1"></span>            <span class="n">q</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="循环队列的实现">循环队列的实现</h4>
+<p>当顺序队列尾部没有多余的空间时，且队列还没有满时，如果还需要添加元素，则需要移动之前的元素为之后新添加的元素预留空间，而元素移动又需要额外的代价。因此，顺序队列不适合实际开发中使用。虽然链队可以动态申请内存单元，因而没有内存空间的限制，但是链队过长会导致过多的元素（请求）排队，从而使元素（请求）处理的时间过长。因此，在一些响应时间比较敏感的系统，比如基于链队实现的线程池是不合适的。因为，链队没有内存空间限制，过多的请求排队会造成程序响应时间过长，降低系统运行效率。因此，循环队列应运而生！</p>
+<p><img src="http://qiniu.arflow.cn/201910/%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97.png" style="zoom:50%;" /></p>
+<p>将顺序队列看成一个环，即一个环状顺序队列，就是循环队列。循环队列出队入队时，队头指针和队尾指针都按顺时针方向加1。循环队列最关键的是队空队满的条件是什么？通常，牺牲一个单元来区分队空和队满，即入队时少用一个队列单元，约定“当队尾指针rear的下一位置是队头指针front时就表示队满”。因此，循环队列的队满条件为：(Q.rear+1)%MaxSize == Q.front，而队空的条件为：Q.front == Q.rear，队列中的元素个数为：(Q.rear-Q.front+MaxSize)%MaxSize。下面是代码实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">CircleQueue</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">CircleQueue</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="c1">// 循环队列初始容量
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">size</span> <span class="p">=</span> <span class="m">10</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">T</span><span class="p">[]</span> <span class="n">contents</span><span class="p">;</span>
+        <span class="c1">// 队头指针
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">front</span><span class="p">;</span>
+        <span class="c1">// 队尾指针
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">rear</span><span class="p">;</span>
+
+        <span class="c1">// 构造函数
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">CircleQueue</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">contents</span> <span class="p">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
+            <span class="c1">// 初始化时队头队尾指针都指向0
+</span><span class="c1"></span>            <span class="n">front</span> <span class="p">=</span> <span class="n">rear</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 判空
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsEmpty</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">rear</span> <span class="p">==</span> <span class="n">front</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 入队，从队尾入，先赋值再让rear加1
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">void</span> <span class="n">EnQueue</span><span class="p">(</span><span class="n">T</span> <span class="n">o</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">rear</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">%</span> <span class="n">size</span> <span class="p">==</span> <span class="n">front</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="p">(</span><span class="s">&#34;CircleQueue is full.&#34;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">contents</span><span class="p">[</span><span class="n">rear</span><span class="p">]</span> <span class="p">=</span> <span class="n">o</span><span class="p">;</span>
+            <span class="n">rear</span> <span class="p">=</span> <span class="p">(</span><span class="n">rear</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">%</span> <span class="n">size</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 出队，从队头出，先取值再让front加1
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">T</span> <span class="n">DeQueue</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">rear</span> <span class="p">==</span> <span class="n">front</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="p">(</span><span class="s">&#34;CircleQueue is empty.&#34;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">T</span> <span class="n">temp</span> <span class="p">=</span> <span class="n">contents</span><span class="p">[</span><span class="n">front</span><span class="p">];</span>
+            <span class="n">front</span> <span class="p">=</span> <span class="p">(</span><span class="n">front</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">%</span> <span class="n">size</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">CircleQueue</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">cq</span> <span class="p">=</span> <span class="k">new</span> <span class="n">CircleQueue</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+            <span class="n">cq</span><span class="p">.</span><span class="n">EnQueue</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+            <span class="n">cq</span><span class="p">.</span><span class="n">EnQueue</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cq</span><span class="p">.</span><span class="n">DeQueue</span><span class="p">());</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">cq</span><span class="p">.</span><span class="n">DeQueue</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 输出结果：1，2
+</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-07-20
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/">栈和队列</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%85%A5%E9%97%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Unity性能优化入门</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/">
+            <span class="next-text nav-default">装饰器模式</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

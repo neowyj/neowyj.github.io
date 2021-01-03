@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Unity脚本CSharp入门 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="C#是一门由微软公司开发的面向对象语言。首先声明，C#并不是一门动态脚本语言。C#与JAVA和C&#43;&#43;很相似，具备面向对象语言大多数特性，如类、对象、继承、重载和多态等。由于微软公司早期的封闭战略，C#语言只能在微软生态里运行。大部分开发者无法忍受微软公司的傲慢，纷纷放弃C#转而选择了JAVA语言，C#从此逐渐开始没落。直到新任CEO纳德拉上台后，微软开始大刀阔斧的改革，开始开源并支持跨平台。再加上.NET框架的性能优化和提升，C#语言正在焕发新的生机。尽管C#影响力大不如前，但在Unity应用领域，C#依然是绝大多数开发者的首选编程语言。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/unity%E8%84%9A%E6%9C%ACcsharp%E5%85%A5%E9%97%A8/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Unity脚本CSharp入门" />
+<meta property="og:description" content="
+C#是一门由微软公司开发的面向对象语言。首先声明，C#并不是一门动态脚本语言。C#与JAVA和C&#43;&#43;很相似，具备面向对象语言大多数特性，如类、对象、继承、重载和多态等。由于微软公司早期的封闭战略，C#语言只能在微软生态里运行。大部分开发者无法忍受微软公司的傲慢，纷纷放弃C#转而选择了JAVA语言，C#从此逐渐开始没落。直到新任CEO纳德拉上台后，微软开始大刀阔斧的改革，开始开源并支持跨平台。再加上.NET框架的性能优化和提升，C#语言正在焕发新的生机。尽管C#影响力大不如前，但在Unity应用领域，C#依然是绝大多数开发者的首选编程语言。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/unity%E8%84%9A%E6%9C%ACcsharp%E5%85%A5%E9%97%A8/" />
+<meta property="article:published_time" content="2019-03-23T17:00:37+00:00" />
+<meta property="article:modified_time" content="2019-03-23T17:00:37+00:00" />
+<meta itemprop="name" content="Unity脚本CSharp入门">
+<meta itemprop="description" content="
+C#是一门由微软公司开发的面向对象语言。首先声明，C#并不是一门动态脚本语言。C#与JAVA和C&#43;&#43;很相似，具备面向对象语言大多数特性，如类、对象、继承、重载和多态等。由于微软公司早期的封闭战略，C#语言只能在微软生态里运行。大部分开发者无法忍受微软公司的傲慢，纷纷放弃C#转而选择了JAVA语言，C#从此逐渐开始没落。直到新任CEO纳德拉上台后，微软开始大刀阔斧的改革，开始开源并支持跨平台。再加上.NET框架的性能优化和提升，C#语言正在焕发新的生机。尽管C#影响力大不如前，但在Unity应用领域，C#依然是绝大多数开发者的首选编程语言。">
+<meta itemprop="datePublished" content="2019-03-23T17:00:37+00:00" />
+<meta itemprop="dateModified" content="2019-03-23T17:00:37+00:00" />
+<meta itemprop="wordCount" content="1867">
+
+
+
+<meta itemprop="keywords" content="CSharp," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Unity脚本CSharp入门"/>
+<meta name="twitter:description" content="
+C#是一门由微软公司开发的面向对象语言。首先声明，C#并不是一门动态脚本语言。C#与JAVA和C&#43;&#43;很相似，具备面向对象语言大多数特性，如类、对象、继承、重载和多态等。由于微软公司早期的封闭战略，C#语言只能在微软生态里运行。大部分开发者无法忍受微软公司的傲慢，纷纷放弃C#转而选择了JAVA语言，C#从此逐渐开始没落。直到新任CEO纳德拉上台后，微软开始大刀阔斧的改革，开始开源并支持跨平台。再加上.NET框架的性能优化和提升，C#语言正在焕发新的生机。尽管C#影响力大不如前，但在Unity应用领域，C#依然是绝大多数开发者的首选编程语言。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Unity脚本CSharp入门</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-03-23 </span>
+        <div class="post-category">
+            <a href="/categories/csharp/"> CSharp </a>
+            </div>
+          <span class="more-meta"> 1867 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://www.mikedane.com/programming-languages/csharp/introduction.png" alt=""></p>
+<p>C#是一门由微软公司开发的面向对象语言。首先声明，C#并不是一门动态脚本语言。C#与JAVA和C++很相似，具备面向对象语言大多数特性，如类、对象、继承、重载和多态等。由于微软公司早期的封闭战略，C#语言只能在微软生态里运行。大部分开发者无法忍受微软公司的傲慢，纷纷放弃C#转而选择了JAVA语言，C#从此逐渐开始没落。直到新任CEO纳德拉上台后，微软开始大刀阔斧的改革，开始开源并支持跨平台。再加上.NET框架的性能优化和提升，C#语言正在焕发新的生机。尽管C#影响力大不如前，但在Unity应用领域，C#依然是绝大多数开发者的首选编程语言。</p>
+<p>在Unity中，脚本即为游戏对象的行为组件。通过脚本，我们可以修改和创建游戏对象的属性，从而达到我们想要的游戏效果。Unity脚本语言支持三种，分别是C#、UnityScript和Boo，但绝大多数开发者采用C#语言。Unity与C#可以天然有机结合，因为Unity是基于由C#编写的Mono平台打造的游戏引擎。在Unity中，创建C#脚本有多种方法，最常用是直接在Project视图里单击右键进行Create。创建完成后，还需将C#脚本移动到Hierarchy视图中对应的游戏对象，这样才能生效。</p>
+<p><img src="http://wx3.sinaimg.cn/large/006WUoxdly1g2v6m884uvj31c00u07jj.jpg" alt=""></p>
+<p>本例来自于Unity官方教学视频，具体逻辑为，当小立方体添加了刚体RigidBody组件后，因受到重力作用开始自由下落，在这个过程中玩家按键盘上的R、G和B键时，小立方体的颜色就会变成对应红色、绿色和蓝色。</p>
+<p>如上图所示，我们为Cube立方体游戏对象添加了ChangeColor脚本。红色方框内是脚本创建和存放的位置，单击脚本文件后，Unity会自动打开IDE供你进行编写代码。你可以在Unity-Preferences-External Tool里配置你喜欢的IDE。作者推荐VSCode，微软良心跨平台IDE，对C#和Unity天生友好，还十分轻量。选中脚本后，在检测视图里可以看见我们编写好的代码。</p>
+<p>每个C#脚本的文件名和Class名必须一致。C#对大小写敏感，文件名、类名和函数名每个单词首字母必须大写，变量名采用帕斯卡命名法（首字母小写，从第二个单词开始首字母大写，其他字母小写）。Unity的C#脚本中所有的类默认继承自MonoBehavior，因此任何一个Unity中的C#脚本均可调用Unity生命周期事件。Unity生命周期中最常用的事件是Awake函数、Start函数、FixedUpdate函数、Update函数、LateUpdate函数和OnDestroy函数等。以上排列顺序即为这些生命周期事件的执行顺序。</p>
+<p>当一个Unity脚本执行时，最先调用的便是Awake函数。Awake函数在Unity生命周期中只在初始时调用一次。通常用于创建游戏对象、初始化游戏对象属性值或者禁用脚本等。Awake函数执行之后，接着便是Start函数。通过Unity创建的C#脚本文件，会自动加上Start函数和Update函数。Start函数同样只执行一次，不过Start函数是在游戏开始运行时执行。通常用于初始化游戏对象的属性值和对应组件。</p>
+<p>以上两个函数执行之后，Unity开始对游戏进行渲染。FixedUpdate函数在游戏运行后，每隔一个固定间隔时间就执行一次，具体间隔时间不定。它通常用于固定更新游戏对象或模型的移动。与FixedUpdate固定更新不同，Update函数更新间隔时间会根据当前系统的运行情况或者性能来决定。在游戏运行中，Update函数每一帧执行一次。但当系统繁忙或者性能欠佳时，游戏渲染的帧速可能会发生变化，Update函数更新的频率也会发生变化。LateUpdate函数在Update函数执行之后，表示最后的更新完成。每一个Unity脚本事件都有开始、更新和销毁的过程，OnDestroy函数在脚本销毁时调用。</p>
+<p>除了以上常见的生命周期事件，Unity还有很多的生命周期事件。请看下图：</p>
+<p><img src="http://wx1.sinaimg.cn/large/006WUoxdly1g2v8d6v3lwj30m80u4wii.jpg" alt=""></p>
+<p>The last but no least! 在Unity中光源非常重要且作为场景的初始对象，有光才有投影，才能使用游戏场景更逼真。光源可以在检测视图中手动开启或者关闭，如下图。</p>
+<p><img src="http://wx2.sinaimg.cn/large/006WUoxdly1g2v98gap1uj31c00u018r.jpg" alt=""></p>
+<p>除了手动关闭外，还可以通过脚本来控制，因为脚本即组件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CloseLight</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="n">Light</span> <span class="n">neoLight</span><span class="p">;</span> <span class="c1">//首先定义一个类变量存放Light组件
+</span><span class="c1"></span>
+    <span class="c1">// Start is called before the first frame update
+</span><span class="c1"></span>    <span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">neoLight</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Light</span><span class="p">&gt;();</span> <span class="c1">//GameObject获取组件的方法已被弃用
+</span><span class="c1"></span>    <span class="p">}</span>
+    
+    <span class="c1">// Update is called once per frame
+</span><span class="c1"></span>    <span class="k">void</span> <span class="n">Update</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetKeyUp</span><span class="p">(</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">Space</span><span class="p">))</span>  
+        <span class="p">{</span>
+            <span class="n">neoLight</span><span class="p">.</span><span class="n">enabled</span> <span class="p">=</span> <span class="p">!</span><span class="n">neoLight</span><span class="p">.</span><span class="n">enabled</span><span class="p">;</span>    <span class="c1">//用空格键实现灯光的开闭
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>更多C#脚本编程知识请看后续博客。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-03-23
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/csharp/">CSharp</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E6%8E%A2%E7%B4%A2niantic%E7%9C%9F%E5%AE%9E%E4%B8%96%E7%95%8C%E5%B9%B3%E5%8F%B0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">探索Niantic真实世界平台</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E7%BC%96%E7%A8%8B%E8%A6%81%E4%BB%8Eweb%E5%BC%80%E5%A7%8B/">
+            <span class="next-text nav-default">为什么学编程要从Web开始？</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

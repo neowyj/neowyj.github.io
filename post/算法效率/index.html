@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>算法效率 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="序言 掌握常用数据结构和算法是每一位程序员最基本的能力之一。在软件开发领域，**“数据结构&#43;算法=程序”**是大多数开发者的共识，这足以说明数据结构和算法的重要性。数据结构和算法不受编程语言限制，绝大多数编程语言都可以实现大部分的数据结构和算法。掌握常用数据结构和算法可以使我们能够高效地解决一些特定场景的复杂问题。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E7%AE%97%E6%B3%95%E6%95%88%E7%8E%87/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="算法效率" />
+<meta property="og:description" content="序言
+掌握常用数据结构和算法是每一位程序员最基本的能力之一。在软件开发领域，**“数据结构&#43;算法=程序”**是大多数开发者的共识，这足以说明数据结构和算法的重要性。数据结构和算法不受编程语言限制，绝大多数编程语言都可以实现大部分的数据结构和算法。掌握常用数据结构和算法可以使我们能够高效地解决一些特定场景的复杂问题。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E7%AE%97%E6%B3%95%E6%95%88%E7%8E%87/" />
+<meta property="article:published_time" content="2019-05-26T22:04:41+00:00" />
+<meta property="article:modified_time" content="2019-05-26T22:04:41+00:00" />
+<meta itemprop="name" content="算法效率">
+<meta itemprop="description" content="序言
+掌握常用数据结构和算法是每一位程序员最基本的能力之一。在软件开发领域，**“数据结构&#43;算法=程序”**是大多数开发者的共识，这足以说明数据结构和算法的重要性。数据结构和算法不受编程语言限制，绝大多数编程语言都可以实现大部分的数据结构和算法。掌握常用数据结构和算法可以使我们能够高效地解决一些特定场景的复杂问题。">
+<meta itemprop="datePublished" content="2019-05-26T22:04:41+00:00" />
+<meta itemprop="dateModified" content="2019-05-26T22:04:41+00:00" />
+<meta itemprop="wordCount" content="2329">
+
+
+
+<meta itemprop="keywords" content="算法效率," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="算法效率"/>
+<meta name="twitter:description" content="序言
+掌握常用数据结构和算法是每一位程序员最基本的能力之一。在软件开发领域，**“数据结构&#43;算法=程序”**是大多数开发者的共识，这足以说明数据结构和算法的重要性。数据结构和算法不受编程语言限制，绝大多数编程语言都可以实现大部分的数据结构和算法。掌握常用数据结构和算法可以使我们能够高效地解决一些特定场景的复杂问题。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">算法效率</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-05-26 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+            </div>
+          <span class="more-meta"> 2329 words </span>
+          <span class="more-meta"> 5 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="序言">序言</h4>
+<p>掌握常用数据结构和算法是每一位程序员最基本的能力之一。在软件开发领域，**“数据结构+算法=程序”**是大多数开发者的共识，这足以说明数据结构和算法的重要性。数据结构和算法不受编程语言限制，绝大多数编程语言都可以实现大部分的数据结构和算法。掌握常用数据结构和算法可以使我们能够高效地解决一些特定场景的复杂问题。</p>
+<p>笔者打算通过《常用数据结构与算法》这个系列梳理一下实际开发中的常用数据结构与算法，<strong>并用C#实现对应数据结构的相关算法</strong>。这个系列包括数组、链表、栈和队列、树和二叉树、图、堆和哈希表以及排序和查找等数据结构和算法。此外，这个博客系列的难度不会很高，所以各位读者一定要把每篇博客上的示例代码跑一遍并在理解的基础上进行吸收。</p>
+<h4 id="数据结构">数据结构</h4>
+<p><strong>数据结构</strong>（Data Structure）是计算机中存储、组织数据的方式。数据结构是相互之间存在一种或多种特定关系的数据元素的集合，即数据结构是一个带“结构”的数据元素的集合。这个结构就是数据元素之间的关系，分为逻辑结构和存储结构（也称物理结构）。数据的逻辑结构和存储结构是密可不分的两个方面，一个算法的设计取决于逻辑结构，而算法的实现依赖于所采用的的存储结构。</p>
+<p><strong>逻辑结构</strong>反映了数据元素之间的逻辑关系，与其在计算机中的存储位置无关，即与存储结构无关。逻辑结构分为线性结构和非线性结构。其中，线性表是典型的线性结构，而集合、树和图是典型的非线性结构。逻辑结构具体分为以下4种逻辑结构：</p>
+<p>1、集合：结构中的数据元素除“同属于一个集合”的相互关系外，别无其他关系。</p>
+<p>2、线性结构：结构中的数据元素存在一对一的相互关系，如数组、链表、栈和队列等。</p>
+<p>3、树形结构：结构中的数据元素存在一对多的相互关系，如二叉树等。</p>
+<p>4、图形结构：结构中的数据元素存在多对多的相互关系，如有向图和无向图。</p>
+<p><strong>存储结构</strong>是指数据结构在计算机中的表示（又称映像），也称物理结构。数据的存储结构是逻辑结构用编程语言的实现，它依赖于编程语言。数据的存储结构主要有：顺序存储、链式存储、索引存储和散列存储。下面分别介绍4种存储结构的特点：</p>
+<p>1、顺序存储：逻辑相邻的元素存储位置也相邻，如数组。优点是可以随机存取，如数组通过下标索引直接访问对应元素。缺点是只能使用相邻的一整块存储单元，容易出现空缺的存储单元，造成内存空间浪费。</p>
+<p>2、链式存储：不要求逻辑相邻的元素存储位置也相邻，通过存有元素地址的指针来链接数据元素，如链表。优点是可以充分利用每一块存储单元，缺点是不能像数组那样随机存取元素，每次存取时只能从头指针开始依次按顺序开始存取元素。</p>
+<p>3、索引存储：在存储元素信息时，建立一个附加的索引表。索引表中的每一项称为索引项，一般形式为（关键字，地址）。优点是检索速度来，缺点是索引表会占用额外的内存空间，并且增加和删除元素时都要修改索引表。</p>
+<p>4、散列存储：根据元素的关键字通过Hash函数直接计算出元素的存储地址，又称Hash存储，如哈希表。优点是检索、增加和删除元素都很快，但可能会出现哈希冲突，而解决冲突会增加时间和空间的开销。</p>
+<p>理解清楚数据的逻辑结构和存储结构，有助于后期数据结构和算法的学习。每一种数据结构都不是万能的，都有自己的适用场景。一个设计良好的数据结构，有利于提高算法的执行效率。</p>
+<h4 id="算法">算法</h4>
+<p><strong>算法</strong>（Algorithm）是对特定问题求解步骤的一种描述，是一系列解决问题的指令。算法具有5个重要特性：有穷性（算法的求解步骤和执行时间都是有穷的）、确定性（输入相同输出不变）、可行性、输入（可以没有）和输出（必须有）。<strong>算法的效率是通过算法的时间复杂度和空间复杂度来衡量的。</strong></p>
+<h6 id="时间复杂度">时间复杂度</h6>
+<p>时间复杂度用T(n)表示，它是问题规模n的函数，定性描述了算法的运行时间。T(n)是算法中<strong>所有语句</strong>的执行次数之和，分析时间复杂度主要是分析T(n)的数量级。由于算法中<strong>关键语句</strong>执行次数f(n)与T(n)同数量级，并且算法的运行时间是不能准确得出的，因此我们主要通过f(n)来分析算法的时间复杂度。</p>
+<p>因此，<strong>T(n) = O(f(n))</strong>，称为渐进时间复杂度，简称时间复杂度。其中，大O符号表示f(n)是T(n)是的同数量级函数，且只取函数f(n)的最高阶项且不包括其系数。常见的时间复杂度及大小关系如下图（对数的底可以忽略，即T(n)可以为logn）：</p>
+<p><img src="https://wx2.sinaimg.cn/large/006WUoxdgy1g7ma482pidj30wc020jub.jpg" alt=""></p>
+<p>下面举一些计算时间复杂度的例子：</p>
+<p>1、O(1)，没有for循环和while循环等复杂结构。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">i</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="n">j</span><span class="p">;</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、O(logn)，常见于while循环中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">n</span> <span class="p">=</span> <span class="m">1024</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="p">&lt;</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>   
+    <span class="c1">// i与n的关系实际上是以2为底的指数函数
+</span><span class="c1"></span>    <span class="n">i</span> <span class="p">=</span> <span class="n">i</span> <span class="p">*</span> <span class="m">2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、O(n)，常见于for循环中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">n</span> <span class="p">=</span> <span class="m">1024</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+<span class="p">{</span>
+    <span class="c1">// 该语句执行次数与n成正比
+</span><span class="c1"></span>    <span class="n">j</span> <span class="p">+=</span> <span class="n">i</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其他程序的时间复杂度计算与上面的例子相似，主要分析关键语句的执行次数与问题规模n的函数关系，还要注意输入数据的初始状态。</p>
+<h6 id="空间复杂度">空间复杂度</h6>
+<p>空间复杂度用S(n)表示，它是问题规模n的函数，定性描述了算法运行所需的存储空间。与时间复杂度T(n)类似，S(n)表示的也是渐进空间复杂度，简称空间复杂度，记为S(n) = O(g(n))。常见的空间复杂度有O(1)和O(n)等。其中，O(1)并不是表示不需要存储空间，而是算法所需存储空间为一个常量。即无论n的规模有多大，算法所需的存储空间是不变的。</p>
+<p>下面举一些计算空间复杂度的例子：</p>
+<p>1、O(1)，无论变量的值有多大，其所需的存储空间是不变的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+<span class="n">i</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="n">j</span><span class="p">;</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、O(n)，问题规模n越大，new的内存空间就越大，二者成正比。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="kt">int</span> <span class="n">n</span> <span class="p">=</span> <span class="m">1024</span><span class="p">;</span>
+<span class="kt">int</span><span class="p">[]</span> <span class="n">nums</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+<span class="p">{</span>
+    <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>参考：<a href="https://zhuanlan.zhihu.com/p/50479555">算法的时间与空间复杂度（一看就懂）</a>。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-05-26
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%AE%97%E6%B3%95%E6%95%88%E7%8E%87/">算法效率</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E6%95%B0%E7%BB%84/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">数组</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E5%8F%8A%E5%85%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">
+            <span class="next-text nav-default">面向对象编程及其设计原则</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>查找 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E6%9F%A5%E6%89%BE/</link>
+    <description>Recent content in 查找 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 26 Sep 2019 22:04:41 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E6%9F%A5%E6%89%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>查找</title>
+      <link>https://neowyj.github.io/post/%E6%9F%A5%E6%89%BE/</link>
+      <pubDate>Thu, 26 Sep 2019 22:04:41 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%9F%A5%E6%89%BE/</guid>
+      <description>&lt;h4 id=&#34;基本概念&#34;&gt;基本概念&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;查找&lt;/strong&gt;：在数据集合中寻找满足某种条件的数据元素的过程称为查找。&lt;strong&gt;查找表&lt;/strong&gt;：用于查找的数据结合称为查找表，它是由同一类型的数据元素（记录）组成，可以是一个数组或链表等数据类型。&lt;strong&gt;静态查找表&lt;/strong&gt;：只用于查找某个元素和检索满足某个条件的数据元素的各种属性的查找表称为静态查找表。&lt;strong&gt;动态查找表&lt;/strong&gt;：在静态查找表基础上，需要动态地插入和删除元素的查找表称为动态查找表。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

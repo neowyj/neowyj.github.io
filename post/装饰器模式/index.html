@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>装饰器模式 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="模式简介 装饰器模式（Decorator Pattern）：在不改变现有对象结构的情况下，动态地给对象增加一些额外的职责，即给现有对象增加一些新的功能。装饰器对客户是透明的，要让客户感受不到该对象被装饰过。因此，装饰器必须要实现被装饰对象的接口方法，从而保证对象的用法不变，不然对象的结构就被改变了。装饰器模式别名又称包装器（Wrapper），与适配器模式别名相同，它属于对象结构型模式。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="装饰器模式" />
+<meta property="og:description" content="模式简介
+装饰器模式（Decorator Pattern）：在不改变现有对象结构的情况下，动态地给对象增加一些额外的职责，即给现有对象增加一些新的功能。装饰器对客户是透明的，要让客户感受不到该对象被装饰过。因此，装饰器必须要实现被装饰对象的接口方法，从而保证对象的用法不变，不然对象的结构就被改变了。装饰器模式别名又称包装器（Wrapper），与适配器模式别名相同，它属于对象结构型模式。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" />
+<meta property="article:published_time" content="2019-07-17T15:33:13+00:00" />
+<meta property="article:modified_time" content="2019-07-17T15:33:13+00:00" />
+<meta itemprop="name" content="装饰器模式">
+<meta itemprop="description" content="模式简介
+装饰器模式（Decorator Pattern）：在不改变现有对象结构的情况下，动态地给对象增加一些额外的职责，即给现有对象增加一些新的功能。装饰器对客户是透明的，要让客户感受不到该对象被装饰过。因此，装饰器必须要实现被装饰对象的接口方法，从而保证对象的用法不变，不然对象的结构就被改变了。装饰器模式别名又称包装器（Wrapper），与适配器模式别名相同，它属于对象结构型模式。">
+<meta itemprop="datePublished" content="2019-07-17T15:33:13+00:00" />
+<meta itemprop="dateModified" content="2019-07-17T15:33:13+00:00" />
+<meta itemprop="wordCount" content="1712">
+
+
+
+<meta itemprop="keywords" content="装饰器模式," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="装饰器模式"/>
+<meta name="twitter:description" content="模式简介
+装饰器模式（Decorator Pattern）：在不改变现有对象结构的情况下，动态地给对象增加一些额外的职责，即给现有对象增加一些新的功能。装饰器对客户是透明的，要让客户感受不到该对象被装饰过。因此，装饰器必须要实现被装饰对象的接口方法，从而保证对象的用法不变，不然对象的结构就被改变了。装饰器模式别名又称包装器（Wrapper），与适配器模式别名相同，它属于对象结构型模式。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">装饰器模式</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-17 </span>
+        <div class="post-category">
+            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 设计模式 </a>
+            </div>
+          <span class="more-meta"> 1712 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="模式简介">模式简介</h4>
+<p>装饰器模式（Decorator Pattern）：在不改变现有对象结构的情况下，动态地给对象增加一些额外的职责，即给现有对象增加一些新的功能。装饰器对客户是透明的，要让客户感受不到该对象被装饰过。因此，装饰器必须要实现被装饰对象的接口方法，从而保证对象的用法不变，不然对象的结构就被改变了。装饰器模式别名又称包装器（Wrapper），与适配器模式别名相同，它属于对象结构型模式。</p>
+<h4 id="模式结构">模式结构</h4>
+<p>装饰器模式包含4个角色：</p>
+<p>1、抽象构件（Component）：定义一个抽象接口制定被装饰对象的规范。</p>
+<p>2、具体构件（Concrete Component）：实现抽象构件的抽象接口，是被装饰的直接对象。</p>
+<p>3、抽象装饰器（Decorator）：继承自抽象构件接口，并关联抽象构件对象，通过其子类装饰具体构件。</p>
+<p>4、具体装饰器（Concrete Decorator）：实现抽象装饰器方法，并对具体构件进行装饰，即为具体构件对象添加一些职责。</p>
+<h4 id="示例类图">示例类图</h4>
+<p>下面以武器中的枪为例，分别通过具体的装饰器把枪装饰为AK47和M4A1。首先分析示例中的模式角色，武器（Weapon）视为抽象构件接口，枪（Gun）视为具体构件类。而AK47和M4A1分别由AK47Decorator类和M4A1Decorator类装饰而来，最后再从两个装饰器中抽象出一个抽象装饰器Decorator类。模式角色分析完毕，该示例的UML类图如下：</p>
+<p><img src="https://wx4.sinaimg.cn/large/006WUoxdgy1g78e3qj3t3j312c0nywij.jpg" alt=""></p>
+<h4 id="示例代码">示例代码</h4>
+<p>1、定义抽象构件武器接口，制定被装饰对象的规范。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">public</span> <span class="k">interface</span> <span class="n">Weapon</span>
+<span class="p">{</span>
+    <span class="k">void</span> <span class="n">Fire</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2、定义具体构件枪类，实现武器接口，枪类对象为被装饰对象。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">public</span> <span class="k">class</span> <span class="nc">Gun</span><span class="p">:</span> <span class="n">Weapon</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="n">Fire</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;Shooting&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3、定义抽象装饰器类，继承自抽象构件武器接口，并给具体装饰器留下装饰接口。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">public</span> <span class="k">class</span> <span class="nc">Decorator</span><span class="p">:</span> <span class="n">Weapon</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="n">Weapon</span> <span class="n">Weapon</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="n">Decorator</span><span class="p">(</span><span class="n">Weapon</span> <span class="n">Weapon</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">Weapon</span> <span class="p">=</span> <span class="n">Weapon</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="n">Fire</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Weapon</span><span class="p">.</span><span class="n">Fire</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>4、定义具体装饰器AK47Decorator类，继承自抽象装饰器类，并重写抽象装饰器中的虚方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">public</span> <span class="k">class</span> <span class="nc">AK47Decorator</span><span class="p">:</span> <span class="n">Decorator</span>
+<span class="p">{</span>
+    <span class="c1">// 由于抽象装饰器类使用有参构造函数，因此子类构造函数必须加base关键字并传入参数。
+</span><span class="c1"></span>    <span class="k">public</span> <span class="n">AK47Decorator</span><span class="p">(</span><span class="n">Weapon</span> <span class="n">Weapon</span><span class="p">):</span> <span class="k">base</span><span class="p">(</span><span class="n">Weapon</span><span class="p">)</span>
+    <span class="p">{</span>
+    
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="n">Fire</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">base</span><span class="p">.</span><span class="n">Fire</span><span class="p">();</span>
+        <span class="n">AK47Func</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="n">AK47Func</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;AK47 Shooting&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>5、定义具体装饰器M4A1Decorator类，继承自抽象装饰器类，并重写抽象装饰器中的虚方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">public</span> <span class="k">class</span> <span class="nc">M4A1Decorator</span><span class="p">:</span> <span class="n">Decorator</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">M4A1Decorator</span><span class="p">(</span><span class="n">Weapon</span> <span class="n">Weapon</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">Weapon</span><span class="p">)</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="n">Fire</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">base</span><span class="p">.</span><span class="n">Fire</span><span class="p">();</span>
+        <span class="n">M4A1Func</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="n">M4A1Func</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;M4A1 Shooting&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6、定义一个客户端Client类使用该装饰器。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">public</span> <span class="k">class</span> <span class="nc">client</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Weapon</span> <span class="n">gun</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Gun</span><span class="p">();</span>
+        <span class="n">Weapon</span> <span class="n">ak47</span> <span class="p">=</span> <span class="k">new</span> <span class="n">AK47Decorator</span><span class="p">(</span><span class="n">gun</span><span class="p">);</span>
+        <span class="n">Weapon</span> <span class="n">m4a1</span> <span class="p">=</span> <span class="k">new</span> <span class="n">M4A1Decorator</span><span class="p">(</span><span class="n">gun</span><span class="p">);</span>
+        <span class="n">ak47</span><span class="p">.</span><span class="n">Fire</span><span class="p">();</span>
+        <span class="n">m4a1</span><span class="p">.</span><span class="n">Fire</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>7、输出结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// Shooting
+</span><span class="c1">// AK47 Shooting
+</span><span class="c1">// Shooting
+</span><span class="c1">// M4A1 Shooting
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="应用场景">应用场景</h4>
+<p>装饰器模式主要用于，当需要给一个现有类添加额外职责时，而又不能采用继承生成子类的方式的情况。例如，该类被密封（sealed）或是终极类（final），或者通过继承的方式会生成大量子类，使系统变得更复杂。</p>
+<p>此外，如果需要将现有的一些功能进行排列组合产生非常多的功能，使用继承会很麻烦。而使用装饰器通过关联的方式很容易实现。由于这种添加额外的功能方式是动态的，因此装饰器模式还可用于动态地为对象添加功能。游戏中经常有遇到各种对象，然后经过装饰器装饰后就增加了额外的属性和方法。</p>
+<h4 id="模式总结">模式总结</h4>
+<h6 id="模式优点">模式优点</h6>
+<p>装饰器模式通过关联的方式动态地为现有对象添加了额外职责（功能），比继承方式更加灵活，类之间的耦合度也降低了。这充分体现了组合/聚合复用原则中“尽量使用关联而不是继承”的理念。通过继承为对象添加功能的方式是静态的，不能控制为对象添加功能的方式和时机，类之间耦合也更深。此外，新建一个具体装饰器十分方便，多个装饰器可以装饰出不同的对象，符合开闭原则。</p>
+<h6 id="模式缺点">模式缺点</h6>
+<p>过多使用装饰器模式会在系统中创建出很多小对象，增大了系统的复杂度。此外，由于装饰器模式比继承方式更灵活也更容易出错，如果装饰层级过多，一旦发生错误，排查错误就是一件很麻烦的事。</p>
+<h6 id="模式比较">模式比较</h6>
+<p>装饰器模式和适配器模式很相似，甚至别名也相同。但二者的侧重点不同，适配器模式是将已有类的接口转换成另一个类能使用的接口，侧重于互不兼容的两个接口之间的转换逻辑。而装饰器模式是给已有对象动态地添加新功能，不会改变或已有对象的内部接口方法，侧重于添加新的功能。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-07-17
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/">装饰器模式</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">栈和队列</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E9%93%BE%E8%A1%A8/">
+            <span class="next-text nav-default">链表</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

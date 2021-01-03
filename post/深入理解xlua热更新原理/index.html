@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>深入理解xLua热更新原理 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="热更新简介 热更新是指在不需要重新编译打包游戏的情况下，在线更新游戏中的一些非核心代码和资源，比如活动运营和打补丁。热更新分为资源热更新和代码热更新两种，代码热更新实际上也是把代码当成资源的一种热更新，但通常所说的热更新一般是指代码热更新。资源热更新主要通过AssetBundle来实现，在Unity编辑器内为游戏中所用到的资源指定AB包的名称和后缀，然后进行打包并上传服务器，待游戏运行时动态加载服务器上的AB资源包。代码热更新主要包括Lua热更新、ILRuntime热更新和C#直接反射热更新等。由于ILRuntime热更新还不成熟可能存在一些坑，而C#直接反射热更新又不支持IOS平台，因此目前大多采用更成熟的、没有平台限制的Lua热更新方案。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3xlua%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="深入理解xLua热更新原理" />
+<meta property="og:description" content="热更新简介
+热更新是指在不需要重新编译打包游戏的情况下，在线更新游戏中的一些非核心代码和资源，比如活动运营和打补丁。热更新分为资源热更新和代码热更新两种，代码热更新实际上也是把代码当成资源的一种热更新，但通常所说的热更新一般是指代码热更新。资源热更新主要通过AssetBundle来实现，在Unity编辑器内为游戏中所用到的资源指定AB包的名称和后缀，然后进行打包并上传服务器，待游戏运行时动态加载服务器上的AB资源包。代码热更新主要包括Lua热更新、ILRuntime热更新和C#直接反射热更新等。由于ILRuntime热更新还不成熟可能存在一些坑，而C#直接反射热更新又不支持IOS平台，因此目前大多采用更成熟的、没有平台限制的Lua热更新方案。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3xlua%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/" />
+<meta property="article:published_time" content="2019-12-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-18T00:00:00+00:00" />
+<meta itemprop="name" content="深入理解xLua热更新原理">
+<meta itemprop="description" content="热更新简介
+热更新是指在不需要重新编译打包游戏的情况下，在线更新游戏中的一些非核心代码和资源，比如活动运营和打补丁。热更新分为资源热更新和代码热更新两种，代码热更新实际上也是把代码当成资源的一种热更新，但通常所说的热更新一般是指代码热更新。资源热更新主要通过AssetBundle来实现，在Unity编辑器内为游戏中所用到的资源指定AB包的名称和后缀，然后进行打包并上传服务器，待游戏运行时动态加载服务器上的AB资源包。代码热更新主要包括Lua热更新、ILRuntime热更新和C#直接反射热更新等。由于ILRuntime热更新还不成熟可能存在一些坑，而C#直接反射热更新又不支持IOS平台，因此目前大多采用更成熟的、没有平台限制的Lua热更新方案。">
+<meta itemprop="datePublished" content="2019-12-18T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-12-18T00:00:00+00:00" />
+<meta itemprop="wordCount" content="7197">
+
+
+
+<meta itemprop="keywords" content="xLua," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="深入理解xLua热更新原理"/>
+<meta name="twitter:description" content="热更新简介
+热更新是指在不需要重新编译打包游戏的情况下，在线更新游戏中的一些非核心代码和资源，比如活动运营和打补丁。热更新分为资源热更新和代码热更新两种，代码热更新实际上也是把代码当成资源的一种热更新，但通常所说的热更新一般是指代码热更新。资源热更新主要通过AssetBundle来实现，在Unity编辑器内为游戏中所用到的资源指定AB包的名称和后缀，然后进行打包并上传服务器，待游戏运行时动态加载服务器上的AB资源包。代码热更新主要包括Lua热更新、ILRuntime热更新和C#直接反射热更新等。由于ILRuntime热更新还不成熟可能存在一些坑，而C#直接反射热更新又不支持IOS平台，因此目前大多采用更成熟的、没有平台限制的Lua热更新方案。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">深入理解xLua热更新原理</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-18 </span>
+        <div class="post-category">
+            <a href="/categories/lua/"> Lua </a>
+            </div>
+          <span class="more-meta"> 7197 words </span>
+          <span class="more-meta"> 15 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#热更新简介">热更新简介</a></li>
+        <li><a href="#为什么需要热更新">为什么需要热更新</a></li>
+        <li><a href="#三种热更新方案">三种热更新方案</a>
+          <ul>
+            <li><a href="#lua热更新">Lua热更新</a></li>
+            <li><a href="#ilruntime热更新">ILRuntime热更新</a></li>
+            <li><a href="#c直接反射热更新">C#直接反射热更新</a></li>
+          </ul>
+        </li>
+        <li><a href="#xlua热更新步骤">xLua热更新步骤</a></li>
+        <li><a href="#xlua热更新原理">xLua热更新原理</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="热更新简介">热更新简介</h2>
+<p>热更新是指在不需要重新编译打包游戏的情况下，在线更新游戏中的一些非核心代码和资源，比如活动运营和打补丁。热更新分为资源热更新和代码热更新两种，代码热更新实际上也是把代码当成资源的一种热更新，但通常所说的热更新一般是指代码热更新。资源热更新主要通过AssetBundle来实现，在Unity编辑器内为游戏中所用到的资源指定AB包的名称和后缀，然后进行打包并上传服务器，待游戏运行时动态加载服务器上的AB资源包。代码热更新主要包括Lua热更新、ILRuntime热更新和C#直接反射热更新等。由于ILRuntime热更新还不成熟可能存在一些坑，而C#直接反射热更新又不支持IOS平台，因此目前大多采用更成熟的、没有平台限制的Lua热更新方案。</p>
+<h2 id="为什么需要热更新">为什么需要热更新</h2>
+<p>一般情况下，游戏开发并测试完后就要提交应用商店审核，其中苹果商店审核周期最长，审核通过后才能上线发布，这时玩家才能下载安装游戏。在如今快节奏的手游时代，游戏的生命周期大幅缩短而且更新还很频繁，如果每次游戏更新都要重新编译游戏打包，然后等待审核发布，最后用户再下载安装游戏，那玩家的耐性早没了。</p>
+<p>而且游戏安装包还不能太大，不然玩家还没等到游戏下载安装好就失去兴趣了。正确的方式是将游戏中一些非核心的资源打包并上传服务器，等游戏下载安装好实际运行时才在线动态加载资源，从而减少游戏安装包的大小。因此，我们急需一种不需要重新编译打包就能在线更新游戏中的一些非核心代码和资源，而这种方式就是热更新。</p>
+<p>热更新分为资源热更新和代码热更新，资源热更新主要是指将游戏中一些资源打包成AB包，并上传服务器，等游戏运行时才从服务器上加载资源。通过这种方式可以减少游戏安装包的大小，减少用户下载游戏的时间。其次，可以通过这种方式动态加载游戏中的资源，比如节假日有活动运营时，可以直接在线更新游戏中的场景，不需要重新发布游戏和重新下载安装游戏，进而提高玩家的游戏体验。</p>
+<p>代码热更新，实际上也是一种资源热更新，它可以在不需要重新编译打包的情况下在线更新游戏的非核心代码，比如游戏中的活动运营、补丁修复和添加小功能等。如果没有代码热更新技术，每次游戏一有改动就需要重新编译打包发布。试想如果新版本游戏变化不大，只能更新几个小功能，却需要重新下载安装游戏，玩家会种有浪费时间和被欺骗的感觉，这会极大地降低玩家的游戏体验。更何况App Store的严格审核机制，长期更新打包发布游戏会丢失大量用户。因此，热更新是手游开发的必备技术之一。</p>
+<p>由于Unity开发大多采用C#作为脚本语言，而C#是一门编译型语言，只有编译后才能运行，而移动平台不支持C#编译，即使把C#代码像资源一样下载到移动平台也无法运行。因此，不能直接用C#进行热更新，除非采用ILRuntime热更新和C#直接反射热更新，但这两种方式都有各自的局限性，最好的方式是用一种不需要编译就可以直接在移动平台上运行的脚本语言进行热更新，而小而精的Lua就是最好的选择。</p>
+<h2 id="三种热更新方案">三种热更新方案</h2>
+<h3 id="lua热更新">Lua热更新</h3>
+<p>Lua热更新解决方案是通过一个Lua热更新插件（如ulua、slua、tolua、xlua等）来提供一个Lua的运行环境以及和C#进行交互。Lua是一门非常小巧的语言，用C语言编写而成，几乎可以在任何操作系统和平台上运行，具体语法参考<a href="https://www.runoob.com/lua/lua-tutorial.html">Lua教程</a>。目前用的人最多，性能最好的当属xlua热更新插件对应的热更新解决方案。<a href="https://github.com/Tencent/xLua">xLua</a>是腾讯开源的热更新插件，有大厂背书和专职人员维护，插件的稳定性和可持续性较强。</p>
+<p>由于Lua不需要编译，因此Lua代码可以直接在Lua虚拟机里运行，Python和JavaScript等脚本语言也是同理。而xLua热更新插件就是为Unity、.Net、Mono等C#环境提供一个Lua虚拟机，使这些环境里也可以运行Lua代码，从而为它们增加Lua脚本编程的能力。借助xLua，这些Lua代码就可以方便的和C#相互调用。这样平时开发时使用C#，等需要热更新时再使用Lua，等下次版本更新时再把之前的Lua代码转换成C#代码，从而保证游戏正常运营。</p>
+<h3 id="ilruntime热更新">ILRuntime热更新</h3>
+<p>ILRuntime项目是掌趣科技开源的热更新项目，它为基于C#的平台（例如Unity）提供了一个纯C#、快速、方便和可靠的IL运行时，使得能够在不支持JIT的硬件环境（如iOS）能够实现代码热更新。ILRuntime项目的原理实际上就是先用VS把需要热更新的C#代码封装成DLL（动态链接库）文件，然后通过Mono.Cecil库读取DLL信息并得到对应的IL中间代码（IL是.NET平台上的C#、F#等高级语言编译后产生的中间代码，IL的具体形式为.NET平台编译后得到的.dll动态链接库文件或.exe可执行文件），最后再用内置的IL解译执行虚拟机来执行DLL文件中的IL代码。</p>
+<p>由于ILRuntime项目是使用C#来完成热更新，因此很多时候会用到反射来实现某些功能。而反射是.NET平台在运行时获取类型（包括类、接口、结构体、委托和枚举等类型）信息的重要机制，即从对象外部获取内部的信息，包括字段、属性、方法、构造函数和特性等。我们可以使用反射动态获取类型的信息，并利用这些信息动态创建对应类型的对象。只不过ILRuntime中的反射有两种：一种是在热更新DLL中直接使用C#反射获取到System.Type类对象；另一种是在Unity主工程中通过appdomain.LoadedTypes来获取继承自System.Type类的IType类对象，因为在Unity主工程中无法直接通过System.Type类来获取热更新DLL中的类。</p>
+<h3 id="c直接反射热更新">C#直接反射热更新</h3>
+<p>由于Android支持JIT（Just In Time）即时编译（动态编译）的模式，即可以边运行边编译，支持在运行时动态生成代码和类型。从Android N开始引入了一种同时使用JIT和AOT的混合编译模式。JIT的优点是支持在运行时动态生成代码和类型，APP安装快，不占用太多内存。缺点是编译时占用运行时资源，执行速度比AOT慢。比如，C#中的虚函数和反射都是在程序运行时才确定对应的重载方法和类。因此，Android平台可以不借助任何第三方热更新方案，直接使用C#反射执行DLL文件。实际开发时通过System.Reflection.Assembly类加载程序集DLL文件，然后再利用System.Type类获取程序集中某个类的信息，还可以通过Activator类来动态创建实例对象。</p>
+<p>而IOS平台采用AOT（Ahead Of Time）预先编译（静态编译）的模式，不支持JIT编译模式，即程序运行前就将代码编译成机器码存储在本地，然后运行时直接执行即可，因此AOT不能在运行时动态生成代码和类型。AOT的优点是执行速度快，安全性更高。缺点是由于AOT需要提前编译，所以APP的安装时间长且占内存。Mono在IOS平台上采用<a href="http://http//www.mono-project.com/AOT#Full_AOT">Full AOT</a>模式运行，如果直接使用C#反射执行DLL文件，就会触发Mono的JIT编译器，而Full AOT模式下又不允许JIT，于是Mono就会报错。因此，IOS平台上不允许直接使用C#反射执行DLL文件来实现热更新。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ExecutionEngineException: Attempting to JIT compile method &#39;...&#39; while running with --aot-only.
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="xlua热更新步骤">xLua热更新步骤</h2>
+<p>学编程，先跑起来，再去研究原理。下面是xLua热更新的步骤：</p>
+<p>1）、下载<a href="https://github.com/Tencent/xLua">xLua插件</a>，解压后将该目录中Assets文件夹下的所有资源复制到Unity工程的Assets文件夹下。</p>
+<p>2）、在Unity编辑器（File-&gt;Build Settings-&gt;Player Settings-&gt;Other Settings-&gt;Scripting Define Symbols）下中添加HOTFIX_ENABLE宏以支持xLua热更新，Unity编辑器和各个手机平台都要添加。建议平时用Lua写业务逻辑时可以关闭HOTFIX_ENABLE宏，当打包手机版本或者在编辑器下开发补丁时才添加HOTFIX_ENABLE宏。</p>
+<p>3）、对所有较大可能变动的类型加上[Hotfix]标签。如果可能变动的类比较多，手动添加比较麻烦，一般游戏初次上线时，由于不确定添加哪些类，因此我们可以用反射将当前程序集下的所有类自动加上[Hotfix]标签，还可以按某个namespace或目录等条件进行设置。代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[Hotfix]public static List&lt;Type&gt; by_property{    get    {        // 需要using System.Linq;        return (from type in Assembly.Load(&#34;Assembly-CSharp&#34;).GetTypes()                where type.Namespace == &#34;XXXX&#34;                select type).ToList();    }}
+</code></pre></td></tr></table>
+</div>
+</div><p>4）、新建一个MonoBehavior脚本并挂载到需要热更新的场景中，然后在Awake函数中新建一个Lua虚拟机用于加载和执行Lua热更新脚本文件。代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// 需要using XLua;void Awake(){    // 新建一个Lua虚拟机，为减少开销，建议全局唯一。    LuaEnv luaEnv = new LuaEnv();    // DoString表示执行Lua代码，由于Unity不能识别.lua文件，只能把Lua文件变成文本文件进行读取。    // require用于加载Lua文件，内置多个Loader加载器，我们也可以自己写Loader。    luaEnv.DoString(&#34;require &#39;hotfix&#39;&#34;);}// 在游戏对象被销毁时，释放Lua虚拟机内存。void OnDestroy(){    luaEnv.Dispose();}
+</code></pre></td></tr></table>
+</div>
+</div><p>5）、由于xLua内置了从Resources目录下加载Lua文本文件，因此我们新建一个hotfix.lua.txt文本文件，然后在里面用Lua实现热更新逻辑。代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// CS.XXX表示在C#代码中打[HotFix]标签的XXX类，&#34;Start&#34;表示XXX类中要进行更改的Start函数， // function(self)表示Start函数更改后的函数逻辑，待热更新完后XXX类的Start函数就会执行function(self)中的代码逻辑。xlua.hotfix(CS.XXX, &#34;Start&#34;, function(self)   print(&#34;hello world&#34;)end)
+</code></pre></td></tr></table>
+</div>
+</div><p>6）、点击Unity编辑器的XLua/Generate Code工具，该操作会收集所有打上[HotFix]标签的类并生成适配代码。</p>
+<p>7）、点击Unity编辑器的XLua/Hotfix inject in Editor工具，该操作会对所有打上[HotFix]标签的类进行IL注入。</p>
+<p>8）、运行游戏，若发现XXX类的Start函数输出了hello world，则表示热更新成功，即整个热更新流程就走完了。</p>
+<h2 id="xlua热更新原理">xLua热更新原理</h2>
+<p>从上面看出，xLua实际上是C#和Lua进行交互的桥梁，因此xLua不仅可以用于热更新，还可以借助它用Lua实现游戏中一些性能要求不高的业务逻辑。经过上面的步骤，我们对xLua热更新的流程应该有了一定的了解，现在我们就来深入分析下xLua热更新的原理。以该类为例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[Hotfix]public class Test : MonoBehaviour {    void Start ()    {        // 接下来对Start函数进行热更新，改为输出Hello World。        Debug.Log(&#34;test&#34;);    }    void Update ()    {          }}
+</code></pre></td></tr></table>
+</div>
+</div><p>Test类打上[HotFix]标签后，执行XLua/Generate Code后，xLua会根据内置的模板代码生成器在XLua目录下的Gen目录中生成一个DelegatesGensBridge.cs文件，该文件在XLua命名空间下生成一个DelegateBridge类，这个类中的__Gen_Delegate_Imp*函数会映射到xlua.hotfix中的function。代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">namespace XLua{    public partial class DelegateBridge : DelegateBridgeBase    {        // DelegateBridge类的关键函数__Gen_Delegate_Imp*        public void __Gen_Delegate_Imp0(object p0)        {            RealStatePtr L = luaEnv.rawL;            // luaReference就是指向xlua.hotfix(CS.XXX, &#34;Start&#34;, function(self))的function            int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);            ObjectTranslator translator = luaEnv.translator;            translator.PushAny(L, p0);            PCall(L, 1, 0, errFunc);            LuaAPI.lua_settop(L, errFunc - 1);        }    } }
+</code></pre></td></tr></table>
+</div>
+</div><p>生成适配器代码后，执行XLua/Hotfix inject in Editor后，xLua会使用Mono.Cecil库对当前工程下的Assembly-CSharp.dll程序集进行IL注入。IL是.NET平台上的C#、F#等高级语言编译后产生的中间代码，该中间代码IL再经.NET平台中的CLR（类似于JVM）编译成机器码让CPU执行相关指令。由于移动平台无法把C#代码编译成IL中间代码，所以绝大多数热更新方案都会涉及到IL注入，只有这样Unity内置的VM才能对热更新的代码进行处理。下面是Unity使用Mono VM的脚本编译执行过程：</p>
+<p><img src="http://qiniu.arflow.cn/201910/Mono%20VM.jpg" alt="img"></p>
+<p>Mono是社区对.NET Framework的跨平台实现方案，实现了.NET Framework的绝大部分类库，因此基于Mono研发的Unity引擎才具有跨平台能力。而Mono VM就是基于Mono框架实现的，不同的平台实现不同的Mono VM，从而可以不同平台上执行C#脚本。由于IL代码是C#代码编译而来的，因此我们可以借用ILSpy工具对C#编译出来的程序集DLL文件进行反编译得到C#源代码，看看IL注入后打上[HotFix]标签的类的变化。注入后的C#代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[Hotfix(HotfixFlag.Stateless)]public class Test : MonoBehaviour{    // 构造函数对应的DelegateBridge变量    private static DelegateBridge _c__Hotfix0_ctor;    private static DelegateBridge __Hotfix0_Start;    private static DelegateBridge __Hotfix0_Update;    private static DelegateBridge __Hotfix0_TestFunc;    public Test()      : this()    {        _c__Hotfix0_ctor?.__Gen_Delegate_Imp0(this);    }    private void Start()    {        DelegateBridge _Hotfix0_Start = __Hotfix0_Start;        // 如果lua脚本里定义了热更新函数，就执行对应的热更新函数逻辑。        if (_Hotfix0_Start != null)        {          _Hotfix0_Start.__Gen_Delegate_Imp0(this);        }        else        {          Debug.Log((object)&#34;test&#34;);        }    }    private void Update()    {        __Hotfix0_Update?.__Gen_Delegate_Imp0(this);    }    private void TestFunc()    {        __Hotfix0_TestFunc?.__Gen_Delegate_Imp0(this);    }}
+</code></pre></td></tr></table>
+</div>
+</div><p>从反编译的C#代码看出，xLua进行IL注入时会为打上[Hotfix]标签的类的所有函数创建一个DelegateBridge变量，同时添加对应的判断条件。如果Lua脚本中添加了对应的热更新函数，DelegateBridge变量就不为空，并将DelegateBridge变量中的__Gen_Delegate_Imp0方法指向xlua.hotfix(CS.XXX, “Start”, function(self))中的具体function。这时由于DelegateBridge变量不为空，所以C#中的函数就会执行Lua脚本中对应的热更新函数逻辑。但如果没有定义对应的热更新函数，或对应的热更新函数为nil，DelegateBridge变量就为空，则C#中的函数依然执行原有的函数逻辑。因此，xLua热更新实际上就是在运行时用Lua函数替换对应的C#函数。</p>
+<p>与xLua热更新相关的标签还包括：[LuaCallCSharp]、[ReflectionUse]和[CSharpCallLua]，这三个标签都需要生成适配代码，但不需要IL注入。[LuaCallCSharp]标签表示如果一个C#类型添加了该标签，xLua会生成这个类型的适配代码（包括构造该类型实例，访问其成员属性、方法，静态属性、方法），否则将会尝试用性能较低的反射方式来访问。比如，Lua脚本中想调用某个C#函数，就可以在该C#函数上添加[LuaCallCSharp]标签，这时Lua就会去寻找该函数的适配代码，然后进行调用。如果没有添加该标签，xLua就会尝试用反射的方式进行调用，但性能低于适配代码，而且在IL2CPP下还有可能因为代码剪裁而导致无法访问。IL2CPP是Unity推出的用来替代Mono VM的编译器，IL2CPP的脚本编译过程如下：</p>
+<p><img src="http://qiniu.arflow.cn/201910/IL2CPP.png" alt="img"></p>
+<p>从上图看到，IL2CPP实际上是将C#编译得到的IL代码转换成C++代码，然后再由各个平台的原生C++编译器将C++代码编译成原生汇编代码（ASM汇编指令）。虽然代码转换成了C++代码，但我们知道C#中的内存是由GC自动管理，而C++需要手动管理内存，因此还需要一个IL2CPP VM用于GC管理等操作。IL2CPP的优点性能得到提升，运行速度更快，其次是编译成C++后反编译更难，进而安全性更高。缺点就是IL2CPP打包速度慢，而且转换后的C++代码量猛增，进而可能超过iOS平台可执行文件大小的限制。从2019年8月开始，Google Play上架的APP必须支持64位，因此只能发布时只能采用IL2CPP了，但平时开发调试时还是可以采用Mono，因为Mono出包快。</p>
+<p>要想解决这个问题就要对UnityEngine下的代码进行Strip裁剪，但这容易导致反射时找不到对应的类型。因为Unity在程序运行前会对代码中没用引用到的地方进行裁剪，而反射必须在程序运行时才能确定要引用的类，如果进行裁剪可能会导致程序运行时通过反射找不到对应的类或函数，从而报错。唯一的解决方法就是在Assets目录下新建一个名为link.xml的XML文件，告诉Unity哪些类型不能被裁剪。[ReflectionUse]标签就是表示如果一个类打上该标签，xLua就把该类型添加进link.xml以阻止il2cpp的代码剪裁。因此，要想在各个平台上都能通过Lua访问到C#的类型，就必须在C#类型上添加[LuaCallCSharp]或[ReflectionUse]标签。</p>
+<p>[CSharpCallLua]标签，表示如果C#想要访问Lua中函数或Table，就要在C#中对应的Delegate或Interface添加该标签。尽管还有其他映射方式，但最好通过Delegate来映射Lua中的函数，通过Interface来映射Lua中的Table。</p>
+<p>在实际开发时，这些标签可以通过自定义配置来自动添加，配置文件放在XLua目录下的Editor文件夹中，下面是具体的配置建议：</p>
+<p>1）、游戏刚上线不确定哪些类需要添加[Hotfix]标签时，可以使用反射把当前程序集下的所有类型都加上[Hotfix]标签，还可以设置条件进行过滤。</p>
+<p>2）、用反射找出所有函数参数、字段、属性、事件涉及的delegate类型，标上[CSharpCallLua]用于C#映射Lua中的函数。</p>
+<p>3）、业务代码、引擎API、系统API等需要在Lua里高性能访问的类型，标上[LuaCallCSharp]，这样就Lua就会从生成的适配代码里找从而性能更高，不然Lua会尝试用反射的获取对应的类型，这会产生大量的性能消耗。</p>
+<p>4）、引擎API、系统API在IL2CPP下可能被代码剪裁（C#无引用的地方都会被剪裁），这样Lua采用反射的方式获取对应的类型时就会出错。因此，如果觉得可能会新增C#代码之外的API调用，那么这些API所在的类型就必须添加[LuaCallCSharp]或[ReflectionUse]标签。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-12-18
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/xlua/">xLua</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90csharp%E5%8F%8D%E5%B0%84/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">深入分析CSharp反射</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/a%E6%98%9F%E7%AE%97%E6%B3%95/">
+            <span class="next-text nav-default">A*算法</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>AssetBundle详解 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="AB包简介 AssetBundle（简称AB包）是一个资源压缩包，包括模型、贴图、预制体、声音甚至整个游戏场景，它可以在游戏运行时加载。AssetBundle能够自动处理资源的依赖关系，比如一个AB包的材质能够引用另一个AB包中的贴图。通过将游戏资源打包成AB包并上传服务器，这样可以避免所有资源都打包进APK，从而减少APK的大小，直到在游戏的运行过程中再按需加载AB包资源。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/assetbundle%E8%AF%A6%E8%A7%A3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="AssetBundle详解" />
+<meta property="og:description" content="AB包简介
+AssetBundle（简称AB包）是一个资源压缩包，包括模型、贴图、预制体、声音甚至整个游戏场景，它可以在游戏运行时加载。AssetBundle能够自动处理资源的依赖关系，比如一个AB包的材质能够引用另一个AB包中的贴图。通过将游戏资源打包成AB包并上传服务器，这样可以避免所有资源都打包进APK，从而减少APK的大小，直到在游戏的运行过程中再按需加载AB包资源。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/assetbundle%E8%AF%A6%E8%A7%A3/" />
+<meta property="article:published_time" content="2020-09-20T20:16:56+00:00" />
+<meta property="article:modified_time" content="2020-09-20T20:16:56+00:00" />
+<meta itemprop="name" content="AssetBundle详解">
+<meta itemprop="description" content="AB包简介
+AssetBundle（简称AB包）是一个资源压缩包，包括模型、贴图、预制体、声音甚至整个游戏场景，它可以在游戏运行时加载。AssetBundle能够自动处理资源的依赖关系，比如一个AB包的材质能够引用另一个AB包中的贴图。通过将游戏资源打包成AB包并上传服务器，这样可以避免所有资源都打包进APK，从而减少APK的大小，直到在游戏的运行过程中再按需加载AB包资源。">
+<meta itemprop="datePublished" content="2020-09-20T20:16:56+00:00" />
+<meta itemprop="dateModified" content="2020-09-20T20:16:56+00:00" />
+<meta itemprop="wordCount" content="8491">
+
+
+
+<meta itemprop="keywords" content="AssetBundle," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AssetBundle详解"/>
+<meta name="twitter:description" content="AB包简介
+AssetBundle（简称AB包）是一个资源压缩包，包括模型、贴图、预制体、声音甚至整个游戏场景，它可以在游戏运行时加载。AssetBundle能够自动处理资源的依赖关系，比如一个AB包的材质能够引用另一个AB包中的贴图。通过将游戏资源打包成AB包并上传服务器，这样可以避免所有资源都打包进APK，从而减少APK的大小，直到在游戏的运行过程中再按需加载AB包资源。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">AssetBundle详解</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-20 </span>
+        <div class="post-category">
+            <a href="/categories/unity/"> Unity </a>
+            </div>
+          <span class="more-meta"> 8491 words </span>
+          <span class="more-meta"> 17 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="ab包简介">AB包简介</h4>
+<p>AssetBundle（简称AB包）是一个资源压缩包，包括模型、贴图、预制体、声音甚至整个游戏场景，它可以在游戏运行时加载。AssetBundle能够自动处理资源的依赖关系，比如一个AB包的材质能够引用另一个AB包中的贴图。通过将游戏资源打包成AB包并上传服务器，这样可以避免所有资源都打包进APK，从而减少APK的大小，直到在游戏的运行过程中再按需加载AB包资源。</p>
+<p>为了更有效的资源传输，Unity提供了LZMA和LZ4两种压缩算法，压缩后资源包的体积更小。Unity经历了从直接引用Assets目录资源，到Resources文件夹资源管理，再到AssetBundle资源管理的过程，AssetBundle资源管理是目前最佳的Unity资源管理方案。但我们在游戏开发期间仍然可以直接使用Resources文件夹进行资源管理，这样比较方便和节省时间。</p>
+<p>AssetBundle是一个存在硬盘上的”文件夹“（AB包），里面包含了很多文件，分为Serialized file（序列化文件）和Resource file（源文件）。根据资源类型不同，打包成不同类型的文件。Serialized file是指很多资源被打碎放在一个对象中，最后统一被写进一个单独的文件（只有一个），如模型和预制体等必须在游戏场景中（Unity）才能看到的文件会打包为一个Serialized file。Resource files是指一些在电脑上能够不借助第三方特殊工具直接打开的文件，比如图片和声音等资源被单独保存，方便快速加载。使用AB包时，必须先在代码中通过AssetBundle对象来加载AB包，然后再从AB包中加载对应的资源。</p>
+<p>在很多数据通信或者存储中，都需要序列化Serialize和反序列化Deserialize的过程。序列化，又称串行化，是指将对象转换成字节流Bytes，从而存储对象或将对象传输到内存、数据库或文件（二进制文件、XML文件或JSON文件）中。Unity中的模型和预制体就是序列化后的二进制文件，而在C#中通过Instantiate函数来实例化的过程就是反序列化，将二进制文件反序列化为一个游戏对象。而Unity中的声音和图片等源文件不需要序列化和反序列化，可以直接在代码中使用。</p>
+<p>AssetBundle一般用于：非代码资源的热更新、减少游戏安装包大小和利用二进制文件进行资源加密，其中最主要的用途是非代码资源的热更新。比如，制作一个节日模型，直接放到AssetBundle然后上传服务器，存储AssetBundle包和它的版本号。在游戏启动检查资源更新时，就与服务器上的AB包和版本号进行比对，这样就可以只下载版本号变更的或者新上传的资源，即需要更新的资源，最后再解压使用。等第一次更新后，第二次启动时如果没有需要更新的资源就不会再下载AB包，从而保证了需要更新的资源只更新一次，更新下载的资源会保存在本地文件夹。</p>
+<h4 id="ab包使用">AB包使用</h4>
+<p>AssetBundle的使用步骤为：1）、指定资源的AssetBundle属性并添加资源后缀名。如果不添加资源后缀名，则打包出来的AB包也没有后缀名，可以正常加载。但为了资源的语义化和防止游戏被反编译后盗取素材，我们通常都要添加对应的资源后缀名。2）、构建AB包，通过在Editor文件夹下添加一个打包脚本来创建一个打包工具进行打包。3）、上传AB包至服务器。4）、加载AB包和包里的资源。打包脚本的具体代码为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">UnityEditor</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CreateAssetBundles</span>
+<span class="p">{</span>
+    <span class="c1">// 在Unity编辑器中Assets工具栏下的Build AssetBundles
+</span><span class="c1"></span><span class="na">    [MenuItem(&#34;Assets/Build AssetBundles&#34;)]</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="n">BuildAllAssetBundles</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">assetBundleDirectory</span> <span class="p">=</span> <span class="s">&#34;Assets/AssetBundles&#34;</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(!</span><span class="n">Directory</span><span class="p">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">assetBundleDirectory</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">Directory</span><span class="p">.</span><span class="n">CreateDirectory</span><span class="p">(</span><span class="n">assetBundleDirectory</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">BuildPipeline</span><span class="p">.</span><span class="n">BuildAssetBundles</span><span class="p">(</span><span class="n">assetBundleDirectory</span><span class="p">,</span> 
+                                        <span class="n">BuildAssetBundleOptions</span><span class="p">.</span><span class="n">None</span><span class="p">,</span> 
+                                        <span class="n">BuildTarget</span><span class="p">.</span><span class="n">StandaloneWindows</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Unity通过BuildPipeline类中BuildAssetBundles函数进行打包，BuildAssetBundles函数有三个参数，分别是AB包的输出路径，AB包的打包选项（是否压缩等），AB包使用的目标平台。其中，BuildAssetBundleOptions的三个选项如下：</p>
+<p>1）、BuildAssetBundleOptions.None（LZMA）：None表示默认选项，先使用LZMA算法压缩，压缩的包更小，但加载解压时间更长。如果要使用LZMA算法对应的压缩包中的一小部分资源，则需要整体解压，比较耗费时间。但一旦解压完成后，这个包又会使用LZ4重新压缩。LZ4算法对应的压缩包使用时不需要整体解压即可使用其中的一小部分资源。因此None选项表示资源打包时采用LZMA算法，这样下载的包更小，第一次整体解压后，就会使用LZ4算法压缩并保存在本地，这样加载的时间更快，因为不需要整体解压即可使用部分文件。</p>
+<p>2）、BuildAssetBundleOptions.UncompressedAssetBundle：不压缩AssetBundle资源包，包大，但不需要解压，加载快。</p>
+<p>3）、BuildAssetBundleOptions.ChunkBasedCompression（LZ4）：使用LZ4压缩，压缩率没有LZMA高，压缩得到的包没有LZMA的小，但我们可以加载指定资源而不用解压全部。使用LZ4压缩可以获得跟不压缩的资源包差不多的加载速度，但包比不压缩的包更小。我们可以用Gzip对LZ4压缩包进行二次压缩，从而减少包的体积，但解压加载的速度不变。</p>
+<p>AssetBundle能够自动处理资源之间的依赖关系，打包时会自动将该资源依赖的其他资源一同打包到该AB包。如果有一个资源被其他多个资源引用，则打包时该资源会被重复打包到多个不同的AB包。因此，通常将多个资源都依赖的公共资源单独打包，避免公共资源被重复打包浪费资源。如果公共资源被单独打包，则在其他AB包的Manifest文件中的Dependencies会显示依赖的AB包。相反，如果没有单独打包即只是隐式依赖，Manifest文件中将不会显示该依赖资源。</p>
+<p>AssetBundle打包需要指定AB包名和后缀名，如果AB包名为&quot;xxx/yyy&quot;，则表示”yyy“AB包生成在打包输出根目录下的xxx文件夹里。此外，AssetBundle采用增量式打包的方式，仅重新打包发生变化的资源或者需要打包的新资源，即只有当资源文件或者typetree发生变化时才会重新打包。如果清空已经打包好的资源，则Unity又会全部重新打包。Unity官方推出了AssetBundle Browser进行AB包管理，通过这个工具可以快速分析出资源之间的依赖关系，然后对其他资源依赖的公共资源进行单独打包，避免出现资源冗余，从而减少资源的浪费。</p>
+<p>AssetBundle打包时会生成一个与资源对应的AB包和Manifest文件，Manifest文件包含了每一个AB包的相关配置信息。下面为一个AB包的Manifest文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// Manifest文件的版本号
+</span><span class="c1"></span><span class="n">ManifestFileVersion</span><span class="p">:</span> <span class="m">0</span>
+<span class="c1">// CRC文件校验码，确保传输文件的完整性。
+</span><span class="c1"></span><span class="n">CRC</span><span class="p">:</span> <span class="m">1509223660</span>
+<span class="c1">// 用于LoadFromCacheOrDownload中加载AB包时的参数
+</span><span class="c1"></span><span class="n">Hashes</span><span class="p">:</span>
+  <span class="n">AssetFileHash</span><span class="p">:</span>
+    <span class="n">serializedVersion</span><span class="p">:</span> <span class="m">2</span>
+    <span class="n">Hash</span><span class="p">:</span> <span class="n">bd4bbd44fb22d87e0d31782ed64fd436</span>
+  <span class="n">TypeTreeHash</span><span class="p">:</span>
+    <span class="n">serializedVersion</span><span class="p">:</span> <span class="m">2</span>
+    <span class="n">Hash</span><span class="p">:</span> <span class="n">cf3f348e2267d190e6df40cbb42919b5</span>
+<span class="n">HashAppended</span><span class="p">:</span> <span class="m">0</span>
+<span class="n">ClassTypes</span><span class="p">:</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">1</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">4</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">21</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">23</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">28</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">33</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">43</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">48</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="p">-</span> <span class="n">Class</span><span class="p">:</span> <span class="m">65</span>
+  <span class="n">Script</span><span class="p">:</span> <span class="p">{</span><span class="n">instanceID</span><span class="p">:</span> <span class="m">0</span><span class="p">}</span>
+<span class="c1">// 该AB包里包含的资源
+</span><span class="c1"></span><span class="n">Assets</span><span class="p">:</span>
+<span class="p">-</span> <span class="n">Assets</span><span class="p">/</span><span class="n">Prefabs</span><span class="p">/</span><span class="n">CubeWall</span><span class="p">.</span><span class="n">prefab</span>
+<span class="c1">// 依赖的AB包
+</span><span class="c1"></span><span class="n">Dependencies</span><span class="p">:</span>
+<span class="p">-</span> <span class="p">/</span><span class="n">Users</span><span class="p">/</span><span class="n">neowyj</span><span class="p">/</span><span class="n">Unity</span><span class="p">/</span><span class="n">AssetBundleProject</span><span class="p">/</span><span class="n">Assets</span><span class="p">/</span><span class="n">AssetBundles</span><span class="p">/</span><span class="n">share</span><span class="p">.</span><span class="n">unity3d</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>除了单个资源对应的AB包和Manifest文件，每次打包时还会在输出目录下生成一个名为AssetBundles的AB包和对应的AssetBundles.manifest文件，AssetBundles.manifest文件记录了每次打包生成的所有AB包的依赖信息。</p>
+<h4 id="ab包加载">AB包加载</h4>
+<p>AB包加载最主要的方式有三种：LoadFromFile(Async)、WWW.LoadFromCacheOrDownload和UnityWebRequest。无论采用哪种加载方式，都有10-40 kb的额外内存开销，其中LoadFromFile(Async)加载速度最快，内存开销也最少。在加载AB包时，依赖资源的AB包必须先加载，加载后不需要做任何操作，因为其他依赖于该资源的AB包会自动获取依赖资源。下面是三种加载方式的介绍：</p>
+<p>1）、LoadFromFile(Async)，直接从本地文件中加载AB包，Async表示对应的异步加载方式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 先加载依赖的AB包，加载后不做任何操作。
+</span><span class="c1"></span><span class="n">AssetBundle</span> <span class="n">share</span> <span class="p">=</span> <span class="n">AssetBundle</span><span class="p">.</span><span class="n">LoadFromFile</span><span class="p">(</span><span class="s">&#34;Assets/AssetBundles/share.unity3d&#34;</span><span class="p">);</span>
+<span class="c1">// 加载cubewall资源的AB包
+</span><span class="c1"></span><span class="n">AssetBundle</span> <span class="n">ab</span> <span class="p">=</span> <span class="n">AssetBundle</span><span class="p">.</span><span class="n">LoadFromFile</span><span class="p">(</span><span class="s">&#34;Assets/AssetBundles/cubewall.unity3d&#34;</span><span class="p">);</span>
+
+<span class="c1">// 异步版本
+</span><span class="c1"></span><span class="n">AssetBundleCreateRequest</span> <span class="n">request</span> <span class="p">=</span>
+<span class="n">AssetBundle</span><span class="p">.</span><span class="n">LoadFromFileAsync</span><span class="p">(</span><span class="s">&#34;Assets/AssetBundles/cubewall.unity3d&#34;</span><span class="p">);</span>
+<span class="c1">// yield表示等待异步加载完成后才执行下面的代码。
+</span><span class="c1"></span><span class="k">yield</span> <span class="k">return</span> <span class="n">request</span><span class="p">;</span>
+<span class="n">AssetBundle</span> <span class="n">ab</span> <span class="p">=</span> <span class="n">request</span><span class="p">.</span><span class="n">assetBundle</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2）、WWW.LoadFromCacheOrDownload，从缓存中或者直接下载AB包，也可以从本地文件中加载AB包，只不过WWW类加载本地文件时使用的是绝对路径。WWW类适合在Unity2018以前使用，Unity2018及更新的版本使用UnityWebRequest替代WWW类。第一次下载AB包时，WWW会缓存这些资源，下次再加载相同的AB包时，就直接从缓存中获取，如果是新的AB包就重新下载对应的AB包。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">while</span> <span class="p">(</span><span class="n">Caching</span><span class="p">.</span><span class="n">ready</span> <span class="p">==</span> <span class="k">false</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 暂停一帧，这一帧后面的代码不执行，直到下一帧再重新开始判断。
+</span><span class="c1"></span>    <span class="k">yield</span> <span class="k">return</span> <span class="k">null</span><span class="p">;</span> 
+<span class="p">}</span>
+<span class="n">WWW</span> <span class="n">www</span> <span class="p">=</span> <span class="n">WWW</span><span class="p">.</span><span class="n">LoadFromCacheOrDownload</span><span class="p">(</span><span class="s">@&#34;file:///Users/neowyj/Unity/AssetBundleProject/Assets/AssetBundles/cubewall.unity3d&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
+<span class="c1">// Mac上没有一般不分盘，所以直接是file://+绝对路径。而Windows上有盘符路径为:file://盘符:+路径。
+</span><span class="c1">//WWW www = WWW.LoadFromCacheOrDownload(@&#34;http://localhost:7000/AssetBundles/cubewall.unity3d&#34;, 1);
+</span><span class="c1">// WWW类即使有错误也不会报错停止运行，所以需要进行www错误检测，www.error不为空则表示有错。
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">www</span><span class="p">.</span><span class="n">error</span><span class="p">))</span> 
+<span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">www</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+    <span class="c1">// 退出www类的下载过程，后面的代码不再执行。yield return只是针对当前帧进行等待操作。
+</span><span class="c1"></span>    <span class="k">yield</span> <span class="k">break</span><span class="p">;</span> 
+<span class="p">}</span>
+<span class="c1">// 等待www下载完成再执行下面的代码
+</span><span class="c1"></span><span class="k">yield</span> <span class="k">return</span> <span class="n">www</span><span class="p">;</span> 
+<span class="n">AssetBundle</span> <span class="n">ab</span> <span class="p">=</span> <span class="n">www</span><span class="p">.</span><span class="n">assetBundle</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3）、UnityWebRequest（重点），和WWW类功能相似，UnityWebRequest自身也有缓存系统，从Unity2018开始UnityWebRequest取代了WWW类。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 使用UnityWebRequest从本地文件中加载AB包
+</span><span class="c1">// string uri = @&#34;file:///Users/neowyj/Unity/AssetBundleProject/Assets/AssetBundles/cubewall.unity3d&#34;;
+</span><span class="c1">// 使用HTTP协议从服务器上下载AB包
+</span><span class="c1"></span><span class="kt">string</span> <span class="n">uri</span> <span class="p">=</span> <span class="s">@&#34;http://localhost:8000/AssetBundles/cubewall.unity3d&#34;</span><span class="p">;</span>
+<span class="n">UnityWebRequest</span> <span class="n">request</span> <span class="p">=</span> <span class="n">UnityWebRequestAssetBundle</span><span class="p">.</span><span class="n">GetAssetBundle</span><span class="p">(</span><span class="n">uri</span><span class="p">);</span>
+<span class="c1">// 发送资源请求，并等待下载完成。
+</span><span class="c1"></span><span class="k">yield</span> <span class="k">return</span> <span class="n">request</span><span class="p">.</span><span class="n">Send</span><span class="p">();</span> 
+<span class="n">AssetBundle</span> <span class="n">ab</span> <span class="p">=</span> <span class="n">DownloadHandlerAssetBundle</span><span class="p">.</span><span class="n">GetContent</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="c1">// 下面这种方式也可以获取AB包
+</span><span class="c1">// AssetBundle ab = (request.downloadHandler as DownloadHandlerAssetBundle).assetBundle;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>从AB包里加载对应的资源也有三种方式：LoadAsset、LoadAssetAsync和LoadAllAssets。LoadAsset是最普通的加载资源方式，每次只能加载一个资源。在加载对应的资源时，必须确保对应的AB包先被加载出来。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 从AB包里加载对应的游戏对象。注意，LoadAsset区分大小写，Unity也区分大小写，只是AssetBundle包名不区分。
+</span><span class="c1"></span><span class="n">GameObject</span> <span class="n">CubeWallPrefab</span> <span class="p">=</span> <span class="n">ab</span><span class="p">.</span><span class="n">LoadAsset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;(</span><span class="s">&#34;CubeWall&#34;</span><span class="p">);</span>
+<span class="c1">// 实例化该游戏对象，如果不指定对象实例化所需要的位置和旋转，则采用该游戏对象在Inspector面板中的默认位置和旋转。
+</span><span class="c1"></span><span class="n">Instantiate</span><span class="p">(</span><span class="n">CubeWallPrefab</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>而LoadAssetAsync是LoadAsset的异步版本，需要用到AssetBundleRequest类，注意与异步加载AB包的类AssetBundleCreateRequest区分开。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="n">AssetBundleRequest</span> <span class="n">request</span> <span class="p">=</span> <span class="n">ab</span><span class="p">.</span><span class="n">LoadAssetAsync</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;(</span><span class="s">&#34;CubeWall&#34;</span><span class="p">);</span>
+<span class="k">yield</span> <span class="k">return</span> <span class="n">request</span><span class="p">;</span>
+<span class="c1">// request获取的asset就是实际的游戏对象或其他类型的资源
+</span><span class="c1"></span><span class="kt">var</span> <span class="n">loadedAsset</span> <span class="p">=</span> <span class="n">request</span><span class="p">.</span><span class="n">asset</span><span class="p">;</span>
+<span class="n">Instantiate</span><span class="p">(</span><span class="n">loadedAsset</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>LoadAssets是加载AB包里的所有资源（不包括依赖的AB包中的资源）并返回一个Object数组。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="n">Object</span><span class="p">[]</span> <span class="n">objs</span> <span class="p">=</span> <span class="n">ab</span><span class="p">.</span><span class="n">LoadAllAssets</span><span class="p">();</span> 
+<span class="k">foreach</span> <span class="p">(</span><span class="n">Object</span> <span class="n">o</span> <span class="k">in</span> <span class="n">objs</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Unity中的GameObject继承自Unity.Object
+</span><span class="c1"></span>    <span class="n">Instantiate</span><span class="p">(</span><span class="n">o</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// 如果AB包里有父子关系的资源，则可以通过LoadSubAsset获取到子资源数组Object[]。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>前面提到每次打包时都会生成一个AB包和对应的Manifest文件，但要想加载manifest文件首先需要加载对应的AB包，然后再从对应AB包里加载Manifest类型的资源。我们可以只加载总的AssetBundle.manifest文件，然后利用AssetBundleManifest对象的GetAllAssetBundles方法获取本次打包的所有AB包，然后再利用GetAllDependencies(AB包名)方法获取某个AB包依赖的AB包资源，这才是完整的公共资源包加载流程。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// AssetBundles的AB包没有后缀，是系统自动创建的，其他资源打包时必须加后缀，除非打包时没有添加。
+</span><span class="c1"></span><span class="n">AssetBundle</span> <span class="n">manifestAB</span> <span class="p">=</span> <span class="n">AssetBundle</span><span class="p">.</span><span class="n">LoadFromFile</span><span class="p">(</span><span class="s">&#34;Assets/AssetBundles/AssetBundles&#34;</span><span class="p">);</span> 
+<span class="c1">// 从AB包里加载对应的manifest文件，和加载GameObject资源一样，只是类型和资源名都是AssetBundleManifest。
+</span><span class="c1"></span><span class="n">AssetBundleManifest</span> <span class="n">manifest</span> <span class="p">=</span> <span class="n">manifestAB</span><span class="p">.</span><span class="n">LoadAsset</span><span class="p">&lt;</span><span class="n">AssetBundleManifest</span><span class="p">&gt;(</span><span class="s">&#34;AssetBundleManifest&#34;</span><span class="p">);</span>
+<span class="c1">// 获取本次打包的所有AB包，返回一个存储AB包名字符串数组。
+</span><span class="c1"></span><span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">name</span> <span class="k">in</span> <span class="n">manifest</span><span class="p">.</span><span class="n">GetAllAssetBundles</span><span class="p">())</span> 
+<span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// 先把依赖包找出来，然后再去加载对应的依赖包，这才是完整的公共资源包的加载流程。
+</span><span class="c1">// 获取AB包对应的依赖包时，需要传递一个AB包名，返回一个存储AB包名字符串数组。
+</span><span class="c1"></span><span class="kt">string</span><span class="p">[]</span> <span class="n">dependencies</span> <span class="p">=</span> <span class="n">manifest</span><span class="p">.</span><span class="n">GetAllDependencies</span><span class="p">(</span><span class="s">&#34;cubewall.unity3d&#34;</span><span class="p">);</span> 
+<span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">name</span> <span class="k">in</span> <span class="n">dependencies</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="c1">// 只需要加载依赖的AB包，具体的依赖资源Unity会自动获取。
+</span><span class="c1"></span>    <span class="n">AssetBundle</span><span class="p">.</span><span class="n">LoadFromFile</span><span class="p">(</span><span class="s">&#34;Assets/AssetBundles/&#34;</span><span class="p">+</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="ab包卸载">AB包卸载</h4>
+<p>AB包的卸载要小心，因为如果卸载不当可能会造成资源重复或者资源丢失等问题。AB包的卸载有三种方式：AssetBundle.Unload(true)、AssetBundle.Unload(false)和Resource.UnloadUnusedAssets。每次AB包加载时都会先加载AB包的信息头，然后根据AB包的信息头去加载AB包的对象实例，AssetBundle.Unload()中的参数表示是否也卸载AB包的对象实例。</p>
+<p><strong>AssetBundle.Unload(true)表示AB包的信息头和对象实例都要一起卸载，即使该对象实例正在被使用</strong>。因此，使用AssetBundle.Unload(true)卸载AB包时，要确保所有资源都没有被使用，一般在关卡和场景切换时调用，因为前一关的所有资源都不会再被使用。对于大多数项目，都应该使用AssetBundle.Unload(true)卸载AB包，并且使用额外的方法来确保不会有重复的副本资源。一般常用的方法有两种：</p>
+<p>1）、在应用生命周期中，在明确定义的时间点对临时的AssetBundle卸载，比如两个关卡或者场景切换时。</p>
+<p>2）、维护单个物体的引用计数，并当组成AssetBundle的对象都未被加载时卸载AssetBundle。这允许应用卸载和重新加载对象而不会复制多余的内存。</p>
+<p><strong>AssetBundle.Unload(false)表示只卸载AB包的信息头和AB包里所有没在使用的资源，但被其他AB包使用的资源将不被卸载</strong>。假如A包里的材质M被B包使用，如果使用AssetBundle.Unload(false)卸载A包，A包中没在使用的资源会被卸载，但材质M不会被卸载，仍然可以在B包中使用。但这样会打破A包和材质M之间的依赖关系，即使重新加载了A包，它们之间的依赖关系也将丢失。</p>
+<p>在重新加载A包后，由于依赖关系丢失，Unity会重新加载一个A包包括材质M的副本资源，从而导致系统中存在两个材质M。显然，AssetBundle.Unload(false)是不可取的，因此实际开发时很少使用。因为一旦AB包被卸载，依赖关系打破后且依赖资源仍在使用，当依赖资源不再被使用时，原来的AB包就无法卸载该资源。那么如何卸载没有使用且没有依赖关系的个别资源？那就是使用Resource.UnloadUnusedAssets。</p>
+<p><strong>Resource.UnloadUnusedAssets可以卸载AssetBundle和Resources文件夹中任何没有使用的资源</strong>。这个方法会在场景Application.LoadScene切换时会自动调用，我们也可以在脚本里手动调用它来卸载未使用的资源。</p>
+<h4 id="ab包分组">AB包分组</h4>
+<p>从AB包的加载和卸载可以看出，AB包的分组策略十分重要。只有在合理的分组策略下，我们才能更好地管理对AB包。常见的分组策略包括：按照逻辑实体分组、按照资源类型分组和按照使用时间分组。</p>
+<p>按照逻辑实体分组：</p>
+<p>1）、一个UI界面或者所有UI界面打成一个AB包，UI界面里的贴图和布局信息单独一个AB包。</p>
+<p>2）、一个角色或者所有角色打成一个AB包，角色里面的模型和动画单独一个AB包。</p>
+<p>3）、所有场景共享的部分打成一个AB包，包括场景中的模型和贴图。</p>
+<p>按照资源类型分组：</p>
+<p>所有声音资源打成一个AB包，所有Shader打成一个AB包，所有模型打成一个AB包，所有材质打成一个AB包。</p>
+<p>按照使用时间分组：</p>
+<p>把在某一个时间段内使用的所有资源打成一个AB包，可以按照关卡分，也可以按照场景分。在实际开发时，我们可以使用一个XML配置文件把当前场景中使用到的GameObject及它的位置、旋转和缩放等信息记录下来，然后根据XML配置文件使用Instantiate方法来动态加载场景中的GameObject。但在使用前必须先把当前场景中Hierarchy视图中GameObject制作成预制体，然后将该场景中的所有资源打成一个AB包。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEditor</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Xml</span><span class="p">;</span>
+
+<span class="c1">// 把当前场景中的GameObject信息导出到XML文档中
+</span><span class="c1"></span><span class="k">public</span> <span class="k">class</span> <span class="nc">Export</span>
+<span class="p">{</span>
+    <span class="c1">// 编辑器扩展
+</span><span class="c1"></span><span class="na">    [MenuItem(&#34;Export/ExportSceneToXML&#34;)]</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="n">ExportSceneToXML</span><span class="p">()</span>
+	<span class="p">{</span>
+        <span class="c1">// 根据当前场景的路径获取场景名
+</span><span class="c1"></span>        <span class="kt">string</span> <span class="n">scenePath</span> <span class="p">=</span> <span class="n">EditorApplication</span><span class="p">.</span><span class="n">currentScene</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="n">sceneName</span> <span class="p">=</span> <span class="n">scenePath</span><span class="p">.</span><span class="n">Substring</span><span class="p">(</span><span class="n">scenePath</span><span class="p">.</span><span class="n">LastIndexOf</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="n">System</span><span class="p">.</span><span class="n">StringComparison</span><span class="p">.</span><span class="n">Ordinal</span><span class="p">)+</span><span class="m">1</span><span class="p">);</span>
+        <span class="n">sceneName</span> <span class="p">=</span> <span class="n">sceneName</span><span class="p">.</span><span class="n">Substring</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">sceneName</span><span class="p">.</span><span class="n">LastIndexOf</span><span class="p">(</span><span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="n">System</span><span class="p">.</span><span class="n">StringComparison</span><span class="p">.</span><span class="n">Ordinal</span><span class="p">));</span>
+        <span class="c1">// 设置导出的XML文件路径
+</span><span class="c1"></span>        <span class="kt">string</span> <span class="n">savePath</span> <span class="p">=</span> <span class="s">&#34;Assets/SceneXML/&#34;</span> <span class="p">+</span> <span class="n">sceneName</span> <span class="p">+</span> <span class="s">&#34;.xml&#34;</span><span class="p">;</span>
+
+        <span class="c1">// 新建一个XML文档
+</span><span class="c1"></span>        <span class="n">XmlDocument</span> <span class="n">xml</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlDocument</span><span class="p">();</span>
+        <span class="c1">// 设置XML文档的根节点
+</span><span class="c1"></span>        <span class="n">XmlElement</span> <span class="n">scene</span> <span class="p">=</span> <span class="n">xml</span><span class="p">.</span><span class="n">CreateElement</span><span class="p">(</span><span class="s">&#34;Scene&#34;</span><span class="p">);</span>
+        <span class="c1">// 设置根节点的属性：名字和保存路径
+</span><span class="c1"></span>        <span class="n">scene</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;Name&#34;</span><span class="p">,</span> <span class="n">sceneName</span><span class="p">);</span>
+        <span class="n">scene</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;Path&#34;</span><span class="p">,</span> <span class="n">savePath</span><span class="p">);</span>
+        <span class="n">xml</span><span class="p">.</span><span class="n">AppendChild</span><span class="p">(</span><span class="n">scene</span><span class="p">);</span>
+
+        <span class="c1">// 获取当前场景下的所有GameObject（包括Asset目录）
+</span><span class="c1"></span>        <span class="n">Object</span><span class="p">[]</span> <span class="n">objs</span> <span class="p">=</span> <span class="n">Resources</span><span class="p">.</span><span class="n">FindObjectsOfTypeAll</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">GameObject</span><span class="p">));</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="n">GameObject</span> <span class="n">go</span> <span class="k">in</span> <span class="n">objs</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 只存储最顶层的GameObject，不考虑子对象，打AB包时也是如此，因为是一个AB包所以不存在公共资源问题。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// 记录GameObject的名字
+</span><span class="c1"></span>                <span class="n">XmlElement</span> <span class="n">gameObject</span> <span class="p">=</span> <span class="n">xml</span><span class="p">.</span><span class="n">CreateElement</span><span class="p">(</span><span class="s">&#34;GameObject&#34;</span><span class="p">);</span>
+                <span class="n">gameObject</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;Name&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+              
+                <span class="c1">// AssetBundle不能记录资源的位置、旋转和缩放等信息
+</span><span class="c1"></span>                <span class="c1">// 记录GameObject的位置信息
+</span><span class="c1"></span>                <span class="n">XmlElement</span> <span class="n">position</span> <span class="p">=</span> <span class="n">xml</span><span class="p">.</span><span class="n">CreateElement</span><span class="p">(</span><span class="s">&#34;Position&#34;</span><span class="p">);</span>
+                <span class="n">position</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">position</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;y&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">position</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;z&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">gameObject</span><span class="p">.</span><span class="n">AppendChild</span><span class="p">(</span><span class="n">position</span><span class="p">);</span>
+
+                <span class="c1">// 记录GameObject的旋转信息
+</span><span class="c1"></span>                <span class="n">XmlElement</span> <span class="n">rotation</span> <span class="p">=</span> <span class="n">xml</span><span class="p">.</span><span class="n">CreateElement</span><span class="p">(</span><span class="s">&#34;Rotation&#34;</span><span class="p">);</span>
+                <span class="n">rotation</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">eulerAngles</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">rotation</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;y&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">eulerAngles</span><span class="p">.</span><span class="n">y</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">rotation</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;z&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">eulerAngles</span><span class="p">.</span><span class="n">z</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">gameObject</span><span class="p">.</span><span class="n">AppendChild</span><span class="p">(</span><span class="n">rotation</span><span class="p">);</span>
+
+                <span class="c1">// 记录GameObject的缩放信息
+</span><span class="c1"></span>                <span class="n">XmlElement</span> <span class="n">scale</span> <span class="p">=</span> <span class="n">xml</span><span class="p">.</span><span class="n">CreateElement</span><span class="p">(</span><span class="s">&#34;Scale&#34;</span><span class="p">);</span>
+                <span class="n">scale</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;x&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">scale</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;y&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">y</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">scale</span><span class="p">.</span><span class="n">SetAttribute</span><span class="p">(</span><span class="s">&#34;z&#34;</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span><span class="p">.</span><span class="n">z</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+                <span class="n">gameObject</span><span class="p">.</span><span class="n">AppendChild</span><span class="p">(</span><span class="n">scale</span><span class="p">);</span>
+
+                <span class="c1">// 添加进XML文档
+</span><span class="c1"></span>                <span class="n">scene</span><span class="p">.</span><span class="n">AppendChild</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 保存为路径对应的XML文件
+</span><span class="c1"></span>        <span class="n">xml</span><span class="p">.</span><span class="n">Save</span><span class="p">(</span><span class="n">savePath</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>接下来将当前场景中Hierarchy视图下的所有GameObject都制作成预制体Prefab并打成一个AB包，然后将它们从Hierarchy视图中全部删除，因为这时我们已经将当前场景的所有资源都打包了，以后加载场景时就直接从AB包里加载资源，最后再新建一个空GameObject用来挂载加载AB包的脚本。AB包打包完成后就上传服务器，等下次游戏启动时再下载到本地，从而实现动态加载场景资源。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Xml</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Load</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> 
+<span class="p">{</span>
+    <span class="c1">// Use this for initialization
+</span><span class="c1"></span>    <span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// AB包路径
+</span><span class="c1"></span>        <span class="kt">string</span> <span class="n">abPath</span> <span class="p">=</span> <span class="s">@&#34;http://localhost:9000/Assets/AssetBundles/main.unity3d&#34;</span><span class="p">;</span>
+        <span class="c1">// XML文档路径
+</span><span class="c1"></span>        <span class="kt">string</span> <span class="n">xmlPath</span> <span class="p">=</span> <span class="s">@&#34;http://localhost:9000/Assets/SceneXML/Main.xml&#34;</span><span class="p">;</span>
+        <span class="c1">// 开启动态加载场景协程
+</span><span class="c1"></span>        <span class="n">IEnumerator</span> <span class="n">routine</span> <span class="p">=</span> <span class="n">LoadDynamicScene</span><span class="p">(</span><span class="n">abPath</span><span class="p">,</span> <span class="n">xmlPath</span><span class="p">);</span>
+        <span class="n">StartCoroutine</span><span class="p">(</span><span class="n">routine</span><span class="p">);</span>
+	  <span class="p">}</span>
+  
+    <span class="c1">// 动态加载场景的协程函数
+</span><span class="c1"></span>    <span class="n">IEnumerator</span> <span class="n">LoadDynamicScene</span><span class="p">(</span><span class="kt">string</span> <span class="n">abPath</span><span class="p">,</span> <span class="kt">string</span> <span class="n">xmlPath</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 如果缓存不可使用，直接跳过当前帧，直到可以使用时再执行后续代码。
+</span><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="n">Caching</span><span class="p">.</span><span class="n">ready</span> <span class="p">==</span> <span class="k">false</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">yield</span> <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">WWW</span> <span class="n">www</span> <span class="p">=</span> <span class="n">WWW</span><span class="p">.</span><span class="n">LoadFromCacheOrDownload</span><span class="p">(</span><span class="n">abPath</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
+        <span class="c1">// 如果下载出错就直接退出协程函数，后续代码不再执行。
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">www</span><span class="p">.</span><span class="n">error</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">www</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+            <span class="k">yield</span> <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// 等www下载完之后再执行后续代码
+</span><span class="c1"></span>        <span class="k">yield</span> <span class="k">return</span> <span class="n">www</span><span class="p">;</span>
+        <span class="c1">// 从www获取AB包
+</span><span class="c1"></span>        <span class="n">AssetBundle</span> <span class="n">ab</span> <span class="p">=</span> <span class="n">www</span><span class="p">.</span><span class="n">assetBundle</span><span class="p">;</span>
+
+        <span class="c1">// 读取XML文档
+</span><span class="c1"></span>        <span class="n">XmlDocument</span> <span class="n">xml</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlDocument</span><span class="p">();</span>
+        <span class="n">xml</span><span class="p">.</span><span class="n">Load</span><span class="p">(</span><span class="n">xmlPath</span><span class="p">);</span>
+        <span class="n">XmlElement</span> <span class="n">root</span> <span class="p">=</span> <span class="n">xml</span><span class="p">.</span><span class="n">DocumentElement</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">&#34;Scene&#34;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 获取XML文档的根节点
+</span><span class="c1"></span>            <span class="n">XmlNodeList</span> <span class="n">nodes</span> <span class="p">=</span> <span class="n">root</span><span class="p">.</span><span class="n">SelectNodes</span><span class="p">(</span><span class="s">&#34;/Scene/GameObject&#34;</span><span class="p">);</span>
+            <span class="n">Vector3</span> <span class="n">position</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+            <span class="n">Vector3</span> <span class="n">rotation</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+            <span class="n">Vector3</span> <span class="n">scale</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+            <span class="c1">// 开始遍历XML文档节点，获取GameObject的信息
+</span><span class="c1"></span>            <span class="k">foreach</span> <span class="p">(</span><span class="n">XmlElement</span> <span class="n">xe</span> <span class="k">in</span> <span class="n">nodes</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">foreach</span> <span class="p">(</span><span class="n">XmlElement</span> <span class="n">xe2</span> <span class="k">in</span> <span class="n">xe</span><span class="p">.</span><span class="n">ChildNodes</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">// 获取GameObject的位置信息
+</span><span class="c1"></span>                    <span class="k">if</span> <span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">&#34;Position&#34;</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;x&#34;</span><span class="p">)),</span> <span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;y&#34;</span><span class="p">)),</span> <span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;z&#34;</span><span class="p">)));</span>
+                    <span class="p">}</span>
+                    <span class="c1">// 获取GameObject的旋转信息
+</span><span class="c1"></span>                    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">&#34;Rotation&#34;</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">rotation</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;x&#34;</span><span class="p">)),</span> <span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;y&#34;</span><span class="p">)),</span> <span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;z&#34;</span><span class="p">)));</span>
+                    <span class="p">}</span>
+                    <span class="c1">// 获取GameObject的缩放信息
+</span><span class="c1"></span>                    <span class="k">else</span>
+                    <span class="p">{</span>
+                        <span class="n">scale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;x&#34;</span><span class="p">)),</span> <span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;y&#34;</span><span class="p">)),</span> <span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">xe2</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;z&#34;</span><span class="p">)));</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="c1">// 根据GameObject的名字从AB包中加载对应的GameObject
+</span><span class="c1"></span>                <span class="c1">//GameObject go = ab.LoadAsset&lt;GameObject&gt;(xe.GetAttribute(&#34;Name&#34;));
+</span><span class="c1"></span>                <span class="n">GameObject</span> <span class="n">go</span> <span class="p">=</span> <span class="n">ab</span><span class="p">.</span><span class="n">LoadAsset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;(</span><span class="n">xe</span><span class="p">.</span><span class="n">GetAttribute</span><span class="p">(</span><span class="s">&#34;Name&#34;</span><span class="p">));</span>
+                <span class="c1">// 如果GameObject不为空就用Instantiate函数实例化，并设置对应的Transform信息。
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="n">go</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">GameObject</span> <span class="n">go2</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span><span class="n">go</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">Euler</span><span class="p">(</span><span class="n">rotation</span><span class="p">));</span>
+                    <span class="n">go2</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="n">scale</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="n">OnDestroy</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// 停止协程
+</span><span class="c1"></span>        <span class="n">StopAllCoroutines</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>测试截图：</p>
+<p><img src="http://pzt77t5d7.bkt.clouddn.com/201910/%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDScene.png" alt=""></p>
+<p>注意：</p>
+<p>1）、把经常更新的资源打包在一起，跟不经常更新的资源分离，减少后期需要下载的AB包的大小。</p>
+<p>2）、把需要同时加载的资源放在一个AB包里，避免同时下载多个AB包。</p>
+<p>3）、把其他AB包共享的资源进行单独打包，比如多个预制体共用一个材质，材质就单独打一个包，每个预制体打一个包，各个预制体包都依赖于材质包，这样材质包就只需要打包一份，而不需要重复多次打包。</p>
+<p>4）、把一些需要同时加载的”小资源“打成一个包，减少AB包的加载次数，节省加载时需要的内存开销。</p>
+<p>5）、如果同一个资源有两个版本（即都有可能使用），可以考虑通过AB的后缀名来区分。</p>
+<p>参考资料：<a href="https://zhuanlan.zhihu.com/p/33268074">AssetBundle 使用模式【译】</a>、<a href="https://blog.csdn.net/qinyuanpei/article/details/46499779">Unity3D游戏开发之使用AssetBundle和Xml实现场景的动态加载</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-09-20
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/assetbundle/">AssetBundle</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90csharp%E5%8F%8D%E5%B0%84/">
+            <span class="next-text nav-default">深入分析CSharp反射</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

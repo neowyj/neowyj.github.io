@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>为什么学编程要从Web开始？ - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="本文已独家授权给刘欣老师的《码农翻身》公众号，谢绝任何媒体和公众号转载，违者必究。
+大多数大学生接触的第一门编程课便是C语言，这对于一个完全不懂计算机的人可能是噩梦。不少人初次上C语言课都会被指针绕得晕头转向，然而大部分编程工作并不需要你关心指针的使用。此外，C语言对可视化编程并不友好，用C语言编写图形化界面十分繁琐。在这种情况下，很多大学生都会问C语言能做什么？
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E7%BC%96%E7%A8%8B%E8%A6%81%E4%BB%8Eweb%E5%BC%80%E5%A7%8B/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="为什么学编程要从Web开始？" />
+<meta property="og:description" content="本文已独家授权给刘欣老师的《码农翻身》公众号，谢绝任何媒体和公众号转载，违者必究。
+大多数大学生接触的第一门编程课便是C语言，这对于一个完全不懂计算机的人可能是噩梦。不少人初次上C语言课都会被指针绕得晕头转向，然而大部分编程工作并不需要你关心指针的使用。此外，C语言对可视化编程并不友好，用C语言编写图形化界面十分繁琐。在这种情况下，很多大学生都会问C语言能做什么？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E7%BC%96%E7%A8%8B%E8%A6%81%E4%BB%8Eweb%E5%BC%80%E5%A7%8B/" />
+<meta property="article:published_time" content="2018-12-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-12-30T00:00:00+00:00" />
+<meta itemprop="name" content="为什么学编程要从Web开始？">
+<meta itemprop="description" content="本文已独家授权给刘欣老师的《码农翻身》公众号，谢绝任何媒体和公众号转载，违者必究。
+大多数大学生接触的第一门编程课便是C语言，这对于一个完全不懂计算机的人可能是噩梦。不少人初次上C语言课都会被指针绕得晕头转向，然而大部分编程工作并不需要你关心指针的使用。此外，C语言对可视化编程并不友好，用C语言编写图形化界面十分繁琐。在这种情况下，很多大学生都会问C语言能做什么？">
+<meta itemprop="datePublished" content="2018-12-30T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2018-12-30T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2487">
+
+
+
+<meta itemprop="keywords" content="学编程," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="为什么学编程要从Web开始？"/>
+<meta name="twitter:description" content="本文已独家授权给刘欣老师的《码农翻身》公众号，谢绝任何媒体和公众号转载，违者必究。
+大多数大学生接触的第一门编程课便是C语言，这对于一个完全不懂计算机的人可能是噩梦。不少人初次上C语言课都会被指针绕得晕头转向，然而大部分编程工作并不需要你关心指针的使用。此外，C语言对可视化编程并不友好，用C语言编写图形化界面十分繁琐。在这种情况下，很多大学生都会问C语言能做什么？"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">为什么学编程要从Web开始？</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-12-30 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%80%9D%E8%80%83/"> 思考 </a>
+            </div>
+          <span class="more-meta"> 2487 words </span>
+          <span class="more-meta"> 5 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>本文已独家授权给刘欣老师的《码农翻身》公众号，谢绝任何媒体和公众号转载，违者必究。</p>
+<p>大多数大学生接触的第一门编程课便是C语言，这对于一个完全不懂计算机的人可能是噩梦。不少人初次上C语言课都会被指针绕得晕头转向，然而大部分编程工作并不需要你关心指针的使用。此外，C语言对可视化编程并不友好，用C语言编写图形化界面十分繁琐。在这种情况下，很多大学生都会问C语言能做什么？</p>
+<p>C语言看似简单，实则无比强大，它主要的用途是系统级编程，操作系统，数据库，编译器，虚拟机等等，可是，并不是每个人都愿意去尝试或者有机会接触。这会导致大多数人学了C语言并没有多少成就感和兴趣，甚至因为这门课怀疑自己能不能学好编程，或者拿到计算机专业的毕业证。</p>
+<p>事实上，这样想是多虑的。并不是每个计算机专业的学生将来都要去搞操作系统，编译器或嵌入式开发，应用型人才大有可为。你完全可以先从应用层入手，获得成就感和兴趣，再深入钻研底层开发。</p>
+<p>在我眼里，编程是世界上最好的工作。既可以凭此获得报酬，还可作为兴趣爱好，享受解决问题的那种成就感。所以，当你第一次学编程或者对编程开始失去兴趣时，不妨从Web入手，先做一个网站。Web开发所用到的语言大多数都是所见即所得类型，学了马上可以做出一个可视化的作品，很有成就感。</p>
+<p>Web开发是最简单的，而且开发语言也多种多样，比如JavaScript、PHP、JAVA、Ruby、Python等。互联网上关于Web开发的学习资料是最多最丰富的，大多数问题都可以通过搜索引擎找到解决方案。这对初学者十分友好，降低了编程的挫折感。尽管受到移动互联网的冲击，但不可否认，网站是互联网最普遍的应用形式，并将长期存在下去。如果你想做Web开发，Just do it！</p>
+<p>Web开发分为前后端，前端包括HTML、CSS和JavaScript等，后端包括Node.js、JAVA、Python、PHP、Ruby等。如果你想做一个静态网站，只需要学习前端技术即可。前端技术本身难度不大，但浏览器适配和响应式布局稍微有点棘手。初学者完全不必理会，先做出一个静态网站即可。当你做出第一版静态网站时，你一定会兴奋，因为这是你自己的作品。</p>
+<p>网站做好后，你可能想更新网站内容，但手动更新又比较麻烦。这时你可以选择一门简单的后端语言，尝试下服务器搭建、前后端数据交互和Linux命令行操作等等。后端技术优先推荐Python、PHP和JAVA，三者选其一即可。人生苦短，我用Python。Python内置了大量丰富的函数供你直接调用，有些语言写很多行的函数，Python一行代码搞定。此外，Python作为程序员必备的脚本语言，在爬虫、科学计算、AI等领域也很出彩。利用这个机会学习下，技多不压身。</p>
+<p>除了Python，PHP效率也不低。作为世界上最好的语言(:-D)，PHP为Web而生，PHP可以直接嵌入HTML标签，十分方便。经典的LAMP或者LNMP搭配更是世界上绝大多数网站的标配(L：Linux，A：Apache，N：Nginx，M：MySql，P：PHP)。最后推荐的当属老大哥JAVA，在国内可能就JAVA程序员最多了，所以学了就业肯定不愁。不过，JAVA的难度要Python和PHP稍高点。</p>
+<p>学了后端语言后，你可以做一个动态网站了。不过，还差一个数据库，推荐MySQL。如果你不想学SQL语句，可以寻找后端语言对应的MySQL图形管理应用。但是，当你的数据量较大或者经常存取数据时，建议学习下基本的SQL语句以提高效率。当你前端和后端都学完了，你就可以随性所欲的做你想做的网站。做出来后，记得分享给你的好友和家人，他们的鼓励是你前进的动力。</p>
+<p>这就完了吗？万里长征才刚踏出第一步。</p>
+<p>为什么我的网站这么慢？可能是因为前端静态资源CSS或者JavaScript太大或者加载方式不对。你得学习下代码优化、静态资源压缩打包和页面渲染原理吧。为什么查询数据怎么慢？你得学习下数据库优化吧。有小伙伴想和你一起开发网站，怎么让别人快速看懂你的代码？你得学习下代码模块化(低耦合，高内聚)和接口设计吧。为了使你网站稳定，你还会遇到很多问题。但通过前面学习，相信你已经学会了如何独立排查和解决问题了。独立解决问题的能力是程序员最基本的能力之一。</p>
+<p>网站稳定了，你可能想设计出类似于热门内容和推荐内容等。一看需要用到排序算法和推荐算法，恍然大悟，数据结构和线性代数被你学成了狗屎。不停的责骂自己，当年上课的时候干啥去了。不要着急，相信你现在回头再去看时，一定能学进去。因为学了，你马上就可以用。现在你终于明白，数据结构中的时空复杂度、线性表、栈和队列、树、图、排序和查找是怎么用的。</p>
+<p>诶，课本里的C代码怎么和我写的Python和JAVA这么相似。仔细搜索发现，C语言才是这些语言的祖师爷。顿时心生悔意，要是当年好好学C语言，现在也不会这么吃力。种一棵树，最好的是十年前，其次是现在。赶紧学吧，少年！现在网站也像模像样了，想知道浏览器怎么运行的吗？HTTP协议是啥？不用搜了，赶紧回去看计算机网络，”三次握手”必须烂熟于心。</p>
+<p>终于有一天，服务器死机了。这下你得学习下服务器运维，了解下服务器工作原理吧。世界上绝大多数服务器系统都是Linux，Linux系统你得学习下吧。多线程多进程貌似见过？你已经学过了，就在操作系统那本书里，老师讲的时候你没认真听。这下你恍然大悟，原来学校里的课是有用的，只是自己没发现。这样你又回去把计算机组成原理和微机接口原理复习了下，了解了Byte和Bit的区别，了解了二进制编码，了解了汇编语言等等。</p>
+<p>大道至简，心中有剑于无形。现在你明白了，编程语言只是术，而计算机基础课才是心法。万变不离其宗，你不再恐惧编程，也不再把自己限定在某一种语言。你开始不满足于只做网站，你想做APP、游戏、编译器或嵌入式开发等。通过之前的学习，你学会了如何用项目去驱动学习，学会了独立解决问题，学会了快速上手一门编程语言，学会了前后端如何交互等等。即使你以后不做Web开发，这些能力都是通用的，伴随你一生。</p>
+<p>现在，恭喜你，你已经是一名软件工程师了！</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2018-12-30
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%AD%A6%E7%BC%96%E7%A8%8B/">学编程</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/unity%E8%84%9A%E6%9C%ACcsharp%E5%85%A5%E9%97%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Unity脚本CSharp入门</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/%E5%93%88%E4%BD%9B%E5%B9%B8%E7%A6%8F%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0%E4%B8%8B/">
+            <span class="next-text nav-default">哈佛幸福公开课笔记（下）</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSharp反射 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/csharp%E5%8F%8D%E5%B0%84/</link>
+    <description>Recent content in CSharp反射 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 13 Jul 2020 15:48:20 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/csharp%E5%8F%8D%E5%B0%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入分析CSharp反射</title>
+      <link>https://neowyj.github.io/post/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90csharp%E5%8F%8D%E5%B0%84/</link>
+      <pubDate>Mon, 13 Jul 2020 15:48:20 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90csharp%E5%8F%8D%E5%B0%84/</guid>
+      <description>&lt;p&gt;反射Reflection是.NET平台在运行时获取类型（包括类、接口、结构体、委托和枚举等类型）信息的重要机制，即从对象外部获取内部的信息，包括字段、属性、方法、构造函数和特性等。我们可以使用反射动态获取类型的信息，并利用这些信息动态创建对应类型的对象。反射的优点：提高程序的灵活性和扩展性，降低程序的耦合性，动态实例化对象。反射的缺点：性能消耗比直接获取类型信息要大，反射代码比普通代码复杂，维护性差。因此普通程序不建议使用反射，需要构建灵活性和扩展性较高的系统框架时才使用。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>思考 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/categories/%E6%80%9D%E8%80%83/</link>
+    <description>Recent content in 思考 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 30 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/categories/%E6%80%9D%E8%80%83/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>为什么学编程要从Web开始？</title>
+      <link>https://neowyj.github.io/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E7%BC%96%E7%A8%8B%E8%A6%81%E4%BB%8Eweb%E5%BC%80%E5%A7%8B/</link>
+      <pubDate>Sun, 30 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E7%BC%96%E7%A8%8B%E8%A6%81%E4%BB%8Eweb%E5%BC%80%E5%A7%8B/</guid>
+      <description>&lt;p&gt;本文已独家授权给刘欣老师的《码农翻身》公众号，谢绝任何媒体和公众号转载，违者必究。&lt;/p&gt;
+&lt;p&gt;大多数大学生接触的第一门编程课便是C语言，这对于一个完全不懂计算机的人可能是噩梦。不少人初次上C语言课都会被指针绕得晕头转向，然而大部分编程工作并不需要你关心指针的使用。此外，C语言对可视化编程并不友好，用C语言编写图形化界面十分繁琐。在这种情况下，很多大学生都会问C语言能做什么？&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>我在质疑我的学习方法</title>
+      <link>https://neowyj.github.io/post/%E6%88%91%E5%9C%A8%E8%B4%A8%E7%96%91%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sat, 19 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%88%91%E5%9C%A8%E8%B4%A8%E7%96%91%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</guid>
+      <description>&lt;p&gt;最近几天把《JavaScript高级程序设计》看完了，而且一个demo不差的把书中的案例全部敲了一遍。敲完以后，觉得成就感爆棚，自己坚持把一本技术书的每一个知识点看完了而且理解了。这几天开始review，发现效果还好，没有遗漏太多。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

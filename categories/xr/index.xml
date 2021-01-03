@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>XR on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/categories/xr/</link>
+    <description>Recent content in XR on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 10 Apr 2019 17:23:50 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/categories/xr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>探索Niantic真实世界平台</title>
+      <link>https://neowyj.github.io/post/%E6%8E%A2%E7%B4%A2niantic%E7%9C%9F%E5%AE%9E%E4%B8%96%E7%95%8C%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Wed, 10 Apr 2019 17:23:50 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%8E%A2%E7%B4%A2niantic%E7%9C%9F%E5%AE%9E%E4%B8%96%E7%95%8C%E5%B9%B3%E5%8F%B0/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://roadtovrlive-5ea0.kxcdn.com/wp-content/uploads/2017/11/pokemon-go-niantic-logo.jpg&#34; alt=&#34;&#34;&gt;当我们创建Niantic时，我们为公司的使命设立了三个核心价值：探索、成长和真实世界的社交互动。但是，在最疯狂的梦想中，我们没想到我们的AR体验会给我们的玩家和他们所生活的社区带来积极的影响。我们很幸运能够将对技术和游戏的热情结合起来，为所有年龄段的人创造创新型的体验。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

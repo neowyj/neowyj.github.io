@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lua on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/categories/lua/</link>
+    <description>Recent content in Lua on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 18 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/categories/lua/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入理解xLua热更新原理</title>
+      <link>https://neowyj.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3xlua%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Wed, 18 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3xlua%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/</guid>
+      <description>&lt;h2 id=&#34;热更新简介&#34;&gt;热更新简介&lt;/h2&gt;
+&lt;p&gt;热更新是指在不需要重新编译打包游戏的情况下，在线更新游戏中的一些非核心代码和资源，比如活动运营和打补丁。热更新分为资源热更新和代码热更新两种，代码热更新实际上也是把代码当成资源的一种热更新，但通常所说的热更新一般是指代码热更新。资源热更新主要通过AssetBundle来实现，在Unity编辑器内为游戏中所用到的资源指定AB包的名称和后缀，然后进行打包并上传服务器，待游戏运行时动态加载服务器上的AB资源包。代码热更新主要包括Lua热更新、ILRuntime热更新和C#直接反射热更新等。由于ILRuntime热更新还不成熟可能存在一些坑，而C#直接反射热更新又不支持IOS平台，因此目前大多采用更成熟的、没有平台限制的Lua热更新方案。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

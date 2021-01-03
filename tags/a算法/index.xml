@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>A*算法 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/a%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in A*算法 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 01 Nov 2019 18:04:43 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/a%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A*算法</title>
+      <link>https://neowyj.github.io/post/a%E6%98%9F%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Fri, 01 Nov 2019 18:04:43 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/a%E6%98%9F%E7%AE%97%E6%B3%95/</guid>
+      <description>&lt;h4 id=&#34;算法简介&#34;&gt;算法简介&lt;/h4&gt;
+&lt;p&gt;A星搜索算法（A* search algorithm），简称A星算法，是一种启发式搜索算法，用于求解图中两个节点之间的最短路径及其长度。常用于游戏中NPC的移动计算和求地图中两点的实际最短路径。A星算法是Dijkstra算法的升级版，但Dijkstra算法属于盲目搜索，每次都需要访问到所有结点的路径并找出最短的一条路径，然后以该最短路径为基础更新到其他结点的路径，不断重复直到找到所有的最短路径结点。当图中的结点很多时，如果采用Dijkstra算法寻找最短路径，产生的计算量将会非常大，而采用A星算法产生的计算量将会远小于Dijkstra算法。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

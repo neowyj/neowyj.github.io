@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>学习方法 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</link>
+    <description>Recent content in 学习方法 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 19 Mar 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我在质疑我的学习方法</title>
+      <link>https://neowyj.github.io/post/%E6%88%91%E5%9C%A8%E8%B4%A8%E7%96%91%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sat, 19 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%88%91%E5%9C%A8%E8%B4%A8%E7%96%91%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</guid>
+      <description>&lt;p&gt;最近几天把《JavaScript高级程序设计》看完了，而且一个demo不差的把书中的案例全部敲了一遍。敲完以后，觉得成就感爆棚，自己坚持把一本技术书的每一个知识点看完了而且理解了。这几天开始review，发现效果还好，没有遗漏太多。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

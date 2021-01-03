@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数组 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E6%95%B0%E7%BB%84/</link>
+    <description>Recent content in 数组 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 20 Jun 2019 22:04:41 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E6%95%B0%E7%BB%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数组</title>
+      <link>https://neowyj.github.io/post/%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Thu, 20 Jun 2019 22:04:41 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E6%95%B0%E7%BB%84/</guid>
+      <description>&lt;h4 id=&#34;简介&#34;&gt;简介&lt;/h4&gt;
+&lt;p&gt;数组（Array）是由相同类型的元素的集合所组成的数据结构。数组采用一块连续的内存空间来存储数据，利用数组下标索引可以随机存取对应的元素。数组元素的类型除了int、float、double和char等基本类型，还可以是类、枚举和结构体等复杂类型。借助数组可以实现线性表的&lt;strong&gt;顺序存储结构&lt;/strong&gt;（即顺序表）。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

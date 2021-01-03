@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>链表 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E9%93%BE%E8%A1%A8/</link>
+    <description>Recent content in 链表 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 27 Jun 2019 22:04:41 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E9%93%BE%E8%A1%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>链表</title>
+      <link>https://neowyj.github.io/post/%E9%93%BE%E8%A1%A8/</link>
+      <pubDate>Thu, 27 Jun 2019 22:04:41 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E9%93%BE%E8%A1%A8/</guid>
+      <description>&lt;h4 id=&#34;简介&#34;&gt;简介&lt;/h4&gt;
+&lt;p&gt;链表（LinkedList）是一种物理存储结构上非连续的线性表结构，数据元素的逻辑顺序通过链表中的指针链接次序来实现。实际上，链表就是线性表的&lt;strong&gt;链式存储结构&lt;/strong&gt;。链表是由一系列结点组成，链表中每一个数据元素表示一个节点，节点可以在运行时动态生成。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

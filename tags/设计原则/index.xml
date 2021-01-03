@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计原则 on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</link>
+    <description>Recent content in 设计原则 on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 20 Apr 2019 15:55:58 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>面向对象编程及其设计原则</title>
+      <link>https://neowyj.github.io/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E5%8F%8A%E5%85%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</link>
+      <pubDate>Sat, 20 Apr 2019 15:55:58 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E5%8F%8A%E5%85%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</guid>
+      <description>&lt;p&gt;面向对象编程（Object Oriented Programming），简称OOP，是一种程序设计思想。OOP程序的基本单位是对象，具有相同数据和操作的对象集合称为类。类是对象的抽象表示，对象是类的实例。尽管近年来函数式编程的呼声越来越高，但不可否认的是OOP在大型软件系统和游戏开发等领域依然是最广泛最有效的编程范式。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

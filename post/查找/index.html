@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>查找 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="基本概念 查找：在数据集合中寻找满足某种条件的数据元素的过程称为查找。查找表：用于查找的数据结合称为查找表，它是由同一类型的数据元素（记录）组成，可以是一个数组或链表等数据类型。静态查找表：只用于查找某个元素和检索满足某个条件的数据元素的各种属性的查找表称为静态查找表。动态查找表：在静态查找表基础上，需要动态地插入和删除元素的查找表称为动态查找表。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E6%9F%A5%E6%89%BE/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="查找" />
+<meta property="og:description" content="基本概念
+查找：在数据集合中寻找满足某种条件的数据元素的过程称为查找。查找表：用于查找的数据结合称为查找表，它是由同一类型的数据元素（记录）组成，可以是一个数组或链表等数据类型。静态查找表：只用于查找某个元素和检索满足某个条件的数据元素的各种属性的查找表称为静态查找表。动态查找表：在静态查找表基础上，需要动态地插入和删除元素的查找表称为动态查找表。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E6%9F%A5%E6%89%BE/" />
+<meta property="article:published_time" content="2019-09-26T22:04:41+00:00" />
+<meta property="article:modified_time" content="2019-09-26T22:04:41+00:00" />
+<meta itemprop="name" content="查找">
+<meta itemprop="description" content="基本概念
+查找：在数据集合中寻找满足某种条件的数据元素的过程称为查找。查找表：用于查找的数据结合称为查找表，它是由同一类型的数据元素（记录）组成，可以是一个数组或链表等数据类型。静态查找表：只用于查找某个元素和检索满足某个条件的数据元素的各种属性的查找表称为静态查找表。动态查找表：在静态查找表基础上，需要动态地插入和删除元素的查找表称为动态查找表。">
+<meta itemprop="datePublished" content="2019-09-26T22:04:41+00:00" />
+<meta itemprop="dateModified" content="2019-09-26T22:04:41+00:00" />
+<meta itemprop="wordCount" content="8456">
+
+
+
+<meta itemprop="keywords" content="查找," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="查找"/>
+<meta name="twitter:description" content="基本概念
+查找：在数据集合中寻找满足某种条件的数据元素的过程称为查找。查找表：用于查找的数据结合称为查找表，它是由同一类型的数据元素（记录）组成，可以是一个数组或链表等数据类型。静态查找表：只用于查找某个元素和检索满足某个条件的数据元素的各种属性的查找表称为静态查找表。动态查找表：在静态查找表基础上，需要动态地插入和删除元素的查找表称为动态查找表。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">查找</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-09-26 </span>
+        <div class="post-category">
+            <a href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+            </div>
+          <span class="more-meta"> 8456 words </span>
+          <span class="more-meta"> 17 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="基本概念">基本概念</h4>
+<p><strong>查找</strong>：在数据集合中寻找满足某种条件的数据元素的过程称为查找。<strong>查找表</strong>：用于查找的数据结合称为查找表，它是由同一类型的数据元素（记录）组成，可以是一个数组或链表等数据类型。<strong>静态查找表</strong>：只用于查找某个元素和检索满足某个条件的数据元素的各种属性的查找表称为静态查找表。<strong>动态查找表</strong>：在静态查找表基础上，需要动态地插入和删除元素的查找表称为动态查找表。</p>
+<p>适合静态查找表的查找方法有：顺序查找、折半查找和散列查找等。适合动态查找表的查找方法有：二叉查找树的查找和散列查找等。<strong>关键字</strong>：数据元素中唯一标识该元素的某个数据项的值，使用基于关键字的查找，查找结果应该是唯一的。比如一个学生数据集合，学号便是这个学生数据集合的关键字，可以唯一标识该学生学生数据集合。</p>
+<p><strong>平均查找长度ASL</strong>：在查找过程中，一次查找的长度为该次查找需要比较的关键字次数。而ASL是指在所有数据元素的查找过程中，<strong>关键字比较次数的平均值</strong>。平均查找长度是衡量算法查找效率的最主要的指标。</p>
+<p><img src="https://wx1.sinaimg.cn/large/006WUoxdgy1g872ma5cz2j30sq0263zq.jpg" alt=""></p>
+<p>n表示查找表的长度，Pi表示查找第i个元素的概率，一般认为每个数据元素的概率是相等的，即Pi=1/n。而Ci表示查找到第i个元素的所需的关键字比较次数。因此，查找算法的时间复杂度为ASL和问题规模n的函数关系式的数量级。即查找过程中数据元素关键字的比较次数是分析查找算法时间复杂度的关键指标。</p>
+<h4 id="顺序查找">顺序查找</h4>
+<p>顺序查找又称线性查找，主要用于在线性表中从前往后依次进行查找。顺序查找一般分为无序线性表的顺序查找和有序线性表的顺序查找。<strong>顺序查找对于顺序表和链表都适用，不分顺序存储和链式存储的存储结构</strong>。</p>
+<h6 id="无序线性表的顺序查找">无序线性表的顺序查找</h6>
+<p>无序线性表的顺序查找是最直观最普通的查找方法，其基本思想是从线性表的一端开始，逐个检查关键字是否满足给定的条件。若查找到某个元素的关键字满足给定条件，则查找成功，返回该元素在查找表中的<strong>位置</strong>。若已经查找到表的另一端，还没有查找到符合给定条件的元素，则查找失败。下面以数组为例，顺序查找的代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Search</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="c1">// 顺序查找
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">SeqSearch</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 提前把数组的长度提取出来，避免在for循环里多次获取长度消耗性能
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">len</span> <span class="p">=</span> <span class="n">a</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="m">6</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="c1">// 返回-1表示查找失败
+</span><span class="c1"></span>            <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 1、顺序查找
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[]</span> <span class="n">a</span> <span class="p">=</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">8</span><span class="p">};</span>
+            <span class="kt">int</span> <span class="n">b</span> <span class="p">=</span> <span class="n">SeqSearch</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="m">6</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 输出结果：3
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这是大多数人都会写的普通写法，但是当数据量比较大时，for循环每次执行完都要和数组长度作比较，这样会造成一定的性能消耗。我们可以通过引入”哨兵“，这样就不必每次循环时都去判断数组是否越界，减少比较次数，提高查找效率。引入”哨兵“进行优化后的代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="c1">// 顺序查找
+</span><span class="c1"></span><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">SeqSearch</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">len</span> <span class="p">=</span> <span class="n">a</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">len</span><span class="p">;</span>
+    <span class="c1">// 如果a[0]就是我们要查找的元素，就直接返回0这个位置
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">==</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// 不是我们要查找的元素，就将a[0]作为”哨兵“
+</span><span class="c1"></span>    <span class="n">a</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="n">key</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="p">-</span> <span class="m">1</span><span class="p">]</span> <span class="p">!=</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">i</span><span class="p">--;</span>
+        <span class="c1">// 如果查找到a[0]时还没找到key，就返回-1表示查找失败
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果a[0]没有存放有效数据，则直接将a[0]作为”哨兵“。在实际开发中，数组下标从0开始，如果查找失败就返回0容易产生歧义，因为它有可能是我们数组中的第一个元素。因此需要做一个判断，查找失败时返回-1。从上面的代码可以看出，引入”哨兵“后，不再需要判断数组是否越界。在数据量比较大时，可以节省一部分性能开销。</p>
+<h6 id="有序线性表的顺序查找">有序线性表的顺序查找</h6>
+<p>在有序线性表的顺序查找中，查找成功的ASL与无序线性表的顺序查找一样。唯一的区别是查找失败时，不用把所有元素查找完。比如，一个有序序列为：10，20，30，40。我们要查找25，当比较完10，20，30时，就直接返回-1表示查找失败。因为该序列是递增的，30以后的数都比25大，不可能查找到25。而无序线性表的顺序查找则必须把剩下的元素比较完，才能得出查找失败的结论。因此，有序线性表的顺序查找效率比无序线性表的顺序查找表效率更高一些。</p>
+<p>综上所述，<strong>顺序查找的时间复杂度为O(n)</strong>。顺序查找的缺点是当问题规模n比较大时，时间复杂度较高，查找效率低。优点是对数据元素的存储结构没有要求，顺序存储和链式存储都可以。此外，对于数据元素的有序性也没有要求，有序无序线性表都可以进行顺序查找。<strong>注意，对于线性链表只能使用顺序查找。</strong></p>
+<h4 id="折半查找">折半查找</h4>
+<p>**折半查找又称二分查找，只适用于有序的顺序表。**折半查找运用了二分法的思想，即在一个有序的顺序表中，通过依次对半查找缩小查找范围，直到查找到目标元素为止。比如，一个有序序列为：10，20，30，40，50，60，70。现在要查找元素20，首先与该有序序列的中间位置(1+7)/2=4对应的元素40进行比较，比40小，所以20应该在序列的左半边。在位置1到位置3这个范围的子序列中，继续与该子序列的中间位置(1+3)/2=2对应的元素进行比较，如果元素相等，则表示查找成功返回元素20在序列中的位置。</p>
+<p>折半查找的过程可以用一棵二叉树来表示，这个二叉树称为<strong>判定树</strong>。判定树中的结点表示一个数据元素，结点中的值表示该数据元素对应的值。查找成功时的查找长度为根节点到目标结点的路径上的结点数。为了使查找过程更加形象，我们添加额外的方形叶结点用于表示查找失败的情况。以刚才查找元素20为例，对应的判定树如下：</p>
+<p><img src="https://wx3.sinaimg.cn/large/006WUoxdgy1g874n87jl9j30ss0bmgo1.jpg" style="zoom:50%;" /></p>
+<p>从上述分析可知，折半查找法查找成功的关键字比较次数不会超过树的高度。已知n个元素的二叉树的高度近似为log2n，因此折半查找的时间复杂度为O(logn)，平均情况下比顺序查找的效率高。由于折半查找过程中需要方便地定位到中间位置的元素，因此适合折半查找的数据集合必须支持随机存取的特性，即折半查找只适合于采用顺序存储的线性表，不支持采用链式存储的线性表。而且必须要求顺序表有序，不然二分法无法奏效。</p>
+<p>由于折半查找的过程是一棵二叉树，因此折半查找的代码实现也分为递归实现和非递归实现。下面是上图中示例的两种折半查找实现代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Search</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+    		<span class="c1">// 折半查找-递归实现
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">BinarySearchDiGui</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="kt">int</span> <span class="n">high</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 如果key不在要查找的有序序列中或者序列的下界超过上界时，就表示查找失败直接返回-1。
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="p">||</span> <span class="n">key</span> <span class="p">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="p">||</span> <span class="n">low</span> <span class="p">&gt;</span> <span class="n">high</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 中间位置mid为下界和上界之和再除以2并进行向下取整后得到的结果
+</span><span class="c1"></span>            <span class="c1">// int mid = (low + high) / 2;
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">mid</span> <span class="p">=</span> <span class="n">low</span> <span class="p">+</span> <span class="p">(</span><span class="n">high</span> <span class="p">-</span> <span class="n">low</span><span class="p">)</span> <span class="p">/</span> <span class="m">2</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+            <span class="p">{</span>
+                <span class="c1">// 如果在序列的左半边，则将序列上界置为mid-1，则原序列变为只有左半边的子序列。
+</span><span class="c1"></span>                <span class="n">MidFindDiGui</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">mid</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+            <span class="p">{</span>
+                <span class="c1">// 如果在序列的右半边，则将序列下界置为mid-1，则原序列变为只有右半边的子序列。
+</span><span class="c1"></span>                <span class="n">MidFindDiGui</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mid</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">high</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 折半查找-非递归实现
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">BinarySearch</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">low</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">high</span> <span class="p">=</span> <span class="n">a</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">mid</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="p">||</span> <span class="n">key</span> <span class="p">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="p">||</span> <span class="n">low</span> <span class="p">&gt;</span> <span class="n">high</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+            <span class="p">}</span>
+          
+            <span class="c1">// 当序列的下界等于上界时，此时序列中只有一个元素。如果再进行折半查找low就会大于high，而此时序列中所有元素已经查找完了。如果还没有查找到元素，就直接退出循环，并返回-1表示查找失败。
+</span><span class="c1"></span>            <span class="k">while</span> <span class="p">(</span><span class="n">low</span> <span class="p">&lt;=</span> <span class="n">high</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">//mid = (low + high) / 2;
+</span><span class="c1"></span>                <span class="n">mid</span> <span class="p">=</span> <span class="n">low</span> <span class="p">+</span> <span class="p">(</span><span class="n">high</span> <span class="p">-</span> <span class="n">low</span><span class="p">)</span> <span class="p">/</span> <span class="m">2</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="n">low</span> <span class="p">=</span> <span class="n">mid</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="n">high</span> <span class="p">=</span> <span class="n">mid</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 2、折半查找
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[]</span> <span class="n">a</span> <span class="p">=</span> <span class="p">{</span> <span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">40</span><span class="p">,</span> <span class="m">50</span><span class="p">,</span> <span class="m">60</span><span class="p">,</span> <span class="m">70</span> <span class="p">};</span>
+            <span class="c1">// 递归实现
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">b1</span> <span class="p">=</span> <span class="n">BinarySearchDiGui</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">Length</span><span class="p">-</span><span class="m">1</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">b1</span><span class="p">);</span>
+            <span class="c1">// 非递归实现
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">b2</span> <span class="p">=</span> <span class="n">BinarySearch</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="m">20</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">b2</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>从上面的代码中可以看到，折半查找的中间位置mid的计算有两种方法：mid = (low + high) / 2 和 mid = low + (high - low) / 2，把第二种计算方式的括号打开就变成了第一种方式。但在极端情况下，第一种计算方式会造成int类型溢出。假如数组长度特别大，而元素恰好在low=high-1和high之中，如果采用第一种计算方式，则(low+high)将是一个非常大的数，很有可能会超过int类型所能表示的最大数，这时程序就会报错int类型溢出。因此，推荐使用mid = low + (high - low) / 2来计算中间位置mid的值。</p>
+<p>对于递归和非递归的实现，优先推荐使用非递归的实现，除非是找不到更好的方法或者特定情况下才使用递归。因为递归的运行效率较低，在递归过程中，每一次函数调用都会产生额外的开销，函数调用时要为局部变量和参数开辟内存空间。此外，递归需要借助递归工作栈，来存储每一层中函数的返回点和局部变量等数据。如果递归深度过大，会造成系统栈溢出。</p>
+<p>此例中递归实现和非递归实现的时间复杂度都是一样的为O(logn)。但非递归实现的空间复杂度为O(1)，而递归实现所需要的空间复杂度为O(logn)。综上所述，折半查找的优点是查找效率较高。缺点是只适用于有序的顺序表，但顺序表插入和删除的时间复杂度较高为O(n)。因此，折半查找属于静态查找，不适合需要动态插入和删除元素的查找表。</p>
+<h4 id="插值查找">插值查找</h4>
+<p><strong>插值查找是二分查找的改进版，只适用于分布均匀的有序顺序表</strong>。二分查找每次都是从有序序列中间查找，这种机械式的对半分是有序序列的通用查找方法。但对于分布均匀的有序序列还有更好的查找方法，那就是插值查找。比如，我们查英文词典时，查China，绝对不会每次都从词典中间开始找。有索引当然先看索引再找，如果不看索引直接查找，我们会习惯性地想C开头的词肯定在词典前面部分，直接翻到前面部分进行查找，这就是插值查找的原理。</p>
+<p>插值查找和二分查找唯一的区别就是中间位置mid的计算。二分查找中中间位置mid = low + <strong>1/2</strong> * (high - low)，而插值查找中间位置的计算方式为：mid = low + <strong>(key - a[low])/(a[high] - a[low])</strong> * (high - low)。即插值查找将二分查找中的(high - low)的系数由1/2改成了(key - a[low])/(a[high] - a[low])。这样每次查找时就不用机械式地对半分，而是根据key在有序序列中的大概位置进行比较查找，从而减少关键字的比较次数，提高查找效率。</p>
+<p>对于分布均匀的有序顺序表，插值查找的时间复杂度为O(log(logn))。但如果有序序列分布不均匀，插值查找的效率还不如二分查找。比如下面这个分布不均匀的有序序列：1，2，3，4，1000，2000，1000000，10000000。如果我们要查找1000，那么按刚才的计算方式mid = 0 + (1000 - 1) / (10000000 - 1) * (7 - 0) = 0，比0位置上的1大，更新low = mid + 1 = 1，继续计算mid = 1 + (1000 - 2) / (10000000 - 2) * (7 - 1) = 0，结果还是0。</p>
+<p>依次类推，插值查找要比较5次才能找到1000，而二分查找只需要3次对半分就可查找到1000。如果这个分布不均的有序序列很大，插值查找的效率将会更低。因此，只有当有序序列分布均匀时，才能使用插值查找，因为这样才可以根据比例确定key在有序序列中的大致范围。</p>
+<h4 id="斐波拉契查找">斐波拉契查找</h4>
+<p><strong>斐波拉契查找也是二分查找的改进版，也只适用于有序的顺序表</strong>。谈到斐波拉契，首先想到斐波拉契数列。斐波那契数列（Fibonacci sequence），又称黄金分割数列。因为随着数列的递增，斐波拉契数列中的前项与后项的比值越来越接近于黄金比例0.618。黄金比例又称黄金分割，是指将一个整体一分为二，较大部分与整体部分的比值和较小部分与较大部分的比值相等，比值约为0.618。</p>
+<p>斐波拉契数列的递归定义为：F(1) = 1，F(2) = 1，F(n) = F(n-1) + F(n-2)（n&gt;=3，n∈N*），即从斐波拉契数列的第三项开始，每一项的值都是前两项之和。而斐波拉契查找就是运用黄金分割的理念在数列中选择查找点进行查找。斐波拉契查找要求查找表的元素个数为n = F[k] - 1，如果待查找的元素个数不够，就把它们的最大值放在查找表末尾凑成一个长度为F[k] - 1的新查找表，然后再进行斐波拉契查找。具体的划分方法如下图所示：</p>
+<p><img src="http://pzt77t5d7.bkt.clouddn.com/201909/%E6%96%90%E6%B3%A2%E6%8B%89%E5%A5%91%E6%9F%A5%E6%89%BE.png" style="zoom:50%;" /></p>
+<p>与二分查找一样，也是比较key和mid（mid = low + F[k-1] - 1）对应的元素大小，从而修改low或high的大小。只不过在斐波拉契查找中，还需要修改k的值。如上图所示，如果key&gt;a[mid]，则low = mid + 1，k -= 2。因为，当key大于a[mid]时，说明元素在有序序列黄金分割的后半段共有F[k-2]-1个元素。接着在长度为F[k-2]-1的子序列中继续进行黄金分割，分成F[k-3]-1、mid、F[k-4]-1三部分。这时mid = low + F[k-3] - 1，与起始mid相比，k多减了一个2。因此，key&gt;a[mid]时，还额外需要k -= 2。同理可得，如果key &lt; a[mid]，则high = mid - 1，k -= 1。如果key = a[mid]，还需要判断mid是否在填充位置，是就直接返回查找表的末尾位置，不是就返回mid。</p>
+<p>通过上面的分析，现在知道了<strong>为什么斐波拉契查找的元素个数必须为F[k]-1</strong>。因为mid位置占了一个元素，总元素个数就变成了F[k]-2，而F[k]-2 = F[k-1] + F[k-2] - 2 = (F[k-1] - 1) + (F[k-2] - 1)，刚好可以黄金分割成两段。而分成的两段又都与起始元素个数F[k]-1形式上一致，这样每一段又可以继续进行黄金分割，我们编写代码时只需要修改k的值，十分方便。具体的代码实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Search</span>
+<span class="p">{</span>
+    <span class="c1">// 斐波拉契查找类
+</span><span class="c1"></span>    <span class="k">class</span> <span class="nc">FibSearch</span>
+    <span class="p">{</span>
+        <span class="c1">// 斐波拉契数组最大长度
+</span><span class="c1"></span>        <span class="k">const</span> <span class="kt">int</span> <span class="n">max_size</span> <span class="p">=</span> <span class="m">20</span><span class="p">;</span>
+
+        <span class="c1">// 构造斐波拉契数组
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">Fib</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">int</span><span class="p">[]</span> <span class="n">F</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">max_size</span><span class="p">];</span>
+            <span class="n">F</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+            <span class="n">F</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+            <span class="c1">// 通过递推而不是递归的方式，使构造斐波拉契数组的时间复杂度降低为O(n)
+</span><span class="c1"></span>            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">max_size</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">F</span><span class="p">[</span><span class="n">i</span> <span class="p">-</span> <span class="m">1</span><span class="p">]</span> <span class="p">+</span> <span class="n">F</span><span class="p">[</span><span class="n">i</span> <span class="p">-</span> <span class="m">2</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">F</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Search</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">n</span> <span class="p">=</span> <span class="n">a</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">low</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">high</span> <span class="p">=</span> <span class="n">n</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">mid</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="kt">int</span><span class="p">[]</span> <span class="n">F</span> <span class="p">=</span> <span class="n">Fib</span><span class="p">();</span>
+            <span class="kt">int</span> <span class="n">k</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="p">&gt;=</span> <span class="n">F</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>  
+            <span class="p">{</span>
+                <span class="c1">// 如果起始元素个数刚好为某个斐波拉契数-1，可以直接黄金分割，不需要进行填充。
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="p">==</span> <span class="n">F</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">k</span><span class="p">++;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 由于数组长度必须为F[k]-1个才能进行黄金分割，因此新建一个临时数组temp用来存放已有的元素，空余的位置用最大值（数组a的最后一个元素）填充。
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[]</span> <span class="n">temp</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">F</span><span class="p">[</span><span class="n">k</span><span class="p">]-</span><span class="m">1</span><span class="p">];</span>
+            <span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">F</span><span class="p">[</span><span class="n">k</span><span class="p">]-</span><span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">a</span><span class="p">[</span><span class="n">n</span> <span class="p">-</span> <span class="m">1</span><span class="p">];</span>
+            <span class="p">}</span>
+
+            <span class="k">while</span> <span class="p">(</span><span class="n">low</span> <span class="p">&lt;=</span> <span class="n">high</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">mid</span> <span class="p">=</span> <span class="n">low</span> <span class="p">+</span> <span class="n">F</span><span class="p">[</span><span class="n">k</span> <span class="p">-</span> <span class="m">1</span><span class="p">]</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&lt;</span> <span class="n">temp</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="n">high</span> <span class="p">=</span> <span class="n">mid</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+                    <span class="n">k</span> <span class="p">-=</span> <span class="m">1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&gt;</span> <span class="n">temp</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="n">low</span> <span class="p">=</span> <span class="n">mid</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+                    <span class="n">k</span> <span class="p">-=</span> <span class="m">2</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="c1">// 如果mid超出了原有数组的范围，则表示该元素为最大值，直接返回原有数组的末尾位置。
+</span><span class="c1"></span>                    <span class="k">if</span> <span class="p">(</span><span class="n">mid</span> <span class="p">&gt;=</span> <span class="n">n</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">return</span> <span class="n">n</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+                    <span class="p">}</span>
+                    <span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 4、斐波拉契查找
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[]</span> <span class="n">a</span> <span class="p">=</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">10</span><span class="p">};</span>
+            <span class="n">FibSearch</span> <span class="n">fs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">FibSearch</span><span class="p">();</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">fs</span><span class="p">.</span><span class="n">Search</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="m">6</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 输出结果：5
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>斐波拉契查找的时间复杂度为O(logn)，而且是只用加减法的二分查找</strong>。二分查找的效率与使用加减法还是乘除法没有直接关系。因为乘除法完全可以用位运算来代替，而位运算的速度远高于乘除法的运算速度。此外，斐波拉契查找依然只适用于有序的顺序表，并且与顺序表是否分布均匀无关。因为，无论顺序表是否分布均匀，斐波拉契查找都是运用黄金比例来寻找mid的位置。</p>
+<h4 id="分块查找">分块查找</h4>
+<p>分块查找又称索引顺序查找，结合了顺序查找和折半查找各自的优点，既有动态结构，又适合于快速查找。分块查找的基本思想：将查找表分为若干子块，块内无序，块间有序。即第一个块中的最大关键字小于第二块中的所有关键字，第二块中的最大关键字小于第三块中的所有的关键字，依次类推。再建立一个索引表，索引表中的各个元素都含有各个块中的最大关键字和各块中第一个元素的地址，索引表按关键字有序排列。以下图为例，查找表和索引表的对应关系如下：</p>
+<p><img src="https://wx4.sinaimg.cn/large/006WUoxdgy1g87zfnoeqfj30qg054adi.jpg" alt=""></p>
+<p>分块查找的ASL为索引查找的ASL和块内查找的ASL之和。设将长度为n的查找表分为b块，每块有s个元素，如果索引查找和块内查找都采用顺序查找时，则当且仅当s = n的算术平方根时，分块查找的ASL最小，即效率最高。下面是以上图为例的分块查找代码实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C#" data-lang="C#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Search</span>
+<span class="p">{</span>
+    <span class="c1">// 分块查找类
+</span><span class="c1"></span>    <span class="k">class</span> <span class="nc">BlockSearch</span>
+    <span class="p">{</span>
+        <span class="c1">// 索引表
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">index</span><span class="p">;</span>
+        <span class="c1">// 索引表长度
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">len</span><span class="p">;</span>
+        <span class="c1">// 索引表对应的块数组
+</span><span class="c1"></span>        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;[]</span> <span class="n">block</span><span class="p">;</span>
+
+        <span class="c1">// 初始化索引表
+</span><span class="c1"></span>        <span class="k">public</span> <span class="n">BlockSearch</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">elements</span><span class="p">,</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">index</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">index</span> <span class="p">=</span> <span class="n">index</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">len</span> <span class="p">=</span> <span class="n">index</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">num</span> <span class="p">=</span> <span class="n">elements</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">block</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;[</span><span class="n">len</span><span class="p">];</span>
+            <span class="c1">// 初始化每个块
+</span><span class="c1"></span>            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">block</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+            <span class="p">}</span>
+            <span class="c1">// 对所有元素进行分块
+</span><span class="c1"></span>            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">Insert</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 用二分查找对分块元素进行索引定位
+</span><span class="c1"></span>        <span class="k">private</span> <span class="kt">int</span> <span class="n">BlockIndex</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">start</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">end</span> <span class="p">=</span> <span class="n">len</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">mid</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">start</span> <span class="p">&lt;=</span> <span class="n">end</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">mid</span> <span class="p">=</span> <span class="n">start</span> <span class="p">+</span> <span class="p">(</span><span class="n">end</span> <span class="p">-</span> <span class="n">start</span><span class="p">)</span> <span class="p">/</span> <span class="m">2</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&lt;</span> <span class="n">index</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="n">end</span> <span class="p">=</span> <span class="n">mid</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">&gt;</span> <span class="n">index</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="n">start</span> <span class="p">=</span> <span class="n">mid</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">==</span> <span class="n">index</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">start</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 插入元素
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">void</span> <span class="n">Insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">start</span> <span class="p">=</span> <span class="n">BlockIndex</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+            <span class="n">block</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">Add</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 删除元素
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">void</span> <span class="n">Delete</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">start</span> <span class="p">=</span> <span class="n">BlockIndex</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+            <span class="n">block</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">Remove</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 具体的分块查找，块内采用顺序查找
+</span><span class="c1"></span>        <span class="k">public</span> <span class="kt">int</span> <span class="n">Search</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="k">out</span> <span class="kt">int</span> <span class="n">start</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">start</span> <span class="p">=</span> <span class="n">BlockIndex</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">num</span> <span class="p">=</span> <span class="n">block</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">Count</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="n">key</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 输出所有元素
+</span><span class="c1"></span>        <span class="k">public</span> <span class="k">void</span> <span class="n">Print</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">block</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Count</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="n">Console</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]+</span><span class="s">&#34; &#34;</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Client</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="n">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// 5、分块查找
+</span><span class="c1"></span>            <span class="kt">int</span><span class="p">[]</span> <span class="n">elements</span> <span class="p">=</span> <span class="p">{</span> <span class="m">24</span><span class="p">,</span> <span class="m">21</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">22</span><span class="p">,</span> <span class="m">32</span><span class="p">,</span> <span class="m">31</span><span class="p">,</span> <span class="m">54</span><span class="p">,</span> <span class="m">72</span><span class="p">,</span> <span class="m">61</span><span class="p">,</span> <span class="m">78</span><span class="p">,</span> <span class="m">88</span><span class="p">,</span> <span class="m">83</span> <span class="p">};</span>
+            <span class="kt">int</span><span class="p">[]</span> <span class="n">index</span> <span class="p">=</span> <span class="p">{</span> <span class="m">24</span><span class="p">,</span> <span class="m">54</span><span class="p">,</span> <span class="m">78</span><span class="p">,</span> <span class="m">88</span> <span class="p">};</span>
+            <span class="n">BlockSearch</span> <span class="n">bs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">BlockSearch</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">index</span><span class="p">);</span>
+            <span class="n">bs</span><span class="p">.</span><span class="n">Insert</span><span class="p">(</span><span class="m">35</span><span class="p">);</span>
+            <span class="n">bs</span><span class="p">.</span><span class="n">Delete</span><span class="p">(</span><span class="m">61</span><span class="p">);</span>
+            <span class="n">bs</span><span class="p">.</span><span class="n">Print</span><span class="p">();</span>
+            <span class="kt">int</span> <span class="n">block</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">bs</span><span class="p">.</span><span class="n">Search</span><span class="p">(</span><span class="m">78</span><span class="p">,</span> <span class="k">out</span> <span class="n">block</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;Not Found&#34;</span><span class="p">);</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;该元素位于第{0}块第{1}个位置&#34;</span><span class="p">,</span> <span class="n">block</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 输出结果：
+</span><span class="c1">// 24 21 6 11 8 22 32 31 54 35 72 78 88 83 
+</span><span class="c1">// 该元素位于第3块第2个位置
+</span></code></pre></td></tr></table>
+</div>
+</div><p>从代码中可以看出，<strong>分块查找的时间复杂度介于顺序查找和二分查找之间，还可以动态地插入和删除元素</strong>。由于分块查找中块内查找必须采用顺序查找，因此分块时每一块不能太大，不然影响块内查找的效率。但如果每一个块太小，建立一个有序的索引表比较耗时，这样分块查找就没有意义了，还不如先排好序直接进行二分查找。即使有动态地插入和删除元素的需求，块数过多也会降低索引查找的效率。</p>
+<p>因此，要在块数和块内元素数量之间找到一个平衡。在上述分块查找的代码中，索引查找的ASL为log2(b+1)取上整，块内查找的ASL为(s+1)/2。当两者之和最小时，可以求得块数b和块内元素个数s的关系式，从而找到b和s之间的平衡。在实际开发中，分块思想很重要。比如，把服务器请求日志按年月日分块，从而可以快速查找到某一天的服务器请求日志。</p>
+<h4 id="散列查找">散列查找</h4>
+<p>谈到散列查找，我们首先想到散列表，又称哈希表。在<a href="">常用数据结构与算法之数组</a>中，我们讲到哈希表是一个直接根据关键字访问元素的数据结构。通过哈希函数将查找表中的关键字映射成该关键字对应的地址，记为Hash(key)=Addr，这个地址可以数组下标、索引、内存地址等。理想情况下，散列查找的时间复杂度为O(1)，与表中元素个数无关。但如果出现哈希冲突，查找的时间复杂度就会增大。因此，我们应尽量较少哈希冲突的发生。</p>
+<p>哈希冲突是指哈希函数将多个不同的关键字映射到同一地址，这样就无法直接准确的查找到关键字对应的元素。我们把发生冲突的多个不同的关键字称为同义词。哈希冲突是不可避免的，只能减少。而减少哈希冲突的发生主要分两个方面：源头治理，即选取一个产生冲突几率较小的哈希函数；对症下药，即选取一个好的冲突解决办法。常用的哈希函数构造法有：直接定址法，除留命数法，数字分析法和折叠法等。常用的冲突解决办法有：线性探测法和拉链法等。哈希表在实际开发中应用广泛，很多编程语言都内置了哈希表相关的数据结构。</p>
+<h4 id="树表查找">树表查找</h4>
+<p>树表查找的本质是遍历整棵树的结点，然后将key与每个结点的关键字进行比较，相同就返回结点的位置，如果全部遍历完都没查找到，就表示查找失败。不同的树的查找时间复杂度不同，最简单的树表查找就是二叉查找树的查找。二叉查找树的中序序列就是一个有序序列，它的查找时间复杂度和二分查找相同都是O(logn)。但最坏情况下时间复杂度为O(n)，即二叉查找树退化成一棵单支树。</p>
+<p>二分查找只适用于有序的顺序表，插入和删除元素的时间复杂度为O(n)。而二叉查找树一般采用链式存储，不要求查找表有序，插入和删除元素的时间复杂度为O(logn)。因此，如果有序表是静态查找表，则采用顺序存储并用二分查找来完成查找操作。如果有序表是动态查找表，则采用链式存储并用二叉查找树作为查找的逻辑结构。但是通过有序表构造的二叉查找树是一棵单支树，查找时间复杂度最坏为O(n)。因此我们引入了平衡二叉树AVL树来避免二叉查找树因树高增长过快而导致查找性能降低。</p>
+<p>除了AVL树，与二叉查找树相关的还有红黑树和B/B+树，这三种二叉查找树查找、插入和删除元素的时间复杂度都是O(logn)。只是应用领域不同，红黑树主要应用于关联数组（key-value键值对）的实现。比如：C++中的map、multimap和multiset，JAVA中的TreeMap和TreeSet，.NET中的SortedDictionary和SortedSet。注意，红黑树实现的关键数组是有序的，而哈希表实现的关联数组是无序的。比如，.NET中的Dictionary是无序的，是用哈希表来实现的。B/B+树主要应用于数据库和文件系统，比如：MySQL和Oracle数据库，Windows、MAC和Linux的文件系统等。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-09-26
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%9F%A5%E6%89%BE/">查找</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E6%8E%92%E5%BA%8F/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">排序</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/dijkstra%E7%AE%97%E6%B3%95%E5%8F%8A%E5%A0%86%E4%BC%98%E5%8C%96/">
+            <span class="next-text nav-default">Dijkstra算法及堆优化</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

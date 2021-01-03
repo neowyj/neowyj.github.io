@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>探索Niantic真实世界平台 - Neo&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Neo" /><meta name="description" content="当我们创建Niantic时，我们为公司的使命设立了三个核心价值：探索、成长和真实世界的社交互动。但是，在最疯狂的梦想中，我们没想到我们的AR体验会给我们的玩家和他们所生活的社区带来积极的影响。我们很幸运能够将对技术和游戏的热情结合起来，为所有年龄段的人创造创新型的体验。
+" /><meta name="keywords" content="游戏, 图形学, 客户端, 引擎, 算法" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with theme even" />
+
+
+<link rel="canonical" href="https://neowyj.github.io/post/%E6%8E%A2%E7%B4%A2niantic%E7%9C%9F%E5%AE%9E%E4%B8%96%E7%95%8C%E5%B9%B3%E5%8F%B0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.043860df74c836e4c662241e1dedade5eb3f9948b982f87ac090d1f59c44aa76.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="探索Niantic真实世界平台" />
+<meta property="og:description" content="当我们创建Niantic时，我们为公司的使命设立了三个核心价值：探索、成长和真实世界的社交互动。但是，在最疯狂的梦想中，我们没想到我们的AR体验会给我们的玩家和他们所生活的社区带来积极的影响。我们很幸运能够将对技术和游戏的热情结合起来，为所有年龄段的人创造创新型的体验。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://neowyj.github.io/post/%E6%8E%A2%E7%B4%A2niantic%E7%9C%9F%E5%AE%9E%E4%B8%96%E7%95%8C%E5%B9%B3%E5%8F%B0/" />
+<meta property="article:published_time" content="2019-04-10T17:23:50+00:00" />
+<meta property="article:modified_time" content="2019-04-10T17:23:50+00:00" />
+<meta itemprop="name" content="探索Niantic真实世界平台">
+<meta itemprop="description" content="当我们创建Niantic时，我们为公司的使命设立了三个核心价值：探索、成长和真实世界的社交互动。但是，在最疯狂的梦想中，我们没想到我们的AR体验会给我们的玩家和他们所生活的社区带来积极的影响。我们很幸运能够将对技术和游戏的热情结合起来，为所有年龄段的人创造创新型的体验。">
+<meta itemprop="datePublished" content="2019-04-10T17:23:50+00:00" />
+<meta itemprop="dateModified" content="2019-04-10T17:23:50+00:00" />
+<meta itemprop="wordCount" content="1920">
+
+
+
+<meta itemprop="keywords" content="AR云," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="探索Niantic真实世界平台"/>
+<meta name="twitter:description" content="当我们创建Niantic时，我们为公司的使命设立了三个核心价值：探索、成长和真实世界的社交互动。但是，在最疯狂的梦想中，我们没想到我们的AR体验会给我们的玩家和他们所生活的社区带来积极的影响。我们很幸运能够将对技术和游戏的热情结合起来，为所有年龄段的人创造创新型的体验。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Neo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Neo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">探索Niantic真实世界平台</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-04-10 </span>
+        <div class="post-category">
+            <a href="/categories/xr/"> XR </a>
+            <a href="/categories/%E7%BF%BB%E8%AF%91/"> 翻译 </a>
+            </div>
+          <span class="more-meta"> 1920 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://roadtovrlive-5ea0.kxcdn.com/wp-content/uploads/2017/11/pokemon-go-niantic-logo.jpg" alt="">当我们创建Niantic时，我们为公司的使命设立了三个核心价值：探索、成长和真实世界的社交互动。但是，在最疯狂的梦想中，我们没想到我们的AR体验会给我们的玩家和他们所生活的社区带来积极的影响。我们很幸运能够将对技术和游戏的热情结合起来，为所有年龄段的人创造创新型的体验。</p>
+<p>今天，我们将展示我们一直在研发的技术：Niantic真实世界平台。这是我们第一次公开这个平台，我相信它将让我们了解AR对未来世界的重要性，并进一步推动我们所开创的未来体验。</p>
+<p>在过去一年中，我们对一些专注于AR地图和计算机视觉的创业公司进行了战略投资。 最近，我们宣布收购Escher Reality，他们将为我们的“地球AR计划”提供帮助。此外，我们还收购了计算机视觉和机器学习公司Matrix Mill，并建立了我们的第一个伦敦工作室。通过这些团队的协调，我们已经建立起了初期的Niantic真实世界平台，并构想出了它未来的样子。</p>
+<p>我们将Niantic真实世界平台视为连接数字和物理世界的操作系统。 基于我们迄今为止已获得的多人协作经验，我们正在突破地理空间技术的界限，去创建一个互补的和互动的现实世界层，并坚持为用户带来引人入胜的体验。</p>
+<p><strong>现实建模</strong></p>
+<p>Niantic真实世界平台提升了计算机看待世界的能力，从以道路和汽车为中心的模型转变为以人为中心的世界。对以人为本的公园，小径，人行道和其他可公开访问的空间进行建模需要大量计算。该技术必须能够理解这些细微的细节，并专门数字化这些地方。然后在交互式3D空间中对其进行建模，使计算机可以快速轻松地读取。</p>
+<p>我们必须应对将这种复杂技术应用于功率受限的移动设备的挑战。高质量的游戏需要一个非常准确的“实时”模型，以适应世界的动态。当用户周围的环境发生变化时，或者当人们移动自己或他人的手机时，我们还需要完成调整模型的艰巨任务。</p>
+<p>将各个移动视角紧密得结合在一起是一项挑战，但我们专注于通过机器学习和计算机视觉的融合来解决它，所有这些都建立在可靠和可扩展的基础架构之上。</p>
+<p><strong>理解现实</strong></p>
+<p>高级AR不仅需要了解世界的面貌，还需要理解它的含义：在给定空间中存在哪些对象，这些对象正在做什么，以及它们如何相互关联（如果存在的话）。Niantic真实世界平台正朝着计算机视觉认知的方向发展，使AR对象以独特的方式理解现实世界对象并与之交互。比如，在现实世界对象面前停留，经过它们，或者与它们融合为一体。</p>
+<p><img src="https://nianticlabs.com/img/posts/semanticspress2.gif" alt=""></p>
+<p>在上面的GIF中，我们说明了我们的计算机视觉算法如何识别对象，并通过可量化的置信度得分来总结它们。例如，当在桌椅上训练我们的计算机视觉时，它将识别它们并将它们放在更广阔的空间内。最终，这会允许将这些对象添加到AR对象库中。对象库越大，我们的理解能力就越强，从而真实世界平台上的AR体验就越丰富多彩。</p>
+<p>一旦我们理解了我们周围世界的“意义”，我们可以分层的可能性是无限的。我们正处于探索创意，测试和创建Demo的早期阶段。例如，想象一下，如果我们的平台能够识别花的存在并将其置于现实世界中，那么它就会知道要有一只大黄蜂。或者，如果AR可以看到湖泊并将其置于现实世界中，它就会知道要有一只鸭子。</p>
+<p>识别对象不仅限于理解它们是什么，还要知道它们的位置。目前AR的一个关键限制是AR对象不能在3D空间中有意义地交互。理想情况下，AR对象应该能够融入我们的现实世界，在现实世界对象的后面和周围无缝移动。</p>
+<p>我们在伦敦的新团队已经开始专注于理解现实世界的研究。利用计算机视觉和深度学习，他们正在研发能够理解3D空间的技术，从而实现比目前更可行的AR交互方式。</p>
+<p>在Pokémon GO中，你可以看到皮卡丘在现实世界中穿过和绕过不同的物体，躲开我们的脚并藏在花盆后面。它是我们对融入周围环境技术的一个概念验证，这让我们对AR的未来感到兴奋。</p>
+<p><strong>共享现实</strong></p>
+<p>我们特别关注AR中的创新，这些创新服务于Niantic的核心使命和价值观。今天，我们正在展示创新的跨平台增强现实技术，以促进高性能的共享增强现实体验。</p>
+<p>多人游戏需要Niantic的真实世界平台的组件在多个用户之间协同工作。当您添加多个用户和多个不同想法时，这些组件必须以特定方式工作，从而创建在视觉上丰富多彩的共享体验。在我们的研究中，我们发现最大的障碍之一是延迟：如果延迟问题不能被解决，创建共享现实体验几乎是不可能的。</p>
+<p>为了应对这一挑战，我们开发了专有的低延迟AR网络技术。借助此解决方案，我们能够构建统一的跨平台解决方案，通过单一的代码库实现共享AR体验。虽然我们首先将这项技术用于游戏，但很明显它将来会应用在各个领域。我们希望其他人能够在Niantic真实世界平台上，以我们尚未想象到的方式连接物理世界和数字世界，从而创造出更多精彩的AR创新体验！</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Neo</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-04-10
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Crative Commons 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ar%E4%BA%91/">AR云</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E5%8F%8A%E5%85%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">面向对象编程及其设计原则</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/unity%E8%84%9A%E6%9C%ACcsharp%E5%85%A5%E9%97%A8/">
+            <span class="next-text nav-default">Unity脚本CSharp入门</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:neowyj@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/neowyj" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/neo-36-35" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://xrflow.cn" class="iconfont icon--xrflow" title="-xrflow"></a>
+  <a href="https://neowyj.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Neo</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        tags: 'ams',
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

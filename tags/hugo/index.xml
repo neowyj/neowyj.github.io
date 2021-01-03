@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/hugo/</link>
+    <description>Recent content in Hugo on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Sep 2017 16:32:17 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>为什么搭建这个博客？</title>
+      <link>https://neowyj.github.io/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%90%AD%E5%BB%BA%E8%BF%99%E4%B8%AA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 16 Sep 2017 16:32:17 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%90%AD%E5%BB%BA%E8%BF%99%E4%B8%AA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>&lt;p&gt;十年前写博客是一种流行，那时每个人都想有自己的思想交流空间。现在仅有一少部分人还在坚持着写博客，也许在他们眼里，写博客已经变成了一种情怀。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

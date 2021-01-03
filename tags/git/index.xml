@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Neo&#39;s Blog</title>
+    <link>https://neowyj.github.io/tags/git/</link>
+    <description>Recent content in Git on Neo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 03 Apr 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://neowyj.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git精华</title>
+      <link>https://neowyj.github.io/post/git%E7%B2%BE%E5%8D%8E/</link>
+      <pubDate>Sun, 03 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://neowyj.github.io/post/git%E7%B2%BE%E5%8D%8E/</guid>
+      <description>&lt;p&gt;以前一般用CVS或者SVN等集中式版本控制系统，现在使用git分布式版本控制系统。集中式版本控制系统需要有一台中央服务器，工作时到中央服务器下载代码，工作完就推送到中央服务器。而且这需要联网，一旦没有网络则会导致无法工作。而git是分布式版本控制系统，每人的电脑上都有一个完整的代码库。联网只是为电脑之间交换修改提供了方便。因此，需要一台中央服务器，为大家提供交换方便。没有这台“中央服务器”，大家一样能进行工作。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
